@@ -1,6 +1,8 @@
 CPP_FILES="generator.cpp io.cpp sortings.cpp main.cpp"
 APP=bin/example
 
+mkdir -p bin
+
 if [ -f $APP ]; then rm $APP
 fi
 
