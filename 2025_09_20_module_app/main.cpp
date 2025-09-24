@@ -1,15 +1,19 @@
 #include "io.hpp"
+#include "generator.hpp"
 #include "sortings.hpp"
+#include <vector>
 
 int main(){
-	int array[] = {1,8,2,5,3,11};
-	const int size = sizeof(array) / sizeof(array[0]);
 
-	biv::showArray("Массив до сортировки:", array, size);
+	const int size = biv::readSize();
 
-	biv::sortings::insertingSort(array,size);
+	std::vector<int> array = biv::gen::generateArray(size);
 
-	biv::showArray("Массив после сортировки", array,size);
+	biv::showArray("Массив до сортировки:", array.data(), size);
+
+	biv::sortings::insertingSort(array.data(),size);
+
+	biv::showArray("Массив после сортировки:", array.data(),size);
 
 	return 0;
 }

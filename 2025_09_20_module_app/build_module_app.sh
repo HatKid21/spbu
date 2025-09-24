@@ -1,4 +1,4 @@
-CPP_FILES="io.cpp sortings.cpp main.cpp"
+CPP_FILES="generator.cpp io.cpp sortings.cpp main.cpp"
 APP=example
 
 if [ -f $APP ]; then rm $APP
