@@ -1,5 +1,5 @@
 MAIN=main.cpp
-APP=example
+APP=bin/example
 
 if [ -f $APP ]; then rm $APP
 fi

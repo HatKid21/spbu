@@ -1,5 +1,5 @@
 CPP_FILES="generator.cpp io.cpp sortings.cpp main.cpp"
-APP=example
+APP=bin/example
 
 if [ -f $APP ]; then rm $APP
 fi

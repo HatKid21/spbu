@@ -2,8 +2,8 @@
 chcp 1251 > log
 del log
 
-set CPP_FILES="io.cpp sortings.cpp main.cpp"
-set EXE=inserting_sort.exe
+set CPP_FILES="generator.cpp io.cpp sortings.cpp main.cpp"
+set EXE=bin/inserting_sort.exe
 set CHARSET="-finput-charset=utf-8 -fexec-charset=windows-1251"
 
 if exist %EXE% del %EXE%
