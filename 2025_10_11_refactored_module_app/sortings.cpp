@@ -1,45 +1,45 @@
 #include "sortings.hpp"
 
-void sort::merge(int* left, int* mid, int* right){
-	int* i = left;
-	int* j = mid;
-	int size = right - left;
-	int ar[size];
-	int k =0;
+void hatkid::sort::merge(int* leftArrayPtr, int* midArrayPtr, int* rightArrayPtr) {
+	int* lPtr = leftArrayPtr;
+	int* rPtr = midArrayPtr;
+	int size = rightArrayPtr - leftArrayPtr;
+	int* tempArray = new int[size];
+	int k = 0;
 
-	while (i < mid && j < right){
-		if (*i < *j){
-			ar[k++] = *i++;	
-		} else{
-			ar[k++] = *j++;
+	while (lPtr < midArrayPtr && rPtr < rightArrayPtr) {
+		if (*lPtr < *rPtr) {
+			tempArray[k++] = *lPtr++;	
+		} else {
+			tempArray[k++] = *rPtr++;
 		}
 	}
 
-	while (i < mid){
-		ar[k++] = *i++;
+	while (lPtr < midArrayPtr) {
+		tempArray[k++] = *lPtr++;
 	}
 
-	while (j < right){
-		ar[k++] = *j++;
+	while (rPtr < rightArrayPtr) {
+		tempArray[k++] = *rPtr++;
 	}
 
-	for (int i = 0; i < size; i++){
-		*(left + i) = ar[i];
+	for (int i = 0; i < size; i++) {
+		*(leftArrayPtr + i) = tempArray[i];
 	}
 
 }
 
-void sort::mergeSort(int* left, int* right){
-	int size = right - left;
-	if (size <= 1){
+void hatkid::sort::mergeSort(int* leftArrayPtr, int* rightArrayPtr) {
+	int size = rightArrayPtr - leftArrayPtr;
+	if (size <= 1) {
 		return;
 	}
 
-	int* mid = left + size / 2;
+	int* midArrayPtr = leftArrayPtr + size / 2;
 
-	mergeSort(left,mid);
-	mergeSort(mid,right);
+	mergeSort(leftArrayPtr, midArrayPtr);
+	mergeSort(midArrayPtr, rightArrayPtr);
 
-	merge(left,mid,right);
+	merge(leftArrayPtr, midArrayPtr, rightArrayPtr);
 }
 
