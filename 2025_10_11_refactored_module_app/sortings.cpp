@@ -26,7 +26,8 @@ void hatkid::sort::merge(int* leftArrayPtr, int* midArrayPtr, int* rightArrayPtr
 	for (int i = 0; i < size; i++) {
 		*(leftArrayPtr + i) = tempArray[i];
 	}
-
+	
+	delete[] tempArray;
 }
 
 void hatkid::sort::mergeSort(int* leftArrayPtr, int* rightArrayPtr) {
