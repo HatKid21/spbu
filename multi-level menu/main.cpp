@@ -7,27 +7,41 @@
 int main() {
 	std::setlocale(LC_ALL, "");
 
-	hatkid::MenuItem study = {"1 - Хочу учиться программированию.",hatkid::study};
-	hatkid::MenuItem exit = {"2 - Не сейчас...", hatkid::exit};
+	hatkid::MenuItem studyPointers = {"1 - Хочу изучать указатели!", hatkid::studyPointer};
+	hatkid::MenuItem studyStructs = {"2 - Хочу изучать структуры!", hatkid::studyStruct};
+	hatkid::MenuItem studyClasses = {"3 - Хочу изучать классы!", hatkid::studyClass};
+       	hatkid::MenuItem studyGoBack = {"0 - Хочу домой...", hatkid::studyGoBack};
+
+	hatkid::MenuItem* studyChildren[] = {
+		&studyGoBack,
+		&studyPointers,
+		&studyStructs,
+		&studyClasses,
+	};
+
+	const int studySize = sizeof(studyChildren) / sizeof(studyChildren[0]);
+
+	hatkid::MenuItem study = {"1 - Хочу учиться программированию.",hatkid::showMenu,studyChildren,studySize};
+	hatkid::MenuItem exit = {"0 - Не сейчас...", hatkid::exit};
 
 	hatkid::MenuItem* mainChildren[] {&exit, &study};
 	const int mainSize = sizeof(mainChildren) / sizeof(mainChildren[0]);
+	
+	hatkid::MenuItem mainMenu = {nullptr, hatkid::showMenu, mainChildren,mainSize};
 
-	int userInput;
+	studyGoBack.parent = &mainMenu;
+	studyPointers.parent = &study;
+	studyStructs.parent = &study;
+	studyClasses.parent = &study;
 
+	study.parent = &mainMenu;
+      	exit.parent = &mainMenu;	
+
+
+
+	const hatkid::MenuItem* current = &mainMenu;
 	do {
-		std:: cout << "Добро пожаловать в обучалку!" << std::endl;
-		for (int i = 1; i < mainSize; i++){
-			std::cout << mainChildren[i]->title << std::endl;
-		}
-		std::cout << mainChildren[0]->title << std::endl;
-		std::cout << "Обучалка > ";
-
-		std::cin >> userInput;
-		mainChildren[userInput]->func();
-
-		std::cout << std::endl;
-
+		current = current->func(current);
 	} while (true);
 	return 0;
 }
