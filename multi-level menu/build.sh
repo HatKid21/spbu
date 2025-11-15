@@ -1,4 +1,4 @@
-CPP_FILES="menuFunctions.cpp main.cpp"
+CPP_FILES="menuItems.cpp menuFunctions.cpp main.cpp"
 APP=bin/example
 
 mkdir -p bin
