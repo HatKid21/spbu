@@ -29,7 +29,7 @@ int main() {
 	
 	hatkid::MenuItem mainMenu = {nullptr, hatkid::showMenu, mainChildren,mainSize};
 
-	studyGoBack.parent = &mainMenu;
+	studyGoBack.parent = &study;
 	studyPointers.parent = &study;
 	studyStructs.parent = &study;
 	studyClasses.parent = &study;

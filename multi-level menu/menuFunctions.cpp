@@ -38,5 +38,5 @@ const hatkid::MenuItem*  hatkid::studyStruct(const MenuItem* current){
 }
 
 const hatkid::MenuItem*  hatkid::studyGoBack(const MenuItem* current){
-	return current->parent;
+	return current->parent->parent;
 }
