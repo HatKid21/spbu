@@ -19,21 +19,37 @@ const hatkid::MenuItem* hatkid::showMenu(const hatkid::MenuItem* current){
 	return current->children[userInput];
 }
 
+const hatkid::MenuItem* hatkid::subjectGoBack(const MenuItem* current){
+	return current->parent;
+}
+
+const hatkid::MenuItem* hatkid::add(const MenuItem* current){
+	return current->parent;
+}
+
+const hatkid::MenuItem* hatkid::subtract(const MenuItem* current){
+	return current->parent;
+}
+
+const hatkid::MenuItem* hatkid::multiply(const MenuItem* current){
+	return current->parent;
+}
+
+const hatkid::MenuItem* hatkid::divide(const MenuItem* current){
+	return current->parent;
+}
 
 const hatkid::MenuItem* hatkid::exit(const MenuItem* current){
 	std::exit(0);
 	return current->parent;
 }
 
-const hatkid::MenuItem* hatkid::studyClass(const MenuItem* current){
+const hatkid::MenuItem* hatkid::studyAlgebra(const MenuItem* current){
 	return current->parent;
 }
 
-const hatkid::MenuItem* hatkid::studyPointer(const MenuItem* current){
-	return current->parent;
-}
-
-const hatkid::MenuItem*  hatkid::studyStruct(const MenuItem* current){
+const hatkid::MenuItem*  hatkid::studyMathAnalysis(const MenuItem* current){
+	std::cout << "Бочкарёв Анатолий Олегович> Здравствуй. Что ты сегодня хочешь повторить?" << std::endl;
 	return current->parent;
 }
 

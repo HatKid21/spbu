@@ -8,8 +8,17 @@ namespace hatkid{
 	extern const MenuItem STUDY;
 	extern const MenuItem EXIT;
 	
-	extern const MenuItem STUDY_POINTER;
-	extern const MenuItem STUDY_CLASS;
-	extern const MenuItem STUDY_STRUCT;
+	extern const MenuItem STUDY_ALGEBRA;
+	extern const MenuItem STUDY_MATH_ANALYSIS;
 	extern const MenuItem STUDY_GO_BACK;
+	
+	extern const MenuItem ADD;
+	extern const MenuItem SUBTRACT;
+	extern const MenuItem MULTIPLY;
+	extern const MenuItem DIVIDE;
+
+	extern const MenuItem DIFFERENTIAL;
+	extern const MenuItem INTEGRAL;
+	
+	extern const MenuItem SUBJECT_GO_BACK;
 }
