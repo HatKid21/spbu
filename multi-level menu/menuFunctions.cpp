@@ -19,11 +19,22 @@ const hatkid::MenuItem* hatkid::showMenu(const hatkid::MenuItem* current){
 	return current->children[userInput];
 }
 
+const hatkid::MenuItem* hatkid::differential(const MenuItem* current){
+	return current->parent;
+}
+
+const hatkid::MenuItem* hatkid::integral(const MenuItem* current){
+	return current->parent;
+}
+
 const hatkid::MenuItem* hatkid::subjectGoBack(const MenuItem* current){
 	return current->parent;
 }
 
 const hatkid::MenuItem* hatkid::add(const MenuItem* current){
+	std::cout << "Утешев Алексей Юрьевич>";
+	std::cout << "В общем случае у нас числа комплексные. " << std::endl;
+	std::cout << "Вот тебе пример: (1+2i) + (5-3i) = 6-i" << std::endl;
 	return current->parent;
 }
 
@@ -45,12 +56,14 @@ const hatkid::MenuItem* hatkid::exit(const MenuItem* current){
 }
 
 const hatkid::MenuItem* hatkid::studyAlgebra(const MenuItem* current){
-	return current->parent;
+	std::cout << "Утешев Алексей Юрьевич> Критическая масса из 1 человека собралась...";
+	std::cout << "Чему хочешь научиться сегодня?" << std::endl;
+	return showMenu(current);
 }
 
 const hatkid::MenuItem*  hatkid::studyMathAnalysis(const MenuItem* current){
 	std::cout << "Бочкарёв Анатолий Олегович> Здравствуй. Что ты сегодня хочешь повторить?" << std::endl;
-	return current->parent;
+	return showMenu(current);
 }
 
 const hatkid::MenuItem*  hatkid::studyGoBack(const MenuItem* current){

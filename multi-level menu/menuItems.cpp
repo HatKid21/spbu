@@ -5,19 +5,19 @@
 #include "menuFunctions.hpp"
 
 const hatkid::MenuItem hatkid::ADD = {
-	"1 - Хочу научиться складывать!", hatkid::add,&hatkid::STUDY
+	"1 - Хочу научиться складывать!", hatkid::add,&hatkid::STUDY_ALGEBRA
 };
 
 const hatkid::MenuItem hatkid::SUBTRACT = {
-	"2 - Хочу научиться вычитать!", hatkid::subtract,&hatkid::STUDY
+	"2 - Хочу научиться вычитать!", hatkid::subtract,&hatkid::STUDY_ALGEBRA
 };
 
 const hatkid::MenuItem hatkid::MULTIPLY = {
-	"3 - Хочу научиться умножать!", hatkid::multiply,&hatkid::STUDY
+	"3 - Хочу научиться умножать!", hatkid::multiply,&hatkid::STUDY_ALGEBRA
 };
 
 const hatkid::MenuItem hatkid::DIVIDE = {
-	"4 - Хочу научиться делить!", hatkid::divide,&hatkid::STUDY
+	"4 - Хочу научиться делить!", hatkid::divide,&hatkid::STUDY_ALGEBRA
 };
 
 const hatkid::MenuItem hatkid::SUBJECT_GO_BACK ={
@@ -36,11 +36,32 @@ namespace {
 }
 
 const hatkid::MenuItem hatkid::STUDY_ALGEBRA = {
-	"1 - Хочу изучать алгебру!", hatkid::showMenu, &hatkid::STUDY, algebraChildren, algebraSize
+	"1 - Хочу изучать алгебру!", hatkid::studyAlgebra, &hatkid::STUDY, algebraChildren, algebraSize
 };
 
+const hatkid::MenuItem hatkid::DIFFERENTIAL = {
+	"1 - Хочу изучать дифференциальное исчисление!", hatkid::differential, &hatkid::STUDY_MATH_ANALYSIS
+};
+
+const hatkid::MenuItem hatkid::INTEGRAL = {
+	"2 - Хочу изучать интегральное исчисление!", hatkid::integral, &hatkid::STUDY_MATH_ANALYSIS
+};
+
+namespace{
+	
+	const hatkid::MenuItem* const mathAnalysisChildren[] = {
+		&hatkid::SUBJECT_GO_BACK,
+		&hatkid::DIFFERENTIAL,
+		&hatkid::INTEGRAL
+	};
+
+	const int mathAnalysisSize = sizeof(mathAnalysisChildren) / sizeof(mathAnalysisChildren[0]);
+
+}
+
+
 const hatkid::MenuItem hatkid::STUDY_MATH_ANALYSIS = {
-	"2 - Хочу изучать математический анализ!", hatkid::studyMathAnalysis, &hatkid::STUDY
+	"2 - Хочу изучать математический анализ!", hatkid::studyMathAnalysis, &hatkid::STUDY, mathAnalysisChildren,mathAnalysisSize
 };
 
 const hatkid::MenuItem hatkid::STUDY_GO_BACK = {
