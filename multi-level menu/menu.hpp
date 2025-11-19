@@ -11,5 +11,7 @@ namespace hatkid {
 		const MenuItem* const *children;
 		const int childrenCount;
 		
+		const char* content;
+				
 	};
 }
