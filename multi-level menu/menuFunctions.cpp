@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 #include "artAssets.hpp"
 #include "menu.hpp"
@@ -22,6 +23,12 @@ const hatkid::MenuItem* hatkid::showMenu(const hatkid::MenuItem* current) {
 
 const hatkid::MenuItem* hatkid::showContent(const hatkid::MenuItem* current) {
 	std::cout << current->content;
+	std::cout << "Нажмите ENTER чтобы продолжить:";
+
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');	
+
+	std::cin.get();
 	return current->parent;
 }
 
