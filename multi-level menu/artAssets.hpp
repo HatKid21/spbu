@@ -1,6 +1,6 @@
 #pragma once
 
-namespace hatkid{
+namespace hatkid {
 
 	const char* UAY = R"(
 =.-......-...... ..-............
@@ -50,5 +50,4 @@ $+=-.....   . ...-..       =+x#x
 **++-.........  .         +x#$&#
 
 )";
-
 }

@@ -1,13 +1,13 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "artAssets.hpp"
 #include "menu.hpp"
 #include "menuFunctions.hpp"
-#include "artAssets.hpp"
 
-const hatkid::MenuItem* hatkid::showMenu(const hatkid::MenuItem* current){
+const hatkid::MenuItem* hatkid::showMenu(const hatkid::MenuItem* current) {
 
-	for (int i = 1; i < current->childrenCount; i++){
+	for (int i = 1; i < current->childrenCount; i++) {
 		std::cout << current->children[i]->title << std::endl;
 	}
 	std::cout << current->children[0]->title << std::endl;
@@ -20,21 +20,21 @@ const hatkid::MenuItem* hatkid::showMenu(const hatkid::MenuItem* current){
 	return current->children[userInput];
 }
 
-const hatkid::MenuItem* hatkid::showContent(const hatkid::MenuItem* current){
+const hatkid::MenuItem* hatkid::showContent(const hatkid::MenuItem* current) {
 	std::cout << current->content;
 	return current->parent;
 }
 
-const hatkid::MenuItem* hatkid::subjectGoBack(const MenuItem* current){
+const hatkid::MenuItem* hatkid::subjectGoBack(const MenuItem* current) {
 	return current->parent;
 }
 
-const hatkid::MenuItem* hatkid::exit(const MenuItem* current){
+const hatkid::MenuItem* hatkid::exit(const MenuItem* current) {
 	std::exit(0);
 	return current->parent;
 }
 
-const hatkid::MenuItem* hatkid::studyAlgebra(const MenuItem* current){
+const hatkid::MenuItem* hatkid::studyAlgebra(const MenuItem* current) {
 	std::cout << hatkid::UAY;
 	std::cout << "Утешев Алексей Юрьевич>";
 	std::cout << "Чтож... критическая масса из 1-го человека собралась...";
@@ -42,13 +42,13 @@ const hatkid::MenuItem* hatkid::studyAlgebra(const MenuItem* current){
 	return showMenu(current);
 }
 
-const hatkid::MenuItem*  hatkid::studyMathAnalysis(const MenuItem* current){
+const hatkid::MenuItem*  hatkid::studyMathAnalysis(const MenuItem* current) {
 	std::cout << hatkid::BAO;
 	std::cout << "Бочкарёв Анатолий Олегович>";
 	std::cout << "Здравствуй. Чему ты хочешь сегодня научиться?" << std::endl;
 	return showMenu(current);
 }
 
-const hatkid::MenuItem*  hatkid::studyGoBack(const MenuItem* current){
+const hatkid::MenuItem*  hatkid::studyGoBack(const MenuItem* current) {
 	return current->parent->parent;
 }

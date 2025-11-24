@@ -1,7 +1,6 @@
+#include <cstddev>
+
 #include "menuItems.hpp"
-
-#include <cstddef>
-
 #include "menuFunctions.hpp"
 
 const hatkid::MenuItem hatkid::ADD = {
@@ -85,7 +84,7 @@ const hatkid::MenuItem hatkid::INTEGRAL = {
 	"Бочкарёв Анатолий Олегович> А эта тема будет у нас на будущих лекциях. Не пропусти!\n\n"
 };
 
-namespace{
+namespace {
 	
 	const hatkid::MenuItem* const mathAnalysisChildren[] = {
 		&hatkid::SUBJECT_GO_BACK,

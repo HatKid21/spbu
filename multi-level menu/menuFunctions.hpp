@@ -16,4 +16,3 @@ namespace hatkid {
 
 	const MenuItem* showContent(const MenuItem* current);
 }
-

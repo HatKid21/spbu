@@ -2,7 +2,7 @@
 
 #include "menu.hpp"
 
-namespace hatkid{
+namespace hatkid {
 	extern const MenuItem MAIN;
 	
 	extern const MenuItem STUDY;

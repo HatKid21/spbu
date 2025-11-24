@@ -6,12 +6,11 @@
 #include "menuItems.hpp"
 
 int main() {
-	std::setlocale(LC_ALL, "");
-	
 	const hatkid::MenuItem* current = &hatkid::MAIN;
 
 	do {
 		current = current->func(current);
 	} while (true);
+
 	return 0;
 }
