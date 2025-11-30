@@ -14,5 +14,10 @@ namespace hatkid {
 
 	const MenuItem* subjectGoBack(const MenuItem* current);
 
-	const MenuItem* showContent(const MenuItem* current);
+	const MenuItem* showAddContent(const MenuItem* current);
+	const MenuItem* showSubtractContent(const MenuItem* current);
+	const MenuItem* showMultiplyContent(const MenuItem* current);
+	const MenuItem* showDivideContent(const MenuItem* current);
+	const MenuItem* showIntegralContent(const MenuItem* current);
+	const MenuItem* showDifferentialContent(const MenuItem* current);
 }

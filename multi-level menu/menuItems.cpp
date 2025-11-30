@@ -5,39 +5,34 @@
 
 const hatkid::MenuItem hatkid::ADD = {
 	"1 - Хочу научиться складывать!", 
-	hatkid::showContent,
+	hatkid::showAddContent,
 	&hatkid::STUDY_ALGEBRA,
 	nullptr,
-	0,
-	"Утешев Алексей Юрьевич> В общем случае у нас числа комплексные.\nВот тебе пример: (1+2i) + (5-3i) = 6-i\n\n"
+	0
 };
 
 const hatkid::MenuItem hatkid::SUBTRACT = {
 	"2 - Хочу научиться вычитать!", 
-	hatkid::showContent,
+	hatkid::showSubtractContent,
 	&hatkid::STUDY_ALGEBRA,
 	nullptr,
-	0,
-	"Утешев Алексей Юрьевич> В общем случае у нас числа комплексные.\nВот тебе пример: (1+2i) - (5-3i) = -4+5i\n\n"
+	0
 };
 
 const hatkid::MenuItem hatkid::MULTIPLY = {
 	"3 - Хочу научиться умножать!", 
-	hatkid::showContent,
+	hatkid::showMultiplyContent,
 	&hatkid::STUDY_ALGEBRA,
 	nullptr,
-	0,
-	"Утешев Алексей Юрьевич> Там есть формула, но никто ее не запоминает. Легче как с обычными числами работать\nВот тебе пример: (1+2i) * (5-3i) =5-3i+10i-6i^2=11+7i\n\n"
+	0
 };
 
 const hatkid::MenuItem hatkid::DIVIDE = {
 	"4 - Хочу научиться делить!", 
-	hatkid::showContent,
+	hatkid::showDivideContent,
 	&hatkid::STUDY_ALGEBRA,
 	nullptr,
-	0,
-	"Утешев Алексей Юрьевич> А вот тут не все так просто. Если мы делим на комплекcное число, надо домножить числитель и знаменатель на комплексно сопряженное.\nВот тебе пример:""(1+2i) / (5-3i) = (-1+13i)/34=-1/34+13i/34\n\n"
-
+	0
 };
 
 const hatkid::MenuItem hatkid::SUBJECT_GO_BACK ={
@@ -67,21 +62,18 @@ const hatkid::MenuItem hatkid::STUDY_ALGEBRA = {
 
 const hatkid::MenuItem hatkid::DIFFERENTIAL = {
 	"1 - Хочу изучать дифференциальное исчисление!", 
-	hatkid::showContent, 
+	hatkid::showDifferentialContent, 
 	&hatkid::STUDY_MATH_ANALYSIS,
 	nullptr,
-	0,
-	"Бочкарёв Анатолий Олегович> Основные понятия в дифферециальном исчислении - производная и дифференциал\nПроизводная - это предел отношения приращения функции к приращению аргумента при стремлении приращения аргумента к нулю\nДифференциал - это главная линейная часть приращения\n\n"
-
+	0
 };
 
 const hatkid::MenuItem hatkid::INTEGRAL = {
 	"2 - Хочу изучать интегральное исчисление!", 
-	hatkid::showContent, 
+	hatkid::showIntegralContent, 
 	&hatkid::STUDY_MATH_ANALYSIS,
 	nullptr,
-	0,
-	"Бочкарёв Анатолий Олегович> А эта тема будет у нас на будущих лекциях. Не пропусти!\n\n"
+	0
 };
 
 namespace {
