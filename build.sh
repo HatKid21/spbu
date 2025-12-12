@@ -10,5 +10,5 @@ fi
 
 cd $BUILD_FOLDER
 
-cmake -G $BUILD_TYPE ../$SOURCE_FOLDER
+cmake -G "$BUILD_TYPE" "../$SOURCE_FOLDER"
 cmake --build .

@@ -6,5 +6,6 @@ enable_testing()
 
 add_subdirectory(lib/googletest)
 add_subdirectory(sort)
+add_subdirectory(multi-level_menu)
 
 
