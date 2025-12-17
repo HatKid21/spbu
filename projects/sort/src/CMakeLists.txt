@@ -1,4 +1,4 @@
-target_sources(sort_lib
+target_sources(${LIBRARY}
 	PRIVATE
 		io.cpp
 		sortings.cpp
@@ -7,6 +7,6 @@ target_sources(sort_lib
 		sortings.hpp
 )
 
-target_include_directories(sort_lib PUBLIC
+target_include_directories(${LIBRARY} PUBLIC
 	"${PROJECT_SOURCE_DIR}/src"
 )

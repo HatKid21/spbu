@@ -5,7 +5,7 @@ set(SOURCES
 add_executable(test_merge ${SOURCES})
 
 target_link_libraries(test_merge
-	sort_lib
+	${LIBRARY}
 	gtest_main
 	gmock_main
 )
