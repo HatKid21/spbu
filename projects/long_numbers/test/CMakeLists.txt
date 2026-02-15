@@ -1,5 +1,7 @@
 set(SOURCES
-    ln_test.cpp
+    ln_comparation_test.cpp
+    ln_init_test.cpp
+    ln_operators_test.cpp
 )
 
 add_executable(ln_test ${SOURCES})
