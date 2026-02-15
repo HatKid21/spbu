@@ -6,5 +6,10 @@ TEST(LongNumberConstructor, DefaultConstructor){
     hatkid::LongNumber ln1;
     
     EXPECT_FALSE(ln1.is_negative());
+}
 
+TEST(LongNumberConstructor, StringConstructor){
+    hatkid::LongNumber ln1("123");
+
+    EXPECT_FALSE(ln1.is_negative()) ;
 }

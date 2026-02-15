@@ -141,11 +141,15 @@ bool LongNumber::is_negative() const noexcept {
 // PRIVATE
 // ----------------------------------------------------------
 int LongNumber::get_length(const char* const str) const noexcept {
-    int offset = 0;
-	if (str[0] == '-'){
-        offset = 1;
+    int len = 0;
+    while (str[len] != '\0'){
+        len++;
     }
-    return sizeof(str) / sizeof(str[0]) - offset;
+
+    if (str[0] == '-'){
+        len--;
+    }
+    return len;
 }
 
 int LongNumber::get_sign(const char* const str) const noexcept {
