@@ -92,26 +92,76 @@ bool LongNumber::operator != (const LongNumber& x) const {
 }
 
 bool LongNumber::operator > (const LongNumber& x) const {
-	if (compare(*this,x) == -1){
-        return true;
-    }
-    return false;
+    return compare(*this,x) == -1;
 }
 
 bool LongNumber::operator < (const LongNumber& x) const {
-	if (compare(*this,x) == 1){
-        return true;
-    }
-    return false;
+    return compare(*this,x) == 1;
 }
 
 LongNumber LongNumber::operator + (const LongNumber& x) const {
-	// TODO
-    return *this;
+
+    if (sign != x.sign){
+        
+    }
+
+    LongNumber maxi;
+    LongNumber mini;
+
+    if (*this > x){
+        maxi = *this;
+        mini = x;
+    } else{
+        maxi = x;
+        mini = *this;
+    }
+
+    int* num = new int[maxi.length];
+    int i = maxi.length - 1;
+    int j = mini.length - 1;
+
+    int rem = 0;
+
+    while (i >= 0){
+        if (j < 0){
+            num[i] = ( maxi.numbers[i] + rem) % 10;
+            rem = (maxi.numbers[i] + rem) / 10;
+        } else{
+            num[i] = (maxi.numbers[i] + mini.numbers[j] + rem) % 10;
+            rem = (maxi.numbers[i] + mini.numbers[j] + rem) / 10;
+        }
+        i--;
+        j--;
+    }
+
+    int* resultNum;
+    int resultLength = maxi.length;
+
+    if (rem != 0){
+        resultNum = new int[maxi.length+1];
+        resultNum[0] = rem;
+        for (int i = 0; i < maxi.length; i++){
+            resultNum[i+1] = num[i];
+        }
+        resultLength++;
+        delete[] num;
+    } else{
+        resultNum = new int[maxi.length];
+        for (int i = 0; i < maxi.length;i++){
+            resultNum[i] = num[i];
+        }
+    }
+
+    LongNumber result;
+    result.numbers = resultNum;
+    result.sign = sign;
+    result.length = resultLength;
+    return result;
+    
 }
 
 LongNumber LongNumber::operator - (const LongNumber& x) const {
-	// TODO
+    // TODO
     return *this;
 }
 
@@ -121,7 +171,7 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
-	// TODO
+    int count = 0;
     return *this;
 }
 
@@ -162,20 +212,34 @@ int LongNumber::get_sign(const char* const str) const noexcept {
 }
 
 int LongNumber::compare(const LongNumber& left, const LongNumber& right) const noexcept{
+
+    if (left.sign != right.sign){
+        return (left.sign == -1) ? 1 : -1;
+    }
+
+    int result = 0;
+
     if (left.length > right.length){
         return -1;
     } else if (left.length < right.length){
         return 1;
     } else{
-        for (int i = 0; i < length; i++){
+        for (int i = 0; i < left.length; i++){
             if (left.numbers[i] > right.numbers[i]){
-                return -1;
+                result = -1;
+                break;
             } else if (left.numbers[i] < right.numbers[i]){
-                return 1;
+                result = 1;
+                break;
             }
         }
     }
-    return 0;
+
+    if (left.sign == -1 and result != 0){
+        return -result;
+    }
+
+    return result;
 }
 
 // ----------------------------------------------------------
