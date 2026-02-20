@@ -10,8 +10,8 @@ LongNumber::LongNumber() {
 }
 
 LongNumber::LongNumber(const char* const str) {
-    length = get_length(str);
-    sign = get_sign(str);
+    length = getLength(str);
+    sign = getSign(str);
     numbers = new int[length];
     int t = (sign == -1) ? 1 : 0;
     for (int i = 0; i < length;i++){
@@ -45,8 +45,8 @@ LongNumber::~LongNumber() {
 LongNumber& LongNumber::operator = (const char* const str) {
     delete[] numbers;
     
-    length = get_length(str);
-    sign = get_sign(str);
+    length = getLength(str);
+    sign = getSign(str);
     numbers = new int[length];
     int t = (sign == -1) ? 1 : 0;
     for (int i = t; i < length; i++){
@@ -190,7 +190,7 @@ LongNumber LongNumber::operator % (const LongNumber& x) const {
     return *this;
 }
 
-bool LongNumber::is_negative() const noexcept {
+bool LongNumber::isNegative() const noexcept {
 	if (sign == -1){
         return true;
     }
@@ -200,7 +200,7 @@ bool LongNumber::is_negative() const noexcept {
 // ----------------------------------------------------------
 // PRIVATE
 // ----------------------------------------------------------
-int LongNumber::get_length(const char* const str) const noexcept {
+int LongNumber::getLength(const char* const str) const noexcept {
     int len = 0;
     while (str[len] != '\0'){
         len++;
@@ -212,7 +212,7 @@ int LongNumber::get_length(const char* const str) const noexcept {
     return len;
 }
 
-int LongNumber::get_sign(const char* const str) const noexcept {
+int LongNumber::getSign(const char* const str) const noexcept {
     if (str[0] == '-'){
         return -1;
     } else if (str[0] == '0'){

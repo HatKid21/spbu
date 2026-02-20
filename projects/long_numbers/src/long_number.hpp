@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 
 namespace hatkid {
@@ -32,13 +31,13 @@ namespace hatkid {
 			LongNumber operator / (const LongNumber& x) const;
 			LongNumber operator % (const LongNumber& x) const;
 			
-            bool is_negative() const noexcept;
+            bool isNegative() const noexcept;
 			
 			friend std::ostream& operator << (std::ostream &os, const LongNumber& x);
 			
 		private:
-			int get_length(const char* const str) const noexcept;
-            int get_sign(const char* const str) const noexcept;
+			int getLength(const char* const str) const noexcept;
+            int getSign(const char* const str) const noexcept;
             int compare(const LongNumber& left, const LongNumber& right) const noexcept;
 	};
 }
