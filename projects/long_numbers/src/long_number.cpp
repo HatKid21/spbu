@@ -14,8 +14,8 @@ LongNumber::LongNumber(const char* const str) {
     sign = get_sign(str);
     numbers = new int[length];
     int t = (sign == -1) ? 1 : 0;
-    for (int i = t; i < length;i++){
-        char c = str[i];
+    for (int i = 0; i < length;i++){
+        char c = str[i+t];
         numbers[i] = c - '0';
     }
 }
@@ -101,10 +101,6 @@ bool LongNumber::operator < (const LongNumber& x) const {
 
 LongNumber LongNumber::operator + (const LongNumber& x) const {
 
-    if (sign != x.sign){
-        
-    }
-
     LongNumber maxi;
     LongNumber mini;
 
@@ -161,7 +157,13 @@ LongNumber LongNumber::operator + (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator - (const LongNumber& x) const {
+    //x.sign *= -1;
+    //if (sign == x.sign){
+    //    return this + x;
+    //}
+
     // TODO
+
     return *this;
 }
 
@@ -171,12 +173,20 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
-    int count = 0;
-    return *this;
+    LongNumber count("0");
+    LongNumber one("1");
+    LongNumber temp(x);
+    if (temp < x){
+        count = count + one;
+        temp = temp + x;
+    }
+    return count;
 }
 
 LongNumber LongNumber::operator % (const LongNumber& x) const {
-	// TODO
+
+    //LongNumber d = this / x;
+
     return *this;
 }
 
@@ -220,9 +230,9 @@ int LongNumber::compare(const LongNumber& left, const LongNumber& right) const n
     int result = 0;
 
     if (left.length > right.length){
-        return -1;
+        result = -1;
     } else if (left.length < right.length){
-        return 1;
+        result = 1;
     } else{
         for (int i = 0; i < left.length; i++){
             if (left.numbers[i] > right.numbers[i]){
@@ -236,7 +246,7 @@ int LongNumber::compare(const LongNumber& left, const LongNumber& right) const n
     }
 
     if (left.sign == -1 and result != 0){
-        return -result;
+        return -(result);
     }
 
     return result;

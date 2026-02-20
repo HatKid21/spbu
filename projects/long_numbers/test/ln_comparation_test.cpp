@@ -2,48 +2,49 @@
 
 #include "long_number.hpp"
 
-TEST(LongNumberComparation, ComparationEqual){
-    hatkid::LongNumber ln1("123");
-    hatkid::LongNumber ln2("123");
-    hatkid::LongNumber ln3("124");
+const hatkid::LongNumber ZERO{};
+const hatkid::LongNumber ONE{"1"};
+const hatkid::LongNumber ONE_NEG{"-1"};
+const hatkid::LongNumber SAME1{"123"};
+const hatkid::LongNumber SAME2{"123"};
+const hatkid::LongNumber SAME_NEG{"-123"};
+const hatkid::LongNumber TEST{"124"};
 
-    EXPECT_TRUE(ln1 == ln2);
-    EXPECT_FALSE(ln1 == ln3);
+TEST(LongNumberComparation, ComparationEqual){
+    
+    EXPECT_TRUE(SAME1 == SAME2);
+    EXPECT_FALSE(ONE == ZERO);
+    EXPECT_FALSE(SAME1 == SAME_NEG);
+    EXPECT_TRUE(ZERO == ZERO);
+
 }
 
 TEST(LongNumberComparation, ComparationNotEqual){
-    hatkid::LongNumber ln1("123");
-    hatkid::LongNumber ln2("123");
-    hatkid::LongNumber ln3("124");
     
-    EXPECT_FALSE(ln1 != ln2);
-    EXPECT_TRUE(ln1 != ln3);
+    EXPECT_FALSE(SAME1 != SAME2);
+    EXPECT_TRUE(ONE != ZERO);
+    EXPECT_TRUE(SAME1 != SAME_NEG);
+    EXPECT_FALSE(ZERO != ZERO);
 
 }
 
 TEST(LongNumberComparation, ComparationGreater){
-    hatkid::LongNumber ln1("123123123");
-    hatkid::LongNumber ln2("123123124");
 
-    hatkid::LongNumber ln3("-5");
-    hatkid::LongNumber ln4("-4");
-    hatkid::LongNumber ln5("5");
-
-    EXPECT_FALSE(ln1 > ln2) << "123123123 больше 123123124";
-    EXPECT_TRUE(ln2 > ln1) << "123123124 меньше 123123123";
-    
-    EXPECT_TRUE(ln4 > ln3);
-    EXPECT_TRUE(ln5 > ln4);
-
+    EXPECT_TRUE(TEST > SAME1);
+    EXPECT_TRUE(SAME1 > SAME_NEG);
+    EXPECT_TRUE(ONE > ZERO);
+    EXPECT_FALSE(SAME1 > SAME2);
+    EXPECT_FALSE(SAME_NEG > SAME1);
 
 }
 
 
 TEST(LongNumberComparation, ComparationLess){
-    hatkid::LongNumber ln1("123123123");
-    hatkid::LongNumber ln2("123123124");
-    
-    EXPECT_TRUE(ln1 < ln2);
-    EXPECT_FALSE(ln2 < ln1);
+
+    EXPECT_TRUE(SAME_NEG < SAME1);
+    EXPECT_FALSE(TEST <  SAME1);
+    EXPECT_FALSE(ZERO < ZERO);
+    EXPECT_FALSE(ONE < ZERO);
+    EXPECT_FALSE(ONE < ONE_NEG);
 
 }

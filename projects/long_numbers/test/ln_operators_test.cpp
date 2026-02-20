@@ -2,13 +2,18 @@
 
 #include "long_number.hpp"
 
-TEST(LongNumberOperations, AddOperation){
-    hatkid::LongNumber ln1("99");
-    hatkid::LongNumber ln2("2");
-    hatkid::LongNumber ln3("101");
-    hatkid::LongNumber ln4("4");
+const hatkid::LongNumber ONE{"1"};
+const hatkid::LongNumber ZERO{};
+const hatkid::LongNumber VAL_101{"101"};
+const hatkid::LongNumber VAL_99{"99"};
+const hatkid::LongNumber VAL_2{"2"};
+const hatkid::LongNumber VAL_4{"4"};
 
-    EXPECT_EQ(ln1+ln2, ln3);
-    EXPECT_EQ(ln2+ln2,ln4);
+
+TEST(LongNumberOperations, AddOperation){
+
+    EXPECT_EQ(ONE + ONE, VAL_2);
+    EXPECT_EQ(VAL_99 + VAL_2, VAL_101);
+    EXPECT_EQ(ONE + ZERO, ONE);
 
 }
