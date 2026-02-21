@@ -35,7 +35,7 @@ LongNumber::LongNumber(LongNumber&& x) {
     sign = x.sign;
 
     numbers = x.numbers;
-    x = nullptr;
+    x.numbers = nullptr;
 }
 
 LongNumber::~LongNumber() {
@@ -100,71 +100,45 @@ bool LongNumber::operator < (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator + (const LongNumber& x) const {
+    if (sign == 0) return x;
+    if (x.sign == 0) return *this;
 
-    LongNumber maxi;
-    LongNumber mini;
+    if (sign == x.sign){
+        return add(*this, x);
+    }
 
-    if (*this > x){
-        maxi = *this;
-        mini = x;
+    LongNumber left = ab(*this);
+    LongNumber right = ab(x);
+
+    if (left == right){
+        return LongNumber{"0"};
+    }
+    int resultSign = 0;
+    if (left > right){
+        resultSign = sign;
     } else{
-        maxi = x;
-        mini = *this;
+        resultSign = x.sign;
     }
-
-    int* num = new int[maxi.length];
-    int i = maxi.length - 1;
-    int j = mini.length - 1;
-
-    int rem = 0;
-
-    while (i >= 0){
-        if (j < 0){
-            num[i] = ( maxi.numbers[i] + rem) % 10;
-            rem = (maxi.numbers[i] + rem) / 10;
-        } else{
-            num[i] = (maxi.numbers[i] + mini.numbers[j] + rem) % 10;
-            rem = (maxi.numbers[i] + mini.numbers[j] + rem) / 10;
-        }
-        i--;
-        j--;
-    }
-
-    int* resultNum;
-    int resultLength = maxi.length;
-
-    if (rem != 0){
-        resultNum = new int[maxi.length+1];
-        resultNum[0] = rem;
-        for (int i = 0; i < maxi.length; i++){
-            resultNum[i+1] = num[i];
-        }
-        resultLength++;
-        delete[] num;
-    } else{
-        resultNum = new int[maxi.length];
-        for (int i = 0; i < maxi.length;i++){
-            resultNum[i] = num[i];
-        }
-    }
-
-    LongNumber result;
-    result.numbers = resultNum;
-    result.sign = sign;
-    result.length = resultLength;
-    return result;
     
+    if (left > right){
+        LongNumber res = subtract(left,right);
+        res.sign = resultSign;
+        return res;
+    }
+    LongNumber res = subtract(right,left);
+    res.sign = resultSign;
+    return res;
+
 }
 
 LongNumber LongNumber::operator - (const LongNumber& x) const {
-    //x.sign *= -1;
-    //if (sign == x.sign){
-    //    return this + x;
-    //}
 
-    // TODO
+    LongNumber n(x);
+    if (n.sign != 0){
+        n.sign = -n.sign;
+    }
+    return *this + n;
 
-    return *this;
 }
 
 LongNumber LongNumber::operator * (const LongNumber& x) const {
@@ -195,6 +169,14 @@ bool LongNumber::isNegative() const noexcept {
         return true;
     }
     return false;
+}
+
+LongNumber LongNumber::ab(const LongNumber& x) const {
+    LongNumber result(x);
+    if (x.sign == -1){
+        result.sign = 1;
+    }
+    return result;
 }
 
 // ----------------------------------------------------------
@@ -252,11 +234,110 @@ int LongNumber::compare(const LongNumber& left, const LongNumber& right) const n
     return result;
 }
 
+hatkid::LongNumber LongNumber::add(const LongNumber& left, const LongNumber& right) const noexcept{
+    int* num = new int[left.length];
+    int i = left.length - 1;
+    int j = right.length - 1;
+
+    int rem = 0;
+
+    while (i >= 0){
+        if (j < 0){
+            num[i] = ( left.numbers[i] + rem) % 10;
+            rem = (left.numbers[i] + rem) / 10;
+        } else{
+            num[i] = (left.numbers[i] + right.numbers[j] + rem) % 10;
+            rem = (left.numbers[i] + right.numbers[j] + rem) / 10;
+        }
+        i--;
+        j--;
+    }
+
+    int* resultNum;
+    int resultLength = left.length;
+
+    if (rem != 0){
+        resultNum = new int[left.length+1];
+        resultNum[0] = rem;
+        for (int i = 0; i < left.length; i++){
+            resultNum[i+1] = num[i];
+        }
+        resultLength++;
+        delete[] num;
+    } else{
+        resultNum = new int[left.length];
+        for (int i = 0; i < left.length;i++){
+            resultNum[i] = num[i];
+        }
+    }
+
+    LongNumber result;
+    delete[] result.numbers;
+
+    result.numbers = resultNum;
+    result.sign = sign;
+    result.length = resultLength;
+    return result;
+    
+}
+
+hatkid::LongNumber LongNumber::subtract(const LongNumber& left, const LongNumber& right) const noexcept{
+    
+    int* num = new int[left.length];
+    int i = left.length - 1;
+    int j = right.length - 1;
+
+    bool rem = 0;
+
+    while (i >= 0){
+        int up = left.numbers[i] - rem;
+        int down = (j < 0) ? 0 : right.numbers[j];
+        if (up >= down){
+            num[i] = up - down;
+            rem = 0;
+        } else{
+            num[i] = up+10-down;
+            rem = 1;
+        }
+        i--;
+        j--;
+    }
+
+    int resultLength = left.length;
+    for (int i = 0; i < left.length; i++){
+        if (num[i] == 0){
+            resultLength--;
+        } else{
+            break;
+        }
+    }
+    
+    int dif = left.length - resultLength;
+
+
+    int* resultNum = new int[resultLength];
+    for (int i = 0; i < resultLength; i++){
+        resultNum[i] = num[i+dif];
+    }
+    delete[] num;
+
+    LongNumber result;
+    delete[] result.numbers;
+
+    result.numbers = resultNum;
+    result.length = resultLength;
+
+    return result;
+}
+
 // ----------------------------------------------------------
 // FRIENDLY
 // ----------------------------------------------------------
 namespace hatkid {
 	std::ostream& operator << (std::ostream &os, const LongNumber& x) {
+        if (x.sign == -1){
+            os << '-';
+        }
 	    for (int i = 0; i < x.length; i++){
             os << x.numbers[i];
         }

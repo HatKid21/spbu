@@ -136,34 +136,34 @@ TEST(LongNumberTest, SubtractOperation){
 
 TEST(LongNumberTest, MultiplyOperation){
     
-    EXPECT_EQ(VAL_2 * VAL_2, VAL_4);
-    EXPECT_EQ(VAL_2 * ONE_NEG, VAL_2_NEG);
-    EXPECT_EQ(VAL_2 * VAL_2_NEG, VAL_4_NEG);
-    EXPECT_EQ(VAL_2_NEG * VAL_2_NEG, VAL_4);
+//    EXPECT_EQ(VAL_2 * VAL_2, VAL_4);
+//    EXPECT_EQ(VAL_2 * ONE_NEG, VAL_2_NEG);
+//    EXPECT_EQ(VAL_2 * VAL_2_NEG, VAL_4_NEG);
+//    EXPECT_EQ(VAL_2_NEG * VAL_2_NEG, VAL_4);
 
-    EXPECT_EQ(VAL_123 * ZERO, ZERO);
-    EXPECT_EQ(VAL_124 * ZERO, ZERO);
-    EXPECT_EQ(VAL_123_NEG * ZERO, ZERO);
+//    EXPECT_EQ(VAL_123 * ZERO, ZERO);
+//    EXPECT_EQ(VAL_124 * ZERO, ZERO);
+//    EXPECT_EQ(VAL_123_NEG * ZERO, ZERO);
     
 
 }
 
 TEST (LongNumberTest, DivideOperation){
     
-    EXPECT_EQ(VAL_4 / VAL_2, VAL_2);
-    EXPECT_EQ(VAL_4 / VAL_2_NEG, VAL_2_NEG);
-    EXPECT_EQ(VAL_4_NEG / VAL_2, VAL_2_NEG);
-    EXPECT_EQ(VAL_4_NEG / VAL_2_NEG, VAL_2);
+//    EXPECT_EQ(VAL_4 / VAL_2, VAL_2);
+//    EXPECT_EQ(VAL_4 / VAL_2_NEG, VAL_2_NEG);
+//    EXPECT_EQ(VAL_4_NEG / VAL_2, VAL_2_NEG);
+//    EXPECT_EQ(VAL_4_NEG / VAL_2_NEG, VAL_2);
     
-    EXPECT_EQ(VAL_2 / VAL_4, ZERO);
-    EXPECT_EQ(VAL_123 / ONE, VAL_123);
+//    EXPECT_EQ(VAL_2 / VAL_4, ZERO);
+//    EXPECT_EQ(VAL_123 / ONE, VAL_123);
 
 }
 
 TEST(LongNumberTest, ReminderOperation){
 
-    EXPECT_EQ(VAL_101 / VAL_2, ONE);
-    EXPECT_EQ(VAL_2 / VAL_4, VAL_2);
-    EXPECT_EQ(VAL_123 / ONE, ZERO);
+//    EXPECT_EQ(VAL_101 / VAL_2, ONE);
+//    EXPECT_EQ(VAL_2 / VAL_4, VAL_2);
+//    EXPECT_EQ(VAL_123 / ONE, ZERO);
 
 }

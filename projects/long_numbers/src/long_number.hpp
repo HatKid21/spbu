@@ -31,11 +31,15 @@ namespace hatkid {
 			LongNumber operator / (const LongNumber& x) const;
 			LongNumber operator % (const LongNumber& x) const;
 			
+            LongNumber ab(const LongNumber& x) const;
+
             bool isNegative() const noexcept;
 			
 			friend std::ostream& operator << (std::ostream &os, const LongNumber& x);
 			
 		private:
+            LongNumber subtract(const LongNumber& left, const LongNumber& right) const noexcept;
+            LongNumber add(const LongNumber& left, const LongNumber& right) const noexcept;
 			int getLength(const char* const str) const noexcept;
             int getSign(const char* const str) const noexcept;
             int compare(const LongNumber& left, const LongNumber& right) const noexcept;
