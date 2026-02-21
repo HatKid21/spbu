@@ -147,13 +147,31 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
+
+    if (sign == 0){
+        return LongNumber{"0"};
+    }
+
+    int resultSign = sign * x.sign;
+    
+    LongNumber left = ab(*this);
+    LongNumber right = ab(x);
+
     LongNumber count("0");
     LongNumber one("1");
-    LongNumber temp(x);
-    if (temp < x){
+
+    while (left > right){
         count = count + one;
-        temp = temp + x;
+        left = left - right;
     }
+
+    if (left == right){
+        count = count + one;
+    }
+    if (count == "0"){
+        return count;
+    }
+    count.sign = resultSign;
     return count;
 }
 
@@ -265,10 +283,7 @@ hatkid::LongNumber LongNumber::add(const LongNumber& left, const LongNumber& rig
         resultLength++;
         delete[] num;
     } else{
-        resultNum = new int[left.length];
-        for (int i = 0; i < left.length;i++){
-            resultNum[i] = num[i];
-        }
+        resultNum = num; 
     }
 
     LongNumber result;

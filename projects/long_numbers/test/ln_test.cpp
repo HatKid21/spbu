@@ -105,6 +105,7 @@ TEST(LongNumberTest, ComparationLess){
     EXPECT_FALSE(ZERO < ZERO);
     EXPECT_FALSE(ONE < ZERO);
     EXPECT_FALSE(ONE < ONE_NEG);
+    EXPECT_TRUE(VAL_124_NEG < ZERO);
 
 }
 
@@ -150,13 +151,13 @@ TEST(LongNumberTest, MultiplyOperation){
 
 TEST (LongNumberTest, DivideOperation){
     
-//    EXPECT_EQ(VAL_4 / VAL_2, VAL_2);
-//    EXPECT_EQ(VAL_4 / VAL_2_NEG, VAL_2_NEG);
-//    EXPECT_EQ(VAL_4_NEG / VAL_2, VAL_2_NEG);
-//    EXPECT_EQ(VAL_4_NEG / VAL_2_NEG, VAL_2);
+    EXPECT_EQ(VAL_4 / VAL_2, VAL_2);
+    EXPECT_EQ(VAL_4 / VAL_2_NEG, VAL_2_NEG);
+    EXPECT_EQ(VAL_4_NEG / VAL_2, VAL_2_NEG);
+    EXPECT_EQ(VAL_4_NEG / VAL_2_NEG, VAL_2);
     
-//    EXPECT_EQ(VAL_2 / VAL_4, ZERO);
-//    EXPECT_EQ(VAL_123 / ONE, VAL_123);
+    EXPECT_EQ(VAL_2 / VAL_4, ZERO);
+    EXPECT_EQ(VAL_123 / ONE, VAL_123);
 
 }
 
