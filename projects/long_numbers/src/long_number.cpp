@@ -142,8 +142,36 @@ LongNumber LongNumber::operator - (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator * (const LongNumber& x) const {
-	// TODO
-    return *this;
+
+    int resultSign = sign * x.sign;
+
+	int leftInd = length-1;
+    int rightInd = x.length-1;
+
+    int rem = 0;
+
+    LongNumber result;
+
+    LongNumber left = ab(*this);
+    LongNumber right = ab(x);
+
+    for (int i = leftInd; i >= 0; i--){
+        LongNumber temp;
+        int shift = 0;
+        for (int j = rightInd; j >= 0; j--){
+            int n = left.numbers[i] * right.numbers[j] + rem;
+            rem = n / 10;
+            char* str = new char[2];
+            str[0] = (n % 10) + '0';
+            str[1] = '\0';
+            temp = temp + shiftLeft(shift,LongNumber(str));
+            shift++; 
+        }
+        result = result + shiftLeft(0,temp);
+    }
+    result.sign = resultSign;
+
+    return result;
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
@@ -200,6 +228,34 @@ LongNumber LongNumber::ab(const LongNumber& x) const {
 // ----------------------------------------------------------
 // PRIVATE
 // ----------------------------------------------------------
+
+LongNumber LongNumber::shiftLeft(int shiftNum,const LongNumber& x) const noexcept{
+    if (shiftNum == 0){
+        return x;
+    }
+    int resultLength = x.length + shiftNum;
+    LongNumber result;
+    delete[] result.numbers;
+
+    result.numbers = new int[resultLength];
+
+    result.sign = x.sign;
+    result.length = resultLength;
+    int j = x.length;
+    for (int i = 0; i < resultLength; i++){
+        if (j == 0){
+            result.numbers[i] = x.numbers[i];
+        } else{
+            result.numbers[i] = 0;
+            continue;
+        }
+
+        j--;
+    }
+
+    return result;
+}
+
 int LongNumber::getLength(const char* const str) const noexcept {
     int len = 0;
     while (str[len] != '\0'){

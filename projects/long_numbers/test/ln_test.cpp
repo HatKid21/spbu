@@ -137,14 +137,14 @@ TEST(LongNumberTest, SubtractOperation){
 
 TEST(LongNumberTest, MultiplyOperation){
     
-//    EXPECT_EQ(VAL_2 * VAL_2, VAL_4);
-//    EXPECT_EQ(VAL_2 * ONE_NEG, VAL_2_NEG);
-//    EXPECT_EQ(VAL_2 * VAL_2_NEG, VAL_4_NEG);
-//    EXPECT_EQ(VAL_2_NEG * VAL_2_NEG, VAL_4);
+    EXPECT_EQ(VAL_2 * VAL_2, VAL_4);
+    EXPECT_EQ(VAL_2 * ONE_NEG, VAL_2_NEG);
+    EXPECT_EQ(VAL_2 * VAL_2_NEG, VAL_4_NEG);
+    EXPECT_EQ(VAL_2_NEG * VAL_2_NEG, VAL_4);
 
-//    EXPECT_EQ(VAL_123 * ZERO, ZERO);
-//    EXPECT_EQ(VAL_124 * ZERO, ZERO);
-//    EXPECT_EQ(VAL_123_NEG * ZERO, ZERO);
+    EXPECT_EQ(VAL_123 * ZERO, ZERO);
+    EXPECT_EQ(VAL_124 * ZERO, ZERO);
+    EXPECT_EQ(VAL_123_NEG * ZERO, ZERO);
     
 
 }

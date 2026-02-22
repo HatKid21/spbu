@@ -38,6 +38,7 @@ namespace hatkid {
 			friend std::ostream& operator << (std::ostream &os, const LongNumber& x);
 			
 		private:
+            LongNumber shiftLeft(int shiftNum, const LongNumber& x) const noexcept;
             LongNumber subtract(const LongNumber& left, const LongNumber& right) const noexcept;
             LongNumber add(const LongNumber& left, const LongNumber& right) const noexcept;
 			int getLength(const char* const str) const noexcept;
