@@ -16,6 +16,8 @@ const hatkid::LongNumber VAL_123_COPY{"123"};
 const hatkid::LongNumber VAL_123_NEG{"-123"};
 const hatkid::LongNumber VAL_124{"124"};
 const hatkid::LongNumber VAL_124_NEG{"-124"};
+const hatkid::LongNumber VAL_50{"50"};
+const hatkid::LongNumber VAL_100{"100"};
 
 // Constructors
 
@@ -122,6 +124,8 @@ TEST(LongNumberTest, AddOperation){
     EXPECT_EQ(VAL_124_NEG + ONE, VAL_123_NEG);
     EXPECT_EQ(VAL_123_NEG + ONE_NEG, VAL_124_NEG);
 
+    EXPECT_EQ(VAL_50 + VAL_50, VAL_100);
+
 }
 
 TEST(LongNumberTest, SubtractOperation){
@@ -146,6 +150,7 @@ TEST(LongNumberTest, MultiplyOperation){
     EXPECT_EQ(VAL_124 * ZERO, ZERO);
     EXPECT_EQ(VAL_123_NEG * ZERO, ZERO);
     
+    EXPECT_EQ(VAL_2 * VAL_50, VAL_100);
 
 }
 
@@ -158,13 +163,14 @@ TEST (LongNumberTest, DivideOperation){
     
     EXPECT_EQ(VAL_2 / VAL_4, ZERO);
     EXPECT_EQ(VAL_123 / ONE, VAL_123);
+    EXPECT_EQ(VAL_101 / VAL_2, VAL_50);
 
 }
 
 TEST(LongNumberTest, ReminderOperation){
 
-//    EXPECT_EQ(VAL_101 / VAL_2, ONE);
-//    EXPECT_EQ(VAL_2 / VAL_4, VAL_2);
-//    EXPECT_EQ(VAL_123 / ONE, ZERO);
+    EXPECT_EQ(VAL_101 % VAL_2, ONE);
+    EXPECT_EQ(VAL_2 % VAL_4, VAL_2);
+    EXPECT_EQ(VAL_123 % ONE, ZERO);
 
 }

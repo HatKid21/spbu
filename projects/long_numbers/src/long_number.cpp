@@ -148,30 +148,38 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
 	int leftInd = length-1;
     int rightInd = x.length-1;
 
-    int rem = 0;
 
     LongNumber result;
 
     LongNumber left = ab(*this);
     LongNumber right = ab(x);
 
+    int shift1 = 0;
+
     for (int i = leftInd; i >= 0; i--){
+        int rem = 0;
         LongNumber temp;
         int shift = 0;
         for (int j = rightInd; j >= 0; j--){
             int n = left.numbers[i] * right.numbers[j] + rem;
             rem = n / 10;
-            char* str = new char[2];
-            str[0] = (n % 10) + '0';
-            str[1] = '\0';
+            char str[2] = {char((n % 10) + '0'), '\0'};
             temp = temp + shiftLeft(shift,LongNumber(str));
             shift++; 
         }
-        result = result + shiftLeft(0,temp);
+
+        if (rem != 0){
+            char str[2] = {char(rem + '0'),'\0'};
+            temp = temp + shiftLeft(shift,LongNumber(str));
+        }
+
+        result = result + shiftLeft(shift1,temp);
+
+        shift1++;
     }
     result.sign = resultSign;
 
-    return result;
+    return normalize(result);
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
@@ -205,9 +213,13 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
 
 LongNumber LongNumber::operator % (const LongNumber& x) const {
 
-    //LongNumber d = this / x;
+    if (x == LongNumber{"1"}){
+        return LongNumber{"0"};
+    }
 
-    return *this;
+    LongNumber d = *this / x;
+
+    return *this - (d * x);
 }
 
 bool LongNumber::isNegative() const noexcept {
@@ -229,6 +241,36 @@ LongNumber LongNumber::ab(const LongNumber& x) const {
 // PRIVATE
 // ----------------------------------------------------------
 
+LongNumber LongNumber::normalize(const LongNumber& x) const noexcept{
+    int resultLength = x.length;
+    for (int i = 0; i < x.length; i++){
+        if (x.numbers[i] == 0){
+            resultLength--;
+        } else{
+            break;
+        }
+    }
+
+    if (resultLength == 0){
+        return LongNumber{"0"};
+    }
+
+    LongNumber result;
+    delete[] result.numbers;
+    result.numbers = new int[resultLength];
+
+    int dif = x.length - resultLength;
+    
+    for (int i = 0; i < resultLength; i++){
+        result.numbers[i] = x.numbers[i+dif];
+    }
+
+    result.sign = x.sign;
+    result.length = resultLength;
+    return result;
+
+}
+
 LongNumber LongNumber::shiftLeft(int shiftNum,const LongNumber& x) const noexcept{
     if (shiftNum == 0){
         return x;
@@ -241,16 +283,13 @@ LongNumber LongNumber::shiftLeft(int shiftNum,const LongNumber& x) const noexcep
 
     result.sign = x.sign;
     result.length = resultLength;
-    int j = x.length;
-    for (int i = 0; i < resultLength; i++){
-        if (j == 0){
-            result.numbers[i] = x.numbers[i];
-        } else{
-            result.numbers[i] = 0;
-            continue;
-        }
 
-        j--;
+    for (int i = 0; i < x.length; i++){
+        result.numbers[i] = x.numbers[i];
+    }
+
+    for (int i = x.length; i < resultLength;i++){
+        result.numbers[i] = 0;
     }
 
     return result;
@@ -382,6 +421,10 @@ hatkid::LongNumber LongNumber::subtract(const LongNumber& left, const LongNumber
             break;
         }
     }
+
+    if (resultLength == 0){
+        return LongNumber{"0"};
+    }
     
     int dif = left.length - resultLength;
 
@@ -394,6 +437,7 @@ hatkid::LongNumber LongNumber::subtract(const LongNumber& left, const LongNumber
 
     LongNumber result;
     delete[] result.numbers;
+
 
     result.numbers = resultNum;
     result.length = resultLength;
