@@ -19,6 +19,14 @@ const hatkid::LongNumber VAL_124_NEG{"-124"};
 const hatkid::LongNumber VAL_50{"50"};
 const hatkid::LongNumber VAL_100{"100"};
 
+const hatkid::LongNumber BIG_VAL_1{"1233123124213413511351435135215454325215152532452415431"};
+const hatkid::LongNumber BIG_VAL_2{"535352454254525325543543543"};
+const hatkid::LongNumber MUL_RESULT{"660155490945658807644438211285718376820008214910449744742460003384898437273612033"};
+const hatkid::LongNumber DIV_RESULT{"2303385581617495576732590615"};
+const hatkid::LongNumber ADD_RESULT{"1233123124213413511351435135750806779469677857995958974"};
+const hatkid::LongNumber SUB_RESULT{"1233123124213413511351435134680101870960627206908871888"};
+const hatkid::LongNumber REM_RESULT{"416420834276266991006766486"};
+
 // Constructors
 
 TEST(LongNumberTest, DefaultConstructor){
@@ -126,6 +134,8 @@ TEST(LongNumberTest, AddOperation){
 
     EXPECT_EQ(VAL_50 + VAL_50, VAL_100);
 
+    EXPECT_EQ(BIG_VAL_1 + BIG_VAL_2,ADD_RESULT);
+
 }
 
 TEST(LongNumberTest, SubtractOperation){
@@ -136,6 +146,8 @@ TEST(LongNumberTest, SubtractOperation){
     EXPECT_EQ(VAL_124 - ONE, VAL_123);
     EXPECT_EQ(VAL_124_NEG - ONE_NEG, VAL_123_NEG);
     EXPECT_EQ(VAL_101 - VAL_2, VAL_99);
+
+    EXPECT_EQ(BIG_VAL_1 - BIG_VAL_2, SUB_RESULT);
 
 }
 
@@ -152,6 +164,8 @@ TEST(LongNumberTest, MultiplyOperation){
     
     EXPECT_EQ(VAL_2 * VAL_50, VAL_100);
 
+    EXPECT_EQ(BIG_VAL_1 * BIG_VAL_2, MUL_RESULT);
+
 }
 
 TEST (LongNumberTest, DivideOperation){
@@ -165,6 +179,8 @@ TEST (LongNumberTest, DivideOperation){
     EXPECT_EQ(VAL_123 / ONE, VAL_123);
     EXPECT_EQ(VAL_101 / VAL_2, VAL_50);
 
+    EXPECT_EQ(BIG_VAL_1 / BIG_VAL_2, DIV_RESULT);
+
 }
 
 TEST(LongNumberTest, ReminderOperation){
@@ -172,5 +188,7 @@ TEST(LongNumberTest, ReminderOperation){
     EXPECT_EQ(VAL_101 % VAL_2, ONE);
     EXPECT_EQ(VAL_2 % VAL_4, VAL_2);
     EXPECT_EQ(VAL_123 % ONE, ZERO);
+
+    EXPECT_EQ(BIG_VAL_1 % BIG_VAL_2,REM_RESULT);
 
 }

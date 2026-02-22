@@ -104,7 +104,11 @@ LongNumber LongNumber::operator + (const LongNumber& x) const {
     if (x.sign == 0) return *this;
 
     if (sign == x.sign){
-        return add(*this, x);
+        if (ab(*this) > ab(x)){
+            return add(*this,x);
+        } else{
+            return add(x,*this);
+        }
     }
 
     LongNumber left = ab(*this);
@@ -183,6 +187,8 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
+
+    //TODO replace that with good algorithm
 
     if (sign == 0){
         return LongNumber{"0"};
