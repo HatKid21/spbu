@@ -188,10 +188,12 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
 
-    //TODO replace that with good algorithm
-
     if (sign == 0){
         return LongNumber{"0"};
+    }
+
+    if (x == LongNumber{"1"}){
+        return *this;
     }
 
     int resultSign = sign * x.sign;
@@ -199,22 +201,39 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
     LongNumber left = ab(*this);
     LongNumber right = ab(x);
 
-    LongNumber count("0");
-    LongNumber one("1");
-
-    while (left > right){
-        count = count + one;
-        left = left - right;
+    if (left < right) {
+        return LongNumber{"0"};
     }
 
-    if (left == right){
-        count = count + one;
+    LongNumber d;
+    LongNumber result;
+
+    for (int i = 0;i < left.length; i++){
+        
+        char lnum[2] = {char(left.numbers[i] + '0'),'\0'};
+        d = shiftLeft(1,d) + LongNumber{lnum};
+
+        int l = 0;
+        int r = 9;
+        while (l <= r){
+            int mid = (r + l) / 2;
+            char lnum[2] = {char(mid + '0'), '\0'};
+            if (!(d < right * LongNumber{lnum})){
+                l = mid+1;
+            } else{
+                r = mid-1;
+            }
+        }
+        char rnum[2] = {char(r + '0'),'\0'};
+        d = d - LongNumber{rnum} * right;
+        result = shiftLeft(1,result) + LongNumber{rnum};
+
     }
-    if (count == "0"){
-        return count;
+    if (result != LongNumber{"0"}){
+        result.sign = resultSign;
     }
-    count.sign = resultSign;
-    return count;
+    return result;
+
 }
 
 LongNumber LongNumber::operator % (const LongNumber& x) const {
