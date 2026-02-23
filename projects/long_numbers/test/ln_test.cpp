@@ -17,7 +17,13 @@ const hatkid::LongNumber VAL_123_NEG{"-123"};
 const hatkid::LongNumber VAL_124{"124"};
 const hatkid::LongNumber VAL_124_NEG{"-124"};
 const hatkid::LongNumber VAL_50{"50"};
+const hatkid::LongNumber VAL_50_NEG{"-50"};
 const hatkid::LongNumber VAL_100{"100"};
+const hatkid::LongNumber VAL_7{"7"};
+const hatkid::LongNumber VAL_7_NEG{"-7"};
+const hatkid::LongNumber VAL_3{"3"};
+const hatkid::LongNumber VAL_3_NEG{"-3"};
+
 
 const hatkid::LongNumber BIG_VAL_1{"1233123124213413511351435135215454325215152532452415431"};
 const hatkid::LongNumber BIG_VAL_2{"535352454254525325543543543"};
@@ -133,6 +139,7 @@ TEST(LongNumberTest, AddOperation){
     EXPECT_EQ(VAL_123_NEG + ONE_NEG, VAL_124_NEG);
 
     EXPECT_EQ(VAL_50 + VAL_50, VAL_100);
+    EXPECT_EQ(VAL_50_NEG + VAL_100, VAL_50);
 
     EXPECT_EQ(BIG_VAL_1 + BIG_VAL_2,ADD_RESULT);
 
@@ -146,6 +153,8 @@ TEST(LongNumberTest, SubtractOperation){
     EXPECT_EQ(VAL_124 - ONE, VAL_123);
     EXPECT_EQ(VAL_124_NEG - ONE_NEG, VAL_123_NEG);
     EXPECT_EQ(VAL_101 - VAL_2, VAL_99);
+
+    EXPECT_EQ(VAL_50 - VAL_100, VAL_50_NEG);
 
     EXPECT_EQ(BIG_VAL_1 - BIG_VAL_2, SUB_RESULT);
 
@@ -190,5 +199,10 @@ TEST(LongNumberTest, ReminderOperation){
     EXPECT_EQ(VAL_123 % ONE, ZERO);
 
     EXPECT_EQ(BIG_VAL_1 % BIG_VAL_2,REM_RESULT);
+
+    EXPECT_EQ(VAL_7 % VAL_3, ONE);
+    EXPECT_EQ(VAL_7_NEG % VAL_3, ONE_NEG);
+    EXPECT_EQ(VAL_7 % VAL_3_NEG, ONE);
+    EXPECT_EQ(VAL_7_NEG % VAL_3_NEG, ONE_NEG);
 
 }
