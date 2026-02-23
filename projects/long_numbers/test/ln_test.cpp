@@ -40,13 +40,20 @@ TEST(LongNumberTest, DefaultConstructor){
     hatkid::LongNumber def;
 
     EXPECT_FALSE(def.isNegative());
+    
+    EXPECT_EQ(def,ZERO);
 
 }
 
 TEST(LongNumberTest, StringConstructor){
+    hatkid::LongNumber test123("123");
+    hatkid::LongNumber test123Neg("-123");
     
-    EXPECT_FALSE(VAL_123.isNegative());
-    EXPECT_TRUE(VAL_123_NEG.isNegative());
+    EXPECT_FALSE(test123.isNegative());
+    EXPECT_TRUE(test123Neg.isNegative());
+
+    EXPECT_EQ(test123,VAL_123);
+    EXPECT_EQ(test123Neg, VAL_123_NEG);
 
 }
 
@@ -54,9 +61,13 @@ TEST(LongNumberTest, StringConstructor){
 
 TEST(LongNumberTest, StringAssigment){
     
-    hatkid::LongNumber testZero = "0";
-    hatkid::LongNumber test123 = "123";
-    hatkid::LongNumber test123Neg = "-123";
+    hatkid::LongNumber testZero;
+    hatkid::LongNumber test123;
+    hatkid::LongNumber test123Neg;
+
+    testZero = "0";
+    test123 = "123";
+    test123Neg = "-123";
 
     EXPECT_EQ(testZero, ZERO);
     EXPECT_EQ(test123, VAL_123);
@@ -66,9 +77,13 @@ TEST(LongNumberTest, StringAssigment){
 
 TEST(LongNumberTest, CopyAssigment){
 
-    hatkid::LongNumber testZero = ZERO;
-    hatkid::LongNumber test123 = VAL_123;
-    hatkid::LongNumber test123Neg = VAL_123_NEG;
+    hatkid::LongNumber testZero;
+    hatkid::LongNumber test123;
+    hatkid::LongNumber test123Neg;
+
+    testZero = ZERO;
+    test123 = VAL_123;
+    test123Neg = VAL_123_NEG;
 
     EXPECT_EQ(testZero, ZERO);
     EXPECT_EQ(test123, VAL_123);
