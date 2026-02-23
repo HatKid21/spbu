@@ -9,6 +9,10 @@ namespace hatkid {
 			int sign;
 		
 		public:
+
+            static const LongNumber ZERO;
+            static const LongNumber ONE;
+
 			LongNumber();
 			LongNumber(const char* const str);
 			LongNumber(const LongNumber& x);
@@ -31,7 +35,7 @@ namespace hatkid {
 			LongNumber operator / (const LongNumber& x) const;
 			LongNumber operator % (const LongNumber& x) const;
 			
-            LongNumber ab(const LongNumber& x) const;
+            LongNumber absolute(const LongNumber& x) const;
 
             bool isNegative() const noexcept;
 			
