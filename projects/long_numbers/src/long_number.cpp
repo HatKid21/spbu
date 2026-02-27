@@ -217,20 +217,13 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
         char lnum[2] = {char(left.numbers[i] + '0'),'\0'};
         d = shiftLeft(1,d) + LongNumber{lnum};
 
-        int l = 0;
-        int r = 9;
-        while (l <= r){
-            int mid = (r + l) / 2;
-            char midStr[2] = {char(mid + '0'), '\0'};
-            if (!(d < right * LongNumber{midStr})){
-                l = mid+1;
-            } else{
-                r = mid-1;
-            }
+        LongNumber r;
+        while (d + ONE > right){
+            d = d - right;
+            r = r + ONE;
         }
-        char rnum[2] = {char(r + '0'),'\0'};
-        d = d - LongNumber{rnum} * right;
-        result = shiftLeft(1,result) + LongNumber{rnum};
+
+        result = shiftLeft(1,result) + r;
 
     }
     if (result != ZERO){
