@@ -20,6 +20,8 @@ const hatkid::LongNumber VAL_50{"50"};
 const hatkid::LongNumber VAL_50_NEG{"-50"};
 const hatkid::LongNumber VAL_100{"100"};
 const hatkid::LongNumber VAL_7{"7"};
+const hatkid::LongNumber VAL_15{"15"};
+const hatkid::LongNumber VAL_15_NEG{"-15"};
 const hatkid::LongNumber VAL_7_NEG{"-7"};
 const hatkid::LongNumber VAL_3{"3"};
 const hatkid::LongNumber VAL_3_NEG{"-3"};
@@ -205,6 +207,11 @@ TEST (LongNumberTest, DivideOperation){
 
     EXPECT_EQ(BIG_VAL_1 / BIG_VAL_2, DIV_RESULT);
 
+    EXPECT_EQ(VAL_15 / VAL_4, VAL_3);
+    EXPECT_EQ(VAL_15 / VAL_4_NEG, VAL_3_NEG);
+    EXPECT_EQ(VAL_15_NEG / VAL_4, VAL_4_NEG);
+    EXPECT_EQ(VAL_15_NEG / VAL_4_NEG, VAL_4);
+
 }
 
 TEST(LongNumberTest, ReminderOperation){
@@ -216,8 +223,8 @@ TEST(LongNumberTest, ReminderOperation){
     EXPECT_EQ(BIG_VAL_1 % BIG_VAL_2,REM_RESULT);
 
     EXPECT_EQ(VAL_7 % VAL_3, ONE);
-    EXPECT_EQ(VAL_7_NEG % VAL_3, ONE_NEG);
+    EXPECT_EQ(VAL_7_NEG % VAL_3, VAL_2);
     EXPECT_EQ(VAL_7 % VAL_3_NEG, ONE);
-    EXPECT_EQ(VAL_7_NEG % VAL_3_NEG, ONE_NEG);
+    EXPECT_EQ(VAL_7_NEG % VAL_3_NEG, VAL_2);
 
 }

@@ -202,6 +202,12 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
 
     int resultSign = sign * x.sign;
     
+    if (x == LongNumber{"-1"}){
+        LongNumber result{*this};
+        result.sign = resultSign;
+        return result;
+    }
+
     LongNumber left = absolute(*this);
     LongNumber right = absolute(x);
 
@@ -226,9 +232,15 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
         result = shiftLeft(1,result) + r;
 
     }
+
+    if (d != ZERO and sign == -1){
+        result = result + ONE;
+    }
+    
     if (result != ZERO){
         result.sign = resultSign;
     }
+    
     return result;
 
 }
