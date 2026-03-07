@@ -59,6 +59,15 @@ TEST(LongNumberTest, StringConstructor){
 
 }
 
+TEST(LongNumberTest, CustomConstructor){
+    hatkid::LongNumber test1(1,1);
+    hatkid::LongNumber test123(123,3);
+
+    EXPECT_EQ(test1,ONE);
+    EXPECT_EQ(test123,VAL_123);
+
+}
+
 // Assignments
 
 TEST(LongNumberTest, StringAssigment){

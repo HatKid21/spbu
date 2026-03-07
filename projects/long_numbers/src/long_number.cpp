@@ -12,6 +12,23 @@ LongNumber::LongNumber() {
     sign = 0;
 }
 
+LongNumber::LongNumber(int num,int len){
+    if (num == 0){
+        sign = 0;
+        length = 1;
+        numbers = new int[len];
+    } else{
+        sign = 1;
+        length = len;
+        numbers = new int[len];
+        
+        for (int i = len-1; i >= 0; i--){
+            numbers[i] = num % 10;
+            num /= 10;
+        }
+    }
+}
+
 LongNumber::LongNumber(const char* const str) {
     length = getLength(str);
     sign = getSign(str);
@@ -152,6 +169,10 @@ LongNumber LongNumber::operator - (const LongNumber& x) const {
 
 LongNumber LongNumber::operator * (const LongNumber& x) const {
 
+    if (this == &ZERO or x == ZERO){
+        return ZERO;
+    }
+
     int resultSign = sign * x.sign;
 
 	int leftInd = length-1;
@@ -171,14 +192,12 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
         for (int j = rightInd; j >= 0; j--){
             int n = left.numbers[i] * right.numbers[j] + rem;
             rem = n / 10;
-            char str[2] = {char((n % 10) + '0'), '\0'};
-            temp = temp + shiftLeft(shift,LongNumber(str));
+            temp = temp + shiftLeft(shift,LongNumber(n % 10,1));
             shift++; 
         }
 
         if (rem != 0){
-            char str[2] = {char(rem + '0'),'\0'};
-            temp = temp + shiftLeft(shift,LongNumber(str));
+            temp = temp + shiftLeft(shift,LongNumber(rem,1));
         }
 
         result = result + shiftLeft(shift1,temp);
@@ -220,8 +239,7 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
 
     for (int i = 0; i < left.length; i++){
         
-        char lnum[2] = {char(left.numbers[i] + '0'),'\0'};
-        d = shiftLeft(1,d) + LongNumber{lnum};
+        d = shiftLeft(1,d) + LongNumber{left.numbers[i],1};
 
         LongNumber r;
         while (d + ONE > right){

@@ -14,6 +14,7 @@ namespace hatkid {
             static const LongNumber ONE;
 
 			LongNumber();
+            LongNumber(int num,int length);
 			LongNumber(const char* const str);
 			LongNumber(const LongNumber& x);
 			LongNumber(LongNumber&& x);
