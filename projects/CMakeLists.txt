@@ -8,4 +8,4 @@ add_subdirectory(lib/googletest)
 add_subdirectory(sort)
 add_subdirectory(multi-level_menu)
 add_subdirectory(long_numbers)
-
+add_subdirectory(vector_list)
