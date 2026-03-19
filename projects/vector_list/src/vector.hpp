@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstddef>
-		
+
 namespace hatkid {
 	template <typename T> 
 	class Vector {
@@ -18,11 +18,15 @@ namespace hatkid {
 			Vector& operator = (const Vector&) = delete;
 			~Vector();
 			
-			std::size_t get_size() const noexcept;
-			bool has_item(const T& value) const noexcept;
+			std::size_t getSize() const noexcept;
+			bool hasItem(const T& value) const noexcept;
 			bool insert(const std::size_t position, const T& value);
 			void print() const noexcept;
-			void push_back(const T& value);
-			bool remove_first(const T& value);
-	};
+			void pushBack(const T& value);
+			bool removeFirst(const T& value);
+
+        private:
+            void expand();
+
+    };
 }
