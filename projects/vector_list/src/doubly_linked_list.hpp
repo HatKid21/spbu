@@ -1,35 +1,35 @@
-#include "doubly_linked_list.hpp"
+#pragma once
 
-#include <iostream>
+#include <cstddef>
 
-using hatkid::DoublyLinkedList;
+namespace hatkid {
+	template <typename T> 
+	class DoublyLinkedList {
+		private:
+			class Node {
+				public:
+					T value;
+					Node* prev = nullptr;
+					Node* next = nullptr;
+					
+					Node(const T& value) : value(value) {}
+						
+					Node(const Node&) = delete;
+					Node& operator = (const Node&) = delete;
+			};
 
-template<typename T>
-DoublyLinkedList<T>::~DoublyLinkedList() {
-	// TODO
-}
-
-template<typename T>
-std::size_t DoublyLinkedList<T>::get_size() const noexcept {
-	// TODO
-}
-
-template<typename T>
-bool DoublyLinkedList<T>::has_item(const T& value) const noexcept {
-	// TODO
-}
-
-template<typename T>
-void DoublyLinkedList<T>::print() const noexcept {
-	// TODO
-}
-
-template<typename T>
-void DoublyLinkedList<T>::push_back(const T& value) {
-	// TODO
-}
-
-template<typename T>
-bool DoublyLinkedList<T>::remove_first(const T& value) noexcept {
-	// TODO
+			Node* begin = nullptr;
+			Node* end = nullptr;
+public:
+			DoublyLinkedList() noexcept {};
+			DoublyLinkedList(const DoublyLinkedList&) = delete;
+			DoublyLinkedList& operator = (const DoublyLinkedList&) = delete;
+			~DoublyLinkedList();
+			
+			std::size_t getSize() const noexcept;
+			bool hasItem(const T& value) const noexcept;
+			void print() const noexcept;
+			void pushBack(const T& value);
+			bool removeFirst(const T& value) noexcept;
+	};
 }

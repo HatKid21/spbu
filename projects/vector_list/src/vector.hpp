@@ -27,6 +27,5 @@ namespace hatkid {
 
         private:
             void mv(size_t startIndex);
-
     };
 }
