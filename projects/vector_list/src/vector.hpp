@@ -26,7 +26,7 @@ namespace hatkid {
 			bool removeFirst(const T& value);
 
         private:
-            void expand();
+            void mv(size_t startIndex);
 
     };
 }
