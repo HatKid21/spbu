@@ -33,13 +33,13 @@ std::size_t DoublyLinkedList<T>::getSize() const noexcept {
 template<typename T>
 bool DoublyLinkedList<T>::hasItem(const T& value) const noexcept {
 	Node* cur = begin;
-    if (cur == nullptr){
-        return false;
-    }
-    while (cur->value != value){
+    while (cur != nullptr){
+        if (cur->value == value){
+            return true;
+        }
         cur = cur->next;
     }
-    return cur->value == value;
+    return false;
 }
 
 template<typename T>
@@ -78,16 +78,29 @@ bool DoublyLinkedList<T>::removeFirst(const T& value) noexcept {
     if (cur == nullptr){
         return false;
     }
-    while (cur->value != value){
+
+    while (cur != nullptr){
+        if (cur->value == value){
+            break;
+        }
         cur = cur->next;
     }
-    if (cur->value == value){
-        Node* prev = cur->prev;
-        Node* next = cur->next;
-        prev->next = next;
-        next->prev = prev;
-        delete cur;
-        return true;
+
+    if (cur == nullptr){
+        return false;
     }
-    return false;
+
+    if (cur->next != nullptr){
+        cur->next->prev = cur->prev;
+    } else{
+        end = cur->prev;
+    }
+
+    if (cur->prev != nullptr){
+        cur->prev->next = cur->next;
+    } else{
+        begin = cur->next;
+    }
+    delete cur;
+    return true;
 }
