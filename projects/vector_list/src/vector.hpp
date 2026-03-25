@@ -24,6 +24,7 @@ namespace hatkid {
 			void print() const noexcept;
 			void pushBack(const T& value);
 			bool removeFirst(const T& value);
+			T get(size_t index);
 
         private:
             void mv(size_t startIndex);

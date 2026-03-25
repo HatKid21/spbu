@@ -103,6 +103,11 @@ bool Vector<T>::removeFirst(const T& value) {
     return true;
 }
 
+template<typename T>
+T Vector<T>::get(size_t index){
+	return arr[index];
+}
+
 //PRIVATE
 
 template<typename T>

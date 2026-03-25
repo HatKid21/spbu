@@ -106,6 +106,25 @@ TEST(VectorTest, CharInsertTest){
     c.print();
 }
 
+TEST(VectorTest, IntGetTest){
+	Vector<int> a;
+	for (int i = 0; i < 10; i++){
+		a.pushBack(i);
+	}
+	EXPECT_EQ(a.get(0),0);
+	EXPECT_EQ(a.get(1),1);
+	EXPECT_EQ(a.get(9),9);
+}
+
+TEST(VectorTest, CharGetTest){	
+	Vector<char> a;
+	for (int i = 0; i < 10; i++){
+		a.pushBack('a' + i);
+	}
+	EXPECT_EQ(a.get(0),'a');
+	EXPECT_EQ(a.get(1),'b');
+}
+
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
