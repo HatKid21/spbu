@@ -8,12 +8,10 @@ template<typename T>
 DoublyLinkedList<T>::~DoublyLinkedList() {
     Node* cur = begin;
     while (cur != nullptr){
-        if (cur->prev != nullptr){
-            delete cur->prev;
-        }
-        cur = cur->next;
+        Node* next = cur->next;
+        delete cur;
+        cur = next;
     }
-    delete cur;
 }
 
 template<typename T>
@@ -63,9 +61,8 @@ void DoublyLinkedList<T>::pushBack(const T& value) {
     Node* node = new Node(value);
     if (begin == nullptr){
         begin = node;
-        end = begin;
+        end = node;
     } else{
-        delete end->next;
         end->next = node;
         node->prev = end;
         end = node;
