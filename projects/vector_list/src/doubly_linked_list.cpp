@@ -72,9 +72,6 @@ void DoublyLinkedList<T>::pushBack(const T& value) {
 template<typename T>
 bool DoublyLinkedList<T>::removeFirst(const T& value) noexcept {
 	Node* cur = begin;
-    if (cur == nullptr){
-        return false;
-    }
 
     while (cur != nullptr){
         if (cur->value == value){
