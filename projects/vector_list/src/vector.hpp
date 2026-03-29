@@ -27,6 +27,7 @@ namespace hatkid {
 			T get(size_t index);
 
         private:
-            void mv(size_t startIndex);
+            void reallocateAndCopy(size_t newCapacity);
+            void reallocateForInsert(size_t newCapacity, size_t position, const T& value);
     };
 }
