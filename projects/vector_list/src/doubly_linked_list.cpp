@@ -12,6 +12,8 @@ DoublyLinkedList<T>::~DoublyLinkedList() {
         delete cur;
         cur = next;
     }
+    begin = nullptr;
+    end = nullptr;
 }
 
 template<typename T>
