@@ -12,10 +12,12 @@
 typedef struct SObject {
     float x,y;
     float width, height;
+    float vertSpeed;
 } TObject;
 
 char map[mapHeight][mapWidth+1];
 TObject mario;
+TObject brick[1];
 
 void clearMap(){
     for (int i = 0; i < mapWidth; i++){
@@ -46,6 +48,22 @@ void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight
     setObjectPos(obj,xPos,yPos);
     (*obj).width = oWidth;
     (*obj).height = oHeight;
+    (*obj).vertSpeed = 0;
+}
+
+bool isCollision(TObject o1, TObject o2);
+
+void vertMoveObject(TObject *obj){
+    (*obj).vertSpeed += 0.05;
+    setObjectPos(obj,(*obj).x,(*obj).y + (*obj).vertSpeed);
+    if (isCollision(*obj,brick[0])){
+        (*obj).y -= (*obj).vertSpeed;
+        (*obj).vertSpeed = 0;
+    }
+}
+
+bool isPosInMap(int x, int y){
+    return ( (x >= 0) && (x < mapWidth) && (y >= 0) && (y < mapHeight) );
 }
 
 void putObjectOnMap(TObject obj){
@@ -55,13 +73,20 @@ void putObjectOnMap(TObject obj){
     int iHeight = (int)round(obj.height);
     for (int i = ix; i < (ix + iWidth);i++){
         for (int j = iy; j < (iy + iHeight);j++){
-            map[j][i] = '@';
+            if (isPosInMap(i,j)){
+                map[j][i] = '@';
+            }
         }
     }
 }
 
 void setCur(int x, int y){
     move(y,x);
+}
+
+bool isCollision(TObject o1, TObject o2){
+    return ( (o1.x + o1.width) > o2.x ) && (o1.x < (o2.x + o2.width)) &&
+        ( (o1.y + o1.height) > o2.y ) && (o1.y < (o2.y + o2.height));
 }
 
 int main(){
@@ -72,12 +97,17 @@ int main(){
     keypad(stdscr,TRUE);
 
     initObject(&mario,39,10,3,3);
+    initObject(brick,20,20,40,5);
     do{
         clearMap();
+        vertMoveObject(&mario);
+        putObjectOnMap(brick[0]);
         putObjectOnMap(mario);
 
         setCur(0,0);
         showMap();
+
+        timeout(10);
     } while (getch() != KEY_ESC);
 
     endwin();
