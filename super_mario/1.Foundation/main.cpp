@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <math.h>
+#include <time.h>
 
 #define mapWidth 80
 #define mapHeight 25
@@ -13,6 +14,7 @@ typedef struct SObject {
     float x,y;
     float width, height;
     float vertSpeed;
+    bool isFly;
 } TObject;
 
 char map[mapHeight][mapWidth+1];
@@ -54,11 +56,13 @@ void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight
 bool isCollision(TObject o1, TObject o2);
 
 void vertMoveObject(TObject *obj){
+    (*obj).isFly = true;
     (*obj).vertSpeed += 0.05;
     setObjectPos(obj,(*obj).x,(*obj).y + (*obj).vertSpeed);
     if (isCollision(*obj,brick[0])){
         (*obj).y -= (*obj).vertSpeed;
         (*obj).vertSpeed = 0;
+        (*obj).isFly = false;
     }
 }
 
@@ -84,22 +88,57 @@ void setCur(int x, int y){
     move(y,x);
 }
 
+void horizonMoveMap(float dx){
+    brick[0].x += dx;
+}
+
 bool isCollision(TObject o1, TObject o2){
     return ( (o1.x + o1.width) > o2.x ) && (o1.x < (o2.x + o2.width)) &&
         ( (o1.y + o1.height) > o2.y ) && (o1.y < (o2.y + o2.height));
 }
 
+bool isRightHold = false;
+bool isLeftHold = false;
+
 int main(){
+
     //Инициализация ncurses для фиксирования нажатий на Линуксе
+    
     initscr();
     cbreak();
     noecho();
     keypad(stdscr,TRUE);
+    nodelay(stdscr,TRUE);
 
     initObject(&mario,39,10,3,3);
     initObject(brick,20,20,40,5);
-    do{
+
+    while(true){
         clearMap();
+        int ch;
+        switch (ch){
+            case ' ':
+                if (!mario.isFly){
+                mario.vertSpeed = -0.7;
+                }
+                break;
+            case 'q':
+                endwin();
+                return 0;
+            case KEY_LEFT:
+                isLeftHold = !isLeftHold;
+                isRightHold = false;
+                break;
+            case KEY_RIGHT:
+                isRightHold = !isRightHold;
+                isLeftHold = false;
+                break;
+        }
+        ch = getch();
+
+        if (isRightHold) horizonMoveMap(-1);
+        if (isLeftHold) horizonMoveMap(1);
+
         vertMoveObject(&mario);
         putObjectOnMap(brick[0]);
         putObjectOnMap(mario);
@@ -107,8 +146,9 @@ int main(){
         setCur(0,0);
         showMap();
 
-        timeout(10);
-    } while (getch() != KEY_ESC);
+        napms(10);
+
+    }
 
     endwin();
 }
