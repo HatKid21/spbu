@@ -19,7 +19,8 @@ typedef struct SObject {
 
 char map[mapHeight][mapWidth+1];
 TObject mario;
-TObject brick[1];
+TObject *brick = NULL;
+int brickLength;
 
 void clearMap(){
     for (int i = 0; i < mapWidth; i++){
@@ -59,10 +60,13 @@ void vertMoveObject(TObject *obj){
     (*obj).isFly = true;
     (*obj).vertSpeed += 0.05;
     setObjectPos(obj,(*obj).x,(*obj).y + (*obj).vertSpeed);
-    if (isCollision(*obj,brick[0])){
-        (*obj).y -= (*obj).vertSpeed;
-        (*obj).vertSpeed = 0;
-        (*obj).isFly = false;
+    for (int i = 0 ; i < brickLength; i++){
+        if (isCollision(*obj,brick[i])){
+            (*obj).y -= (*obj).vertSpeed;
+            (*obj).vertSpeed = 0;
+            (*obj).isFly = false;
+            break;
+        }
     }
 }
 
@@ -89,7 +93,19 @@ void setCur(int x, int y){
 }
 
 void horizonMoveMap(float dx){
-    brick[0].x += dx;
+
+    mario.x -= dx;
+    for (int i = 0; i < brickLength; i++){
+        if (isCollision(mario, brick[i])){
+            mario.x += dx;
+            return;
+        }
+    }
+    mario.x += dx;
+
+    for (int i = 0; i < brickLength; i++){
+        brick[i].x += dx;
+    }
 }
 
 bool isCollision(TObject o1, TObject o2){
@@ -99,6 +115,18 @@ bool isCollision(TObject o1, TObject o2){
 
 bool isRightHold = false;
 bool isLeftHold = false;
+
+void createLevel(){
+    initObject(&mario,39,10,3,3);
+
+    brickLength = 5;
+    brick = (TObject*)malloc(sizeof(TObject) * brickLength);
+    initObject(brick+0,20,21,40,5);
+    initObject(brick+1,60,15,10,10);
+    initObject(brick+2,80,20,20,5);
+    initObject(brick+3,120,15,10,10);
+    initObject(brick+4,150,20,40,5);
+}
 
 int main(){
 
@@ -110,8 +138,7 @@ int main(){
     keypad(stdscr,TRUE);
     nodelay(stdscr,TRUE);
 
-    initObject(&mario,39,10,3,3);
-    initObject(brick,20,20,40,5);
+    createLevel();
 
     while(true){
         clearMap();
@@ -119,7 +146,7 @@ int main(){
         switch (ch){
             case ' ':
                 if (!mario.isFly){
-                mario.vertSpeed = -0.7;
+                mario.vertSpeed = -1;
                 }
                 break;
             case 'q':
@@ -140,13 +167,15 @@ int main(){
         if (isLeftHold) horizonMoveMap(1);
 
         vertMoveObject(&mario);
-        putObjectOnMap(brick[0]);
+        for (int i = 0; i < brickLength;i++){
+            putObjectOnMap(brick[i]);
+        }
         putObjectOnMap(mario);
 
         setCur(0,0);
         showMap();
 
-        napms(10);
+        napms(33);
 
     }
 
