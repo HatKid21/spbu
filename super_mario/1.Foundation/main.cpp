@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstring>
 
 #include <ncurses.h>
 #include <math.h>
@@ -29,6 +30,8 @@ TObject *moving = NULL;
 int movingLength;
  
 int level = 1;
+int score;
+int maxLvl;
 
 void clearMap(){
     for (int i = 0; i < mapWidth; i++){
@@ -83,13 +86,14 @@ void vertMoveObject(TObject *obj){
             if ((brick[i].cType == '?') && (obj[0].vertSpeed < 0) && (obj == &mario) ){
                 brick[i].cType = '-';
                 initObject(getNewMoving(),brick[i].x,brick[i].y-3,3,2,'$');
+                moving[movingLength-1].vertSpeed = -0.5;
             }
 
             (*obj).y -= (*obj).vertSpeed;
             (*obj).vertSpeed = 0;
             if (brick[i].cType == '+'){
                 level++;
-                if (level > 3) level = 1;
+                if (level > maxLvl) level = 1;
                 napms(1000);
                 createLevel(level);
             }
@@ -109,6 +113,7 @@ void marioCollision(){
         if (isCollision(mario,moving[i])){
             if (moving[i].cType == 'o'){
                 if (mario.isFly && (mario.vertSpeed > 0) && (mario.y + mario.height < moving[i].y + moving[i].height * 0.5)){
+                    score += 50;
                     deleteMoving(i);
                     i--;
                     continue;
@@ -119,6 +124,7 @@ void marioCollision(){
             }
 
             if (moving[i].cType == '$'){
+                score += 100;
                 deleteMoving(i);
                 i--;
                 continue;
@@ -207,6 +213,15 @@ TObject *getNewMoving(){
     return moving + movingLength - 1;
 }
 
+void putScoreOnMap(){
+    char c[30];
+    sprintf(c,"Score %d",score);
+    int len = strlen(c);
+    for (int i = 0; i < len;i++){
+        map[1][i+5] = c[i];
+    }
+}
+
 void createLevel(int lvl){
 
     isLeftHold = false;
@@ -218,8 +233,9 @@ void createLevel(int lvl){
     moving = (TObject*)realloc(moving,0);
 
     initObject(&mario,39,10,3,3,'@');
+    score = 0;
 
-    if (lvl = 1){
+    if (lvl == 1){
         initObject(getNewBrick(),20,21,40,5,'#');
             initObject(getNewBrick(),30,10,5,3,'?');
             initObject(getNewBrick(),50,10,5,3,'?');
@@ -268,6 +284,8 @@ void createLevel(int lvl){
         initObject(getNewMoving(),120,10,3,2,'o');
         initObject(getNewMoving(),130,10,3,2,'o');
     }
+
+    maxLvl = 3;
 }
 
 int main(){
@@ -330,6 +348,8 @@ int main(){
         }
 
         putObjectOnMap(mario);
+
+        putScoreOnMap();
 
         setCur(0,0);
         showMap();
