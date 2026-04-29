@@ -15,6 +15,7 @@ typedef struct SObject {
     float width, height;
     float vertSpeed;
     bool isFly;
+    char cType;
 } TObject;
 
 char map[mapHeight][mapWidth+1];
@@ -24,7 +25,7 @@ int brickLength;
 
 void clearMap(){
     for (int i = 0; i < mapWidth; i++){
-        map[0][i] = '.';
+        map[0][i] = ' ';
     }
     map[0][mapWidth] = '\0';
     for (int i = 1; i < mapHeight;i++){
@@ -47,14 +48,16 @@ void setObjectPos(TObject *obj,float xPos, float yPos){
     (*obj).y = yPos;
 }
 
-void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight){
+void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight, char oType){
     setObjectPos(obj,xPos,yPos);
     (*obj).width = oWidth;
     (*obj).height = oHeight;
     (*obj).vertSpeed = 0;
+    (*obj).cType = oType;
 }
 
 bool isCollision(TObject o1, TObject o2);
+void createLevel();
 
 void vertMoveObject(TObject *obj){
     (*obj).isFly = true;
@@ -65,6 +68,10 @@ void vertMoveObject(TObject *obj){
             (*obj).y -= (*obj).vertSpeed;
             (*obj).vertSpeed = 0;
             (*obj).isFly = false;
+            if (brick[i].cType == '+'){
+                createLevel();
+                napms(500);
+            }
             break;
         }
     }
@@ -82,7 +89,7 @@ void putObjectOnMap(TObject obj){
     for (int i = ix; i < (ix + iWidth);i++){
         for (int j = iy; j < (iy + iHeight);j++){
             if (isPosInMap(i,j)){
-                map[j][i] = '@';
+                map[j][i] = obj.cType;
             }
         }
     }
@@ -117,15 +124,20 @@ bool isRightHold = false;
 bool isLeftHold = false;
 
 void createLevel(){
-    initObject(&mario,39,10,3,3);
 
-    brickLength = 5;
-    brick = (TObject*)malloc(sizeof(TObject) * brickLength);
-    initObject(brick+0,20,21,40,5);
-    initObject(brick+1,60,15,10,10);
-    initObject(brick+2,80,20,20,5);
-    initObject(brick+3,120,15,10,10);
-    initObject(brick+4,150,20,40,5);
+    isLeftHold = false;
+    isRightHold = false;
+
+    initObject(&mario,39,10,3,3,'@');
+
+    brickLength = 6;
+    brick = (TObject*)realloc(brick,sizeof(TObject) * brickLength);
+    initObject(brick+0,20,21,40,5,'#');
+    initObject(brick+1,60,15,10,10,'#');
+    initObject(brick+2,80,20,20,5,'#');
+    initObject(brick+3,120,15,10,10,'#');
+    initObject(brick+4,150,20,40,5,'#');
+    initObject(brick+5,210,15,10,10,'+');
 }
 
 int main(){
@@ -165,6 +177,8 @@ int main(){
 
         if (isRightHold) horizonMoveMap(-1);
         if (isLeftHold) horizonMoveMap(1);
+
+        if (mario.y > mapHeight) createLevel();
 
         vertMoveObject(&mario);
         for (int i = 0; i < brickLength;i++){
