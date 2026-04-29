@@ -78,7 +78,7 @@ void vertMoveObject(TObject *obj){
             (*obj).isFly = false;
             if (brick[i].cType == '+'){
                 level++;
-                if (level > 2) level = 1;
+                if (level > 3) level = 1;
                 createLevel(level);
                 napms(500);
             }
@@ -87,10 +87,22 @@ void vertMoveObject(TObject *obj){
     }
 }
 
+void deleteMoving(int i){
+    movingLength--;
+    moving[i] = moving[movingLength];
+    moving = (TObject*)realloc(moving,sizeof(*moving) * movingLength);
+}
+
 void marioCollision(){
     for (int i = 0; i < movingLength;i++){
         if (isCollision(mario,moving[i])){
-            createLevel(level);
+            if (mario.isFly && (mario.vertSpeed > 0) && (mario.y + mario.height < moving[i].y + moving[i].height * 0.5)){
+                deleteMoving(i);
+                i--;
+                continue;
+            } else{
+                createLevel(level);
+            }
         }
     }
 }
@@ -161,6 +173,18 @@ bool isCollision(TObject o1, TObject o2){
 bool isRightHold = false;
 bool isLeftHold = false;
 
+TObject *getNewBrick(){
+    brickLength++;
+    brick = (TObject*)realloc(brick, sizeof(*brick) * brickLength);
+    return brick + brickLength - 1;
+}
+
+TObject *getNewMoving(){
+    movingLength++;
+    moving = (TObject*)realloc(moving, sizeof(*moving) * movingLength);
+    return moving + movingLength - 1;
+}
+
 void createLevel(int lvl){
 
     isLeftHold = false;
@@ -168,28 +192,48 @@ void createLevel(int lvl){
 
     initObject(&mario,39,10,3,3,'@');
 
-    if (lvl == 1){
-
-        brickLength = 6;
-        brick = (TObject*)realloc(brick,sizeof(TObject) * brickLength);
-        initObject(brick+0,20,21,40,5,'#');
-        initObject(brick+1,60,15,10,10,'#');
-        initObject(brick+2,80,20,20,5,'#');
-        initObject(brick+3,120,15,10,10,'#');
-        initObject(brick+4,150,20,40,5,'#');
-        initObject(brick+5,210,15,10,10,'+');
-        movingLength = 1;
-        moving = (TObject*)realloc(moving,sizeof(TObject) * movingLength);
-        initObject(moving+0,25,10,3,2,'o');
+    if (lvl = 1){
+        brickLength = 0;
+        initObject(getNewBrick(),20,21,40,5,'#');
+        initObject(getNewBrick(),60,15,40,10,'#');
+        initObject(getNewBrick(),100,20,20,5,'#');
+        initObject(getNewBrick(),120,15,10,10,'#');
+        initObject(getNewBrick(),150,20,40,5,'#');
+        initObject(getNewBrick(),210,15,10,10,'+');
     }
+
     if (lvl == 2){
 
-        brickLength = 4;
-        brick = (TObject*)realloc(brick,sizeof(TObject) * brickLength);
-        initObject(brick+0,20,21,40,5,'#');
-        initObject(brick+1,80,20,15,5,'#');
-        initObject(brick+2,120,15,15,10,'#');
-        initObject(brick+3,160,10,15,15,'+');
+        brickLength = 0;
+        initObject(getNewBrick(),20,21,40,5,'#');
+        initObject(getNewBrick(),60,15,10,10,'#');
+        initObject(getNewBrick(),80,20,20,5,'#');
+        initObject(getNewBrick(),120,15,10,10,'#');
+        initObject(getNewBrick(),150,20,40,5,'#');
+        initObject(getNewBrick(),210,15,10,10,'+');
+        movingLength = 0;
+        initObject(getNewMoving(),25,10,3,2,'o');
+        initObject(getNewMoving(),80,10,3,2,'o');
+        initObject(getNewMoving(),65,10,3,2,'o');
+        initObject(getNewMoving(),120,10,3,2,'o');
+        initObject(getNewMoving(),160,10,3,2,'o');
+        initObject(getNewMoving(),175,10,3,2,'o');
+    }
+    if (lvl == 3){
+
+        brickLength = 0;
+        initObject(getNewBrick(),20,21,40,5,'#');
+        initObject(getNewBrick(),80,20,15,5,'#');
+        initObject(getNewBrick(),120,15,15,10,'#');
+        initObject(getNewBrick(),160,10,15,15,'+');
+        movingLength = 0;
+
+        initObject(getNewMoving(),25,10,3,2,'o');
+        initObject(getNewMoving(),50,10,3,2,'o');
+        initObject(getNewMoving(),80,10,3,2,'o');
+        initObject(getNewMoving(),90,10,3,2,'o');
+        initObject(getNewMoving(),120,10,3,2,'o');
+        initObject(getNewMoving(),130,10,3,2,'o');
     }
 }
 
@@ -242,6 +286,11 @@ int main(){
         for (int i = 0; i < movingLength;i++){
             vertMoveObject(moving + i);
             horizonMoveObject(moving + i);
+            if (moving[i].y > mapHeight){
+                deleteMoving(i);
+                i--;
+                continue;
+            }
             putObjectOnMap(moving[i]);
         }
 
@@ -250,7 +299,7 @@ int main(){
         setCur(0,0);
         showMap();
 
-        napms(33);
+        napms(16);
 
     }
 
