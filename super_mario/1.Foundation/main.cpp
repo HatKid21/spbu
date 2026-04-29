@@ -16,12 +16,18 @@ typedef struct SObject {
     float vertSpeed;
     bool isFly;
     char cType;
+    float horizSpeed;
 } TObject;
 
 char map[mapHeight][mapWidth+1];
 TObject mario;
+
 TObject *brick = NULL;
 int brickLength;
+
+TObject *moving = NULL;
+int movingLength;
+ 
 int level = 1;
 
 void clearMap(){
@@ -55,6 +61,7 @@ void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight
     (*obj).height = oHeight;
     (*obj).vertSpeed = 0;
     (*obj).cType = oType;
+    (*obj).horizSpeed = 0.5;
 }
 
 bool isCollision(TObject o1, TObject o2);
@@ -77,6 +84,31 @@ void vertMoveObject(TObject *obj){
             }
             break;
         }
+    }
+}
+
+void marioCollision(){
+    for (int i = 0; i < movingLength;i++){
+        if (isCollision(mario,moving[i])){
+            createLevel(level);
+        }
+    }
+}
+
+void horizonMoveObject(TObject *obj){
+    obj[0].x += obj[0].horizSpeed;
+    for (int i = 0; i < brickLength;i++){
+        if (isCollision(obj[0],brick[i])){
+            obj[0].x -= obj[0].horizSpeed;
+            obj[0].horizSpeed = -obj[0].horizSpeed;
+            return;
+        }
+    }
+    TObject temp = *obj;
+    vertMoveObject(&temp);
+    if (temp.isFly == true){
+        obj[0].x -= obj[0].horizSpeed;
+        obj[0].horizSpeed = -obj[0].horizSpeed;
     }
 }
 
@@ -116,6 +148,9 @@ void horizonMoveMap(float dx){
     for (int i = 0; i < brickLength; i++){
         brick[i].x += dx;
     }
+    for (int i = 0; i < movingLength; i++){
+        moving[i].x += dx;
+    }
 }
 
 bool isCollision(TObject o1, TObject o2){
@@ -143,6 +178,9 @@ void createLevel(int lvl){
         initObject(brick+3,120,15,10,10,'#');
         initObject(brick+4,150,20,40,5,'#');
         initObject(brick+5,210,15,10,10,'+');
+        movingLength = 1;
+        moving = (TObject*)realloc(moving,sizeof(TObject) * movingLength);
+        initObject(moving+0,25,10,3,2,'o');
     }
     if (lvl == 2){
 
@@ -196,9 +234,17 @@ int main(){
         if (mario.y > mapHeight) createLevel(level);
 
         vertMoveObject(&mario);
+        marioCollision();
+
         for (int i = 0; i < brickLength;i++){
             putObjectOnMap(brick[i]);
         }
+        for (int i = 0; i < movingLength;i++){
+            vertMoveObject(moving + i);
+            horizonMoveObject(moving + i);
+            putObjectOnMap(moving[i]);
+        }
+
         putObjectOnMap(mario);
 
         setCur(0,0);
