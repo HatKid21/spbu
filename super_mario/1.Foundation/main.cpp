@@ -22,6 +22,7 @@ char map[mapHeight][mapWidth+1];
 TObject mario;
 TObject *brick = NULL;
 int brickLength;
+int level = 1;
 
 void clearMap(){
     for (int i = 0; i < mapWidth; i++){
@@ -57,7 +58,7 @@ void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight
 }
 
 bool isCollision(TObject o1, TObject o2);
-void createLevel();
+void createLevel(int lvl);
 
 void vertMoveObject(TObject *obj){
     (*obj).isFly = true;
@@ -69,7 +70,9 @@ void vertMoveObject(TObject *obj){
             (*obj).vertSpeed = 0;
             (*obj).isFly = false;
             if (brick[i].cType == '+'){
-                createLevel();
+                level++;
+                if (level > 2) level = 1;
+                createLevel(level);
                 napms(500);
             }
             break;
@@ -123,21 +126,33 @@ bool isCollision(TObject o1, TObject o2){
 bool isRightHold = false;
 bool isLeftHold = false;
 
-void createLevel(){
+void createLevel(int lvl){
 
     isLeftHold = false;
     isRightHold = false;
 
     initObject(&mario,39,10,3,3,'@');
 
-    brickLength = 6;
-    brick = (TObject*)realloc(brick,sizeof(TObject) * brickLength);
-    initObject(brick+0,20,21,40,5,'#');
-    initObject(brick+1,60,15,10,10,'#');
-    initObject(brick+2,80,20,20,5,'#');
-    initObject(brick+3,120,15,10,10,'#');
-    initObject(brick+4,150,20,40,5,'#');
-    initObject(brick+5,210,15,10,10,'+');
+    if (lvl == 1){
+
+        brickLength = 6;
+        brick = (TObject*)realloc(brick,sizeof(TObject) * brickLength);
+        initObject(brick+0,20,21,40,5,'#');
+        initObject(brick+1,60,15,10,10,'#');
+        initObject(brick+2,80,20,20,5,'#');
+        initObject(brick+3,120,15,10,10,'#');
+        initObject(brick+4,150,20,40,5,'#');
+        initObject(brick+5,210,15,10,10,'+');
+    }
+    if (lvl == 2){
+
+        brickLength = 4;
+        brick = (TObject*)realloc(brick,sizeof(TObject) * brickLength);
+        initObject(brick+0,20,21,40,5,'#');
+        initObject(brick+1,80,20,15,5,'#');
+        initObject(brick+2,120,15,15,10,'#');
+        initObject(brick+3,160,10,15,15,'+');
+    }
 }
 
 int main(){
@@ -150,7 +165,7 @@ int main(){
     keypad(stdscr,TRUE);
     nodelay(stdscr,TRUE);
 
-    createLevel();
+    createLevel(level);
 
     while(true){
         clearMap();
@@ -178,7 +193,7 @@ int main(){
         if (isRightHold) horizonMoveMap(-1);
         if (isLeftHold) horizonMoveMap(1);
 
-        if (mario.y > mapHeight) createLevel();
+        if (mario.y > mapHeight) createLevel(level);
 
         vertMoveObject(&mario);
         for (int i = 0; i < brickLength;i++){
