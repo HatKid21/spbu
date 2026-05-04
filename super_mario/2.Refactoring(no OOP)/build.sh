@@ -1,0 +1,9 @@
+FILE_TO_COMPILE="main.cpp"
+FILE_NAME="out"
+DIRECTORY="bin"
+
+FULL_PATH="$DIRECTORY/$FILE_NAME"
+
+mkdir -p "$DIRECTORY"
+
+g++ "$FILE_TO_COMPILE" -o "$FULL_PATH" -lncurses
