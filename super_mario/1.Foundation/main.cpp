@@ -2,9 +2,62 @@
 #include <stdlib.h>
 #include <cstring>
 
+#include <iostream>
+#include <filesystem>
+#include <fcntl.h>
+#include <unistd.h>
+#include <linux/input.h>
+
 #include <ncurses.h>
 #include <math.h>
 #include <time.h>
+
+namespace fs = std::filesystem;
+
+std::string findKeyboardPath() {
+    std::string path = "/dev/input/by-path/";
+    try {
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::string filename = entry.path().filename().string();
+            if (filename.find("-event-kbd") != std::string::npos) {
+                return entry.path().string();
+            }
+        }
+    } catch (...) {
+        std::cerr << "Error accessing /dev/input/by-path/" << std::endl;
+    }
+    return ""; 
+}
+
+class Keyboard {
+private:
+    int fd;
+    bool keyStates[KEY_MAX];
+
+public:
+    Keyboard(const char* device = "/dev/input/event3") {
+        fd = open(device, O_RDONLY | O_NONBLOCK);
+        for (int i = 0; i < KEY_MAX; i++) keyStates[i] = false;
+    }
+
+    ~Keyboard() { if (fd > 0) close(fd); }
+
+    void update() {
+        struct input_event ev;
+        if (fd < 0) return;
+
+        while (read(fd, &ev, sizeof(struct input_event)) > 0) {
+            if (ev.type == EV_KEY) {
+                if (ev.value == 1 || ev.value == 2) keyStates[ev.code] = true;
+                else if (ev.value == 0) keyStates[ev.code] = false;
+            }
+        }
+    }
+
+    bool isPressed(int keyCode) {
+        return keyStates[keyCode];
+    }
+};
 
 #define mapWidth 80
 #define mapHeight 25
@@ -287,8 +340,18 @@ void createLevel(int lvl){
 
     maxLvl = 3;
 }
-
 int main(){
+
+    std::string kbdPath = findKeyboardPath();
+    
+    if (kbdPath.empty()) {
+        std::cerr << "No keyboard found! Try running with sudo." << std::endl;
+        return 1;
+    }
+
+    std::cout << "Using keyboard at: " << kbdPath << std::endl;
+    Keyboard kbd(kbdPath.c_str());
+
 
     //Инициализация ncurses для фиксирования нажатий на Линуксе
     
@@ -300,63 +363,55 @@ int main(){
 
     createLevel(level);
 
-    while(true){
+    while(true) {
+        kbd.update(); 
         clearMap();
-        int ch;
-        switch (ch){
-            case ' ':
-                if (!mario.isFly){
-                mario.vertSpeed = -1;
-                }
-                break;
-            case 'q':
-                endwin();
-                return 0;
-            case KEY_LEFT:
-                isLeftHold = !isLeftHold;
-                isRightHold = false;
-                break;
-            case KEY_RIGHT:
-                isRightHold = !isRightHold;
-                isLeftHold = false;
-                break;
-        }
-        ch = getch();
 
-        if (isRightHold) horizonMoveMap(-1);
-        if (isLeftHold) horizonMoveMap(1);
+        if (kbd.isPressed(57) && !mario.isFly) { 
+            mario.vertSpeed = -1;
+        }
+
+        if (kbd.isPressed(16)) {
+            endwin();
+            return 0;
+        }
+
+        if (kbd.isPressed(105)) { 
+            horizonMoveMap(1);
+        } 
+        if (kbd.isPressed(106)) { 
+            horizonMoveMap(-1);
+        }
+
 
         if (mario.y > mapHeight) {
+            isLeftHold = false;  
+            isRightHold = false;
             napms(500);
             createLevel(level);
         }
+        
         vertMoveObject(&mario);
         marioCollision();
 
-        for (int i = 0; i < brickLength;i++){
-            putObjectOnMap(brick[i]);
-        }
-        for (int i = 0; i < movingLength;i++){
+        for (int i = 0; i < brickLength; i++) putObjectOnMap(brick[i]);
+        
+        for (int i = 0; i < movingLength; i++) {
             vertMoveObject(moving + i);
             horizonMoveObject(moving + i);
-            if (moving[i].y > mapHeight){
-                deleteMoving(i);
-                i--;
-                continue;
+            if (moving[i].y > mapHeight) {
+                deleteMoving(i); i--; continue;
             }
             putObjectOnMap(moving[i]);
         }
 
         putObjectOnMap(mario);
-
         putScoreOnMap();
-
         setCur(0,0);
         showMap();
-
-        napms(16);
-
+        napms(16); 
     }
 
     endwin();
 }
+
