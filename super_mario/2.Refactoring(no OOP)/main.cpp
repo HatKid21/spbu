@@ -14,10 +14,10 @@
 typedef struct SObject {
     float x,y;
     float width, height;
-    float vertSpeed;
+    float verticalSpeed;
     bool isFly;
     char cType;
-    float horizSpeed;
+    float horizontalSpeed;
 } TObject;
 
 char map[mapHeight][mapWidth+1];
@@ -62,9 +62,9 @@ void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight
     setObjectPos(obj,xPos,yPos);
     (*obj).width = oWidth;
     (*obj).height = oHeight;
-    (*obj).vertSpeed = 0;
+    (*obj).verticalSpeed = 0;
     (*obj).cType = oType;
-    (*obj).horizSpeed = 0.5;
+    (*obj).horizontalSpeed = 0.5;
 }
 
 
@@ -75,22 +75,22 @@ TObject *getNewMoving();
 
 void vertMoveObject(TObject *obj){
     (*obj).isFly = true;
-    (*obj).vertSpeed += 0.05;
-    setObjectPos(obj,(*obj).x,(*obj).y + (*obj).vertSpeed);
+    (*obj).verticalSpeed += 0.05;
+    setObjectPos(obj,(*obj).x,(*obj).y + (*obj).verticalSpeed);
     for (int i = 0 ; i < brickLength; i++){
         if (isCollision(obj[0],brick[i])){
-            if (obj[0].vertSpeed > 0){
+            if (obj[0].verticalSpeed > 0){
                 obj[0].isFly = false;
             }
 
-            if ((brick[i].cType == '?') && (obj[0].vertSpeed < 0) && (obj == &mario) ){
+            if ((brick[i].cType == '?') && (obj[0].verticalSpeed < 0) && (obj == &mario) ){
                 brick[i].cType = '-';
                 initObject(getNewMoving(),brick[i].x,brick[i].y-3,3,2,'$');
-                moving[movingLength-1].vertSpeed = -0.5;
+                moving[movingLength-1].verticalSpeed = -0.5;
             }
 
-            (*obj).y -= (*obj).vertSpeed;
-            (*obj).vertSpeed = 0;
+            (*obj).y -= (*obj).verticalSpeed;
+            (*obj).verticalSpeed = 0;
             if (brick[i].cType == '+'){
                 level++;
                 if (level > maxLvl) level = 1;
@@ -112,7 +112,7 @@ void marioCollision(){
     for (int i = 0; i < movingLength;i++){
         if (isCollision(mario,moving[i])){
             if (moving[i].cType == 'o'){
-                if (mario.isFly && (mario.vertSpeed > 0) && (mario.y + mario.height < moving[i].y + moving[i].height * 0.5)){
+                if (mario.isFly && (mario.verticalSpeed > 0) && (mario.y + mario.height < moving[i].y + moving[i].height * 0.5)){
                     score += 50;
                     deleteMoving(i);
                     i--;
@@ -134,11 +134,11 @@ void marioCollision(){
 }
 
 void horizonMoveObject(TObject *obj){
-    obj[0].x += obj[0].horizSpeed;
+    obj[0].x += obj[0].horizontalSpeed;
     for (int i = 0; i < brickLength;i++){
         if (isCollision(obj[0],brick[i])){
-            obj[0].x -= obj[0].horizSpeed;
-            obj[0].horizSpeed = -obj[0].horizSpeed;
+            obj[0].x -= obj[0].horizontalSpeed;
+            obj[0].horizontalSpeed = -obj[0].horizontalSpeed;
             return;
         }
     }
@@ -146,8 +146,8 @@ void horizonMoveObject(TObject *obj){
         TObject temp = *obj;
         vertMoveObject(&temp);
         if (temp.isFly == true){
-            obj[0].x -= obj[0].horizSpeed;
-            obj[0].horizSpeed = -obj[0].horizSpeed;
+            obj[0].x -= obj[0].horizontalSpeed;
+            obj[0].horizontalSpeed = -obj[0].horizontalSpeed;
         }
     }
 }
@@ -170,7 +170,7 @@ void putObjectOnMap(TObject obj){
     }
 }
 
-void setCur(int x, int y){
+void setCursor(int x, int y){
     move(y,x);
 }
 
@@ -302,11 +302,11 @@ int main(){
 
     while(true){
         clearMap();
-        int ch;
-        switch (ch){
+        int input;
+        switch (input){
             case ' ':
                 if (!mario.isFly){
-                mario.vertSpeed = -1;
+                mario.verticalSpeed = -1;
                 }
                 break;
             case 'q':
@@ -321,7 +321,7 @@ int main(){
                 isLeftHold = false;
                 break;
         }
-        ch = getch();
+        input = getch();
 
         if (isRightHold) horizonMoveMap(-1);
         if (isLeftHold) horizonMoveMap(1);
@@ -351,7 +351,7 @@ int main(){
 
         putScoreOnMap();
 
-        setCur(0,0);
+        setCursor(0,0);
         showMap();
 
         napms(16);
