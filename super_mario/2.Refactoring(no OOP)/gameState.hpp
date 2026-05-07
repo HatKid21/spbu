@@ -15,7 +15,7 @@ namespace hatkid {
             int brickAmount;
 
             TObject *moving;
-            int movingAmount;
+            int movingAmount
 
             char map[25][81];
 
