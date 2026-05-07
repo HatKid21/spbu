@@ -1,5 +1,10 @@
 #include <ncurses.h>
 
+#include "gameState.hpp"
+#include "level.hpp"
+#include "render.hpp"
+#include "physics.hpp"
+
 int main(){
 
     //Инициализация ncurses для фиксирования нажатий на Линуксе
@@ -10,61 +15,69 @@ int main(){
     keypad(stdscr,TRUE);
     nodelay(stdscr,TRUE);
 
-    createLevel(level);
+    hatkid::game::GameState state = {};
+    hatkid::level::createLevel(state,state.level);
 
     while(true){
-        clearMap();
-        int input;
+        hatkid::render::clearMap(state);
+        
+        int input = 0;
+        
         switch (input){
             case ' ':
-                if (!mario.isFly){
-                mario.verticalSpeed = -1;
+                if (!state.mario.isFly){
+                    state.mario.verticalSpeed = -1;
                 }
                 break;
             case 'q':
                 endwin();
                 return 0;
             case KEY_LEFT:
-                isLeftHold = !isLeftHold;
-                isRightHold = false;
+                state.isLeftHold = !state.isLeftHold;
+                state.isRightHold = false;
                 break;
             case KEY_RIGHT:
-                isRightHold = !isRightHold;
-                isLeftHold = false;
+                state.isRightHold = !state.isRightHold;
+                state.isLeftHold = false;
                 break;
         }
         input = getch();
 
-        if (isRightHold) horizonMoveMap(-1);
-        if (isLeftHold) horizonMoveMap(1);
-
-        if (mario.y > mapHeight) {
+        if (state.isRightHold){ 
+            hatkid::physics::horizonMoveMap(state,-1);
+        }
+        
+        if (state.isLeftHold) {
+            hatkid::physics::horizonMoveMap(state,1);
+        }
+        
+        if (state.mario.y > hatkid::game::MAP_HEIGHT) {
             napms(500);
-            createLevel(level);
+            hatkid::level::createLevel(state,state.level);
         }
-        vertMoveObject(&mario);
-        marioCollision();
+        hatkid::physics::vertMoveObject(state,&state.mario);
+        hatkid::physics::marioCollision(state);
 
-        for (int i = 0; i < brickLength;i++){
-            putObjectOnMap(brick[i]);
+        for (int i = 0; i < state.brickAmount;i++){
+            hatkid::render::putObjectOnMap(state,state.brick[i]);
         }
-        for (int i = 0; i < movingLength;i++){
-            vertMoveObject(moving + i);
-            horizonMoveObject(moving + i);
-            if (moving[i].y > mapHeight){
-                deleteMoving(i);
+        for (int i = 0; i < state.movingAmount; i++){
+            hatkid::physics::vertMoveObject(state, state.moving + i);
+            hatkid::physics::horizonMoveObject(state,state.moving + i);
+            if (state.moving[i].y > hatkid::game::MAP_HEIGHT){
+                hatkid::game::deleteMoving(state,i);
                 i--;
                 continue;
             }
-            putObjectOnMap(moving[i]);
+            hatkid::render::putObjectOnMap(state,state.moving[i]);
         }
 
-        putObjectOnMap(mario);
+        hatkid::render::putObjectOnMap(state,state.mario);
 
-        putScoreOnMap();
+        hatkid::render::putScoreOnMap(state);
 
-        setCursor(0,0);
-        showMap();
+        hatkid::render::setCursor(0,0);
+        hatkid::render::showMap(state);
 
         napms(16);
 

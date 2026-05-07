@@ -1,30 +1,33 @@
 #pragma once
 
 #include "object.hpp"
-#include "objectFunctions.hpp"
 
 namespace hatkid {
     namespace game{ 
 
-        static int MAP_HEIGHT = 25;
-        static int MAP_WIDTH = 80;
+        const static int MAP_HEIGHT = 25;
+        const static int MAP_WIDTH = 80;
 
         using objects::TObject;
 
         struct GameState{
             TObject mario;
 
-            TObject *brick;
-            int brickAmount;
+            TObject *brick = nullptr;
+            int brickAmount = 0;
 
-            TObject *moving;
-            int movingAmount
+            TObject *moving = nullptr;
+            int movingAmount = 0;
 
             char map[MAP_HEIGHT][MAP_WIDTH+1];
 
             int level;
             int score;
             int maxLevel;
+
+
+            bool isLeftHold = false;
+            bool isRightHold = false;
             
         };
 
@@ -32,7 +35,7 @@ namespace hatkid {
         TObject *getNewMoving(GameState& state);
         TObject *getNewBrick(GameState& state);
         void deleteMoving(GameState& state, int i);
-        bool isPosInMap(GameState& state,int x, int y){
+        bool isPosInMap(GameState& state,int x, int y);
 
     }
 }

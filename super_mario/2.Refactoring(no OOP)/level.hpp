@@ -4,6 +4,6 @@
 
 namespace hatkid{
     namespace level{
-        void createLevel(hatkid::state::GameState& state, int lvl);
+        void createLevel(hatkid::game::GameState& state, int lvl);
     }
 }

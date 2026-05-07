@@ -1,6 +1,8 @@
 #include <ncurses.h>
 #include "gameState.hpp"
 #include "object.hpp"
+#include "level.hpp"
+#include "physics.hpp"
 
 bool hatkid::physics::isCollision(hatkid::objects::TObject o1, hatkid::objects::TObject o2) {
     return (o1.x + o1.width > o2.x) && (o1.x < o2.x + o2.width) &&
@@ -20,7 +22,7 @@ void hatkid::physics::marioCollision(hatkid::game::GameState& state) {
                     continue;
                 } else {
                     napms(500);
-                    hatkid::level::createLevel(state.level);
+                    hatkid::level::createLevel(state,state.level);
                 }
             }
 
@@ -46,7 +48,7 @@ void hatkid::physics::horizonMoveObject(hatkid::game::GameState& state, hatkid::
 
     if (obj->cType == 'o') {
         hatkid::objects::TObject temp = *obj;
-        vertMoveObject(state, &temp);
+        hatkid::physics::vertMoveObject(state, &temp);
         if (temp.isFly) {
             obj->x -= obj->horizontalSpeed;
             obj->horizontalSpeed = -obj->horizontalSpeed;
@@ -100,7 +102,7 @@ void hatkid::physics::vertMoveObject(hatkid::game::GameState& state, hatkid::obj
                     state.level = 1;
                 }
                 napms(1000);
-                hatkid::level::createLevel(state.level);
+                hatkid::level::createLevel(state,state.level);
             }
             break;
         }

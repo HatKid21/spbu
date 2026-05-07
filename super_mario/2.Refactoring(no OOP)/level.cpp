@@ -1,21 +1,24 @@
+#include <cstdlib>
+
 #include "object.hpp"
 #include "gameState.hpp"
 #include "level.hpp"
 
 using hatkid::objects::initObject;
-using hatkid::objects::getNewBrick;
-using hatkid::ibjects::getNewMoving;
+using hatkid::game::getNewBrick;
+using hatkid::game::getNewMoving;
 
-void hatkid::level::createLevel(hatkid::state::GameState& state,int lvl){
+void hatkid::level::createLevel(hatkid::game::GameState& state,int lvl){
 
-    //TODO add right and left hold logic
+    state.isLeftHold = false;
+    state.isRightHold = false;
 
-    state.brickLength = 0;
-    state.brick = (TObject*)realloc(state.brick, 0);
-    state.movingLength = 0;
-    state.moving = (TObject*)realloc(state.moving,0);
+    state.brickAmount = 0;
+    state.brick = (hatkid::objects::TObject*)realloc(state.brick, 0);
+    state.movingAmount = 0;
+    state.moving = (hatkid::objects::TObject*)realloc(state.moving,0);
 
-    hatkid::object::initObject(state.mario,39,10,3,3,'@');
+    hatkid::objects::initObject(&state.mario,39,10,3,3,'@');
     state.score = 0;
 
     if (lvl == 1){
@@ -68,5 +71,5 @@ void hatkid::level::createLevel(hatkid::state::GameState& state,int lvl){
         initObject(getNewMoving(state),130,10,3,2,'o');
     }
 
-    maxLvl = 3;
+    state.maxLevel = 3;
 }

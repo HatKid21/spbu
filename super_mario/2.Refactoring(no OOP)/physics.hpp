@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gameState.hpp"
-#include "objects.hpp"
+#include "object.hpp"
 
 namespace hatkid {
     namespace physics {
