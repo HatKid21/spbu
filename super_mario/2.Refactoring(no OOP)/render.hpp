@@ -1,17 +1,16 @@
 #pragma once
 
+#include "gameState.hpp"
 #include "object.hpp"
 
 namespace hatkid{
     namespace render{
 
-        using objects::TObject;
-        
-        void clearMap();
-        void showMap();
-        void putObjectOnMap(TObject obj);
+        void clearMap(hatkid::game::GameState& state);
+        void showMap(hatkid::game::GameState& state);
+        void putObjectOnMap(hatkid::game::GameState& state,hatkid::objects::TObject obj);
         void setCursor(int x, int y);
-        void putScoreOnMap();
+        void putScoreOnMap(hatkid::game::GameState& state);
 
     }
 }

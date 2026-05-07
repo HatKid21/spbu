@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <cstring>
-
 #include <ncurses.h>
-#include <math.h>
-#include <time.h>
-
-#include "object.hpp"
-#include "objectFunctions.hpp"
-
 
 int main(){
 
