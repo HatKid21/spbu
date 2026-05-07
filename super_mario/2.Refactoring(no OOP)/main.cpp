@@ -6,19 +6,11 @@
 #include <math.h>
 #include <time.h>
 
+#include "object.hpp"
+#include "objectFunctions.hpp"
+
 #define mapWidth 80
 #define mapHeight 25
-
-#define KEY_ESC 27
-
-typedef struct SObject {
-    float x,y;
-    float width, height;
-    float verticalSpeed;
-    bool isFly;
-    char cType;
-    float horizontalSpeed;
-} TObject;
 
 char map[mapHeight][mapWidth+1];
 TObject mario;
@@ -52,21 +44,6 @@ void showMap(){
     refresh();
 
 }
-
-void setObjectPos(TObject *obj,float xPos, float yPos){
-    (*obj).x = xPos;
-    (*obj).y = yPos;
-}
-
-void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight, char oType){
-    setObjectPos(obj,xPos,yPos);
-    (*obj).width = oWidth;
-    (*obj).height = oHeight;
-    (*obj).verticalSpeed = 0;
-    (*obj).cType = oType;
-    (*obj).horizontalSpeed = 0.5;
-}
-
 
 bool isCollision(TObject o1, TObject o2);
 void createLevel(int lvl);

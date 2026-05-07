@@ -1,4 +1,4 @@
-FILE_TO_COMPILE="main.cpp"
+FILES_TO_COMPILE="main.cpp objectFunctions.hpp"
 FILE_NAME="out"
 DIRECTORY="bin"
 
