@@ -9,22 +9,6 @@
 #include "object.hpp"
 #include "objectFunctions.hpp"
 
-#define mapWidth 80
-#define mapHeight 25
-
-char map[mapHeight][mapWidth+1];
-TObject mario;
-
-TObject *brick = NULL;
-int brickLength;
-
-TObject *moving = NULL;
-int movingLength;
- 
-int level = 1;
-int score;
-int maxLvl;
-
 void clearMap(){
     for (int i = 0; i < mapWidth; i++){
         map[0][i] = ' ';
