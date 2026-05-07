@@ -1,16 +1,18 @@
 #pragma once
 
+#include "gameState.hpp"
 #include "objects.hpp"
 
-namespace hatkid{
-    namespace physics{
+namespace hatkid {
+    namespace physics {
 
-        using objects::TObject;
-        
-        bool isCollision(TObject o1, TObject o2);
-        void marioCollision();
-        void horizonMoveObject(TObject *obj);
-        void horizonMoveMap(float dx);
-        void vertMoveObject(TObject *obj);
+        bool isCollision(hatkid::objects::TObject o1, hatkid::objects::TObject o2);
+
+        void marioCollision(hatkid::game::GameState& state);
+        void horizonMoveObject(hatkid::game::GameState& state, hatkid::objects::TObject* obj);
+        void horizonMoveMap(hatkid::game::GameState& state, float dx);
+        void vertMoveObject(hatkid::game::GameState& state, hatkid::objects::TObject* obj);
+
     }
 }
+
