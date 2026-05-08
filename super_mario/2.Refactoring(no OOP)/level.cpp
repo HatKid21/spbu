@@ -1,8 +1,8 @@
 #include <cstdlib>
 
-#include "object.hpp"
 #include "gameState.hpp"
 #include "level.hpp"
+#include "object.hpp"
 
 using hatkid::objects::initObject;
 using hatkid::game::getNewBrick;

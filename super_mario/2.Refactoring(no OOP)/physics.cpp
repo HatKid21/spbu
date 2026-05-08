@@ -1,7 +1,8 @@
 #include <ncurses.h>
+
 #include "gameState.hpp"
-#include "object.hpp"
 #include "level.hpp"
+#include "object.hpp"
 #include "physics.hpp"
 
 bool hatkid::physics::isCollision(hatkid::objects::TObject o1, hatkid::objects::TObject o2) {

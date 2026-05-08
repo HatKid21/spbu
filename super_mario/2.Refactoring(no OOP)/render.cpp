@@ -1,10 +1,10 @@
-#include <ncurses.h>
-#include <math.h>
 #include <cstring>
+#include <math.h>
+#include <ncurses.h>
 
 #include "gameState.hpp"
-#include "render.hpp"
 #include "object.hpp"
+#include "render.hpp"
 
 void hatkid::render::clearMap(hatkid::game::GameState& state){
     for (int i = 0; i < hatkid::game::MAP_WIDTH; i++){
