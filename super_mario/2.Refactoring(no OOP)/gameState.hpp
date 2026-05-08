@@ -21,7 +21,7 @@ namespace hatkid {
 
             char map[MAP_HEIGHT][MAP_WIDTH+1];
 
-            int level;
+            int level = 1;
             int score;
             int maxLevel;
 

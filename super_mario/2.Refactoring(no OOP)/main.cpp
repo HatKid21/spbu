@@ -15,13 +15,13 @@ int main(){
     keypad(stdscr,TRUE);
     nodelay(stdscr,TRUE);
 
-    hatkid::game::GameState state = {};
+    hatkid::game::GameState state;
     hatkid::level::createLevel(state,state.level);
 
+    int input = 0;
+    
     while(true){
         hatkid::render::clearMap(state);
-        
-        int input = 0;
         
         switch (input){
             case ' ':
