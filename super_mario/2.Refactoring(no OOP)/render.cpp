@@ -4,6 +4,7 @@
 
 #include "gameState.hpp"
 #include "object.hpp"
+#include "physics.hpp"
 #include "render.hpp"
 
 void hatkid::render::clearMap(hatkid::game::GameState& state){
@@ -53,3 +54,23 @@ void hatkid::render::putScoreOnMap(hatkid::game::GameState& state){
         state.map[1][i+5] = c[i];
     }
 }
+
+void hatkid::render::renderBricks(hatkid::game::GameState& state){
+    for (int i = 0; i < state.brickAmount;i++){
+        hatkid::render::putObjectOnMap(state,state.brick[i]);
+    }
+}
+
+void hatkid::render::renderMoving(hatkid::game::GameState& state){
+    for (int i = 0; i < state.movingAmount; i++){
+        hatkid::physics::vertMoveObject(state, state.moving + i);
+        hatkid::physics::horizonMoveObject(state,state.moving + i);
+        if (state.moving[i].y > hatkid::game::MAP_HEIGHT){
+            hatkid::game::deleteMoving(state,i);
+            i--;
+            continue;
+        }
+        hatkid::render::putObjectOnMap(state,state.moving[i]);
+    }
+}
+

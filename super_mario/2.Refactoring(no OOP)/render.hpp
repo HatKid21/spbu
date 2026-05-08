@@ -11,6 +11,8 @@ namespace hatkid{
         void putObjectOnMap(hatkid::game::GameState& state,hatkid::objects::TObject obj);
         void setCursor(int x, int y);
         void putScoreOnMap(hatkid::game::GameState& state);
+        void renderBricks(hatkid::game::GameState& state);
+        void renderMoving(hatkid::game::GameState& state);
 
     }
 }

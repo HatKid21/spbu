@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <ncurses.h>
 
 #include "gameState.hpp"
@@ -5,15 +6,12 @@
 #include "physics.hpp"
 #include "render.hpp"
 
+void ncursesInit();
+void inputHandler(hatkid::game::GameState& state, int input);
+
 int main(){
 
-    //Инициализация ncurses для фиксирования нажатий на Линуксе
-    
-    initscr();
-    cbreak();
-    noecho();
-    keypad(stdscr,TRUE);
-    nodelay(stdscr,TRUE);
+    ncursesInit();
 
     hatkid::game::GameState state;
     hatkid::level::createLevel(state,state.level);
@@ -23,25 +21,9 @@ int main(){
     while(true){
         hatkid::render::clearMap(state);
         
-        switch (input){
-            case ' ':
-                if (!state.mario.isFly){
-                    state.mario.verticalSpeed = -1;
-                }
-                break;
-            case 'q':
-                endwin();
-                return 0;
-            case KEY_LEFT:
-                state.isLeftHold = !state.isLeftHold;
-                state.isRightHold = false;
-                break;
-            case KEY_RIGHT:
-                state.isRightHold = !state.isRightHold;
-                state.isLeftHold = false;
-                break;
-        }
         input = getch();
+        
+        inputHandler(state, input);
 
         if (state.isRightHold){ 
             hatkid::physics::horizonMoveMap(state,-1);
@@ -55,22 +37,12 @@ int main(){
             napms(500);
             hatkid::level::createLevel(state,state.level);
         }
+
         hatkid::physics::vertMoveObject(state,&state.mario);
         hatkid::physics::marioCollision(state);
 
-        for (int i = 0; i < state.brickAmount;i++){
-            hatkid::render::putObjectOnMap(state,state.brick[i]);
-        }
-        for (int i = 0; i < state.movingAmount; i++){
-            hatkid::physics::vertMoveObject(state, state.moving + i);
-            hatkid::physics::horizonMoveObject(state,state.moving + i);
-            if (state.moving[i].y > hatkid::game::MAP_HEIGHT){
-                hatkid::game::deleteMoving(state,i);
-                i--;
-                continue;
-            }
-            hatkid::render::putObjectOnMap(state,state.moving[i]);
-        }
+        hatkid::render::renderBricks(state);
+        hatkid::render::renderMoving(state);
 
         hatkid::render::putObjectOnMap(state,state.mario);
 
@@ -84,4 +56,33 @@ int main(){
     }
 
     endwin();
+}
+
+void ncursesInit(){
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr,TRUE);
+    nodelay(stdscr,TRUE);
+}
+
+void inputHandler(hatkid::game::GameState& state, int input){
+    switch (input){
+    case ' ':
+        if (!state.mario.isFly){
+            state.mario.verticalSpeed = -1;
+        }
+        break;
+    case 'q':
+        endwin();
+        exit(0);
+    case KEY_LEFT:
+        state.isLeftHold = !state.isLeftHold;
+        state.isRightHold = false;
+        break;
+    case KEY_RIGHT:
+        state.isRightHold = !state.isRightHold;
+        state.isLeftHold = false;
+        break;
+    }
 }
