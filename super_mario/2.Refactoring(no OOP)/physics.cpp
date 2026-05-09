@@ -6,7 +6,12 @@
 #include "physics.hpp"
 #include "utils.hpp"
 
-void hatkid::horizonMoveMap(hatkid::TObject& mario, hatkid::TObject* brick, int brickAmount, hatkid::TObject* moving, int movingAmount, float dx) {
+void hatkid::horizonMoveMap(
+        hatkid::TObject& mario, 
+        hatkid::TObject* brick, int brickAmount, 
+        hatkid::TObject* moving, int movingAmount, 
+        float dx
+        ) {
     mario.x -= dx;
 
     for (int i = 0; i < brickAmount; i++) {
@@ -25,7 +30,10 @@ void hatkid::horizonMoveMap(hatkid::TObject& mario, hatkid::TObject* brick, int 
     }
 }
 
-void hatkid::horizonMoveObject(hatkid::TObject* brick, int brickAmount, hatkid::TObject* obj) {
+void hatkid::horizonMoveObject(
+        hatkid::TObject* brick, int brickAmount, 
+        hatkid::TObject* obj
+        ) {
     obj->x += obj->horizontalSpeed;
 
     for (int i = 0; i < brickAmount; i++) {
@@ -36,7 +44,7 @@ void hatkid::horizonMoveObject(hatkid::TObject* brick, int brickAmount, hatkid::
         }
     }
 
-    if (obj->cType == hatkid::TYPE_ENEMY) {
+    if (obj->cType == hatkid::ObjectType::ENEMY) {
         hatkid::TObject temp = *obj;
         int dummyLevel = 0, dummyMax = 0, dummyScore = 0;
         bool dummyL = false, dummyR = false;
@@ -57,10 +65,17 @@ bool hatkid::isCollision(hatkid::TObject o1, hatkid::TObject o2) {
            (o1.y + o1.height > o2.y) && (o1.y < o2.y + o2.height);
 }
 
-void hatkid::marioCollision(hatkid::TObject& mario, hatkid::TObject* &moving, int &movingAmount, int &score, int &level, int maxLevel, hatkid::TObject* &brick, int &brickAmount, bool &isLeftHold, bool &isRightHold) {
+void hatkid::marioCollision(
+        hatkid::TObject& mario, 
+        hatkid::TObject* &moving, int &movingAmount, 
+        int &score, 
+        int &level, int maxLevel, 
+        hatkid::TObject* &brick, int &brickAmount, 
+        bool &isLeftHold, bool &isRightHold
+        ) {
     for (int i = 0; i < movingAmount; i++) {
         if (isCollision(mario, moving[i])) {
-            if (moving[i].cType == hatkid::TYPE_ENEMY) {
+            if (moving[i].cType == hatkid::ObjectType::ENEMY) {
                 if (mario.isFly && 
                     mario.verticalSpeed > 0 && 
                     mario.y + mario.height < moving[i].y + moving[i].height * 0.5f) {
@@ -74,7 +89,7 @@ void hatkid::marioCollision(hatkid::TObject& mario, hatkid::TObject* &moving, in
                 }
             }
 
-            if (moving[i].cType == hatkid::TYPE_MONEY) {
+            if (moving[i].cType == hatkid::ObjectType::MONEY) {
                 score += 100;
                 deleteMoving(moving, movingAmount, i);
                 i--;
@@ -83,7 +98,15 @@ void hatkid::marioCollision(hatkid::TObject& mario, hatkid::TObject* &moving, in
     }
 }
 
-void hatkid::vertMoveObject(hatkid::TObject& mario, hatkid::TObject* brick, int brickAmount, hatkid::TObject* obj, int &level, int maxLevel, hatkid::TObject* &moving, int &movingAmount, int &score, bool &isLeftHold, bool &isRightHold) {
+void hatkid::vertMoveObject(
+        hatkid::TObject& mario, 
+        hatkid::TObject* brick, int brickAmount, 
+        hatkid::TObject* obj, 
+        int &level, int maxLevel, 
+        hatkid::TObject* &moving, int &movingAmount, 
+        int &score, 
+        bool &isLeftHold, bool &isRightHold
+        ) {
     obj->isFly = true;
     obj->verticalSpeed += 0.05f;
     hatkid::setObjectPos(obj, obj->x, obj->y + obj->verticalSpeed);
@@ -94,17 +117,17 @@ void hatkid::vertMoveObject(hatkid::TObject& mario, hatkid::TObject* brick, int 
                 obj->isFly = false;
             }
 
-            if (brick[i].cType == hatkid::TYPE_BONUS && obj->verticalSpeed < 0 && obj == &mario) {
-                brick[i].cType = hatkid::TYPE_EMPTY_BONUS;
+            if (brick[i].cType == hatkid::ObjectType::BONUS && obj->verticalSpeed < 0 && obj == &mario) {
+                brick[i].cType = hatkid::ObjectType::EMPTY_BONUS;
                 hatkid::TObject* coin = getNewMoving(moving, movingAmount);
-                hatkid::initObject(coin, brick[i].x, brick[i].y - 3, 3, 2, hatkid::TYPE_MONEY);
+                hatkid::initObject(coin, brick[i].x, brick[i].y - 3, 3, 2, hatkid::ObjectType::MONEY);
                 coin->verticalSpeed = -0.5f;
             }
 
             obj->y -= obj->verticalSpeed;
             obj->verticalSpeed = 0;
 
-            if (brick[i].cType == hatkid::TYPE_GOAL && obj == &mario) {
+            if (brick[i].cType == hatkid::ObjectType::GOAL && obj == &mario) {
                 level++;
                 if (level > maxLevel) {
                     level = 1;

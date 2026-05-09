@@ -9,7 +9,7 @@
 
 void hatkid::clearMap(char map[MAP_HEIGHT][MAP_WIDTH + 1]) {
     for (int i = 0; i < MAP_WIDTH; i++) {
-        map[0][i] = TYPE_AIR;
+        map[0][i] = hatkid::ObjectType::AIR;
     }
     map[0][MAP_WIDTH] = '\0';
     for (int i = 1; i < MAP_HEIGHT; i++) {
@@ -44,7 +44,15 @@ void hatkid::renderBricks(char map[MAP_HEIGHT][MAP_WIDTH + 1], TObject* brick, i
     }
 }
 
-void hatkid::renderMoving(char map[MAP_HEIGHT][MAP_WIDTH + 1], TObject* &moving, int &movingAmount, TObject* brick, int brickAmount, TObject& mario, int &level, int maxLevel, int &score, bool &isLeftHold, bool &isRightHold) {
+void hatkid::renderMoving(
+        char map[MAP_HEIGHT][MAP_WIDTH + 1], 
+        TObject* &moving, int &movingAmount, 
+        TObject* brick, int brickAmount, 
+        TObject& mario, 
+        int &level, int maxLevel, 
+        int &score, 
+        bool &isLeftHold, bool &isRightHold
+        ) {
     for (int i = 0; i < movingAmount; i++) {
         vertMoveObject(mario, brick, brickAmount, moving + i, level, maxLevel, moving, movingAmount, score, isLeftHold, isRightHold);
         horizonMoveObject(brick, brickAmount, moving + i);

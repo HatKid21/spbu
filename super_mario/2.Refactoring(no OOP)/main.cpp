@@ -6,7 +6,10 @@
 #include "render.hpp"
 #include "utils.hpp"
 
-void inputHandler(hatkid::TObject& mario, bool &isLeftHold, bool &isRightHold, int input);
+void inputHandler(
+        hatkid::TObject& mario,
+        bool &isLeftHold, bool &isRightHold,
+        int input);
 void ncursesInit();
 
 int main() {
