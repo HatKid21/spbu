@@ -24,7 +24,7 @@ namespace hatkid {
             bool &isLeftHold, bool &isRightHold);
     void vertMoveObject(
             TObject& mario, 
-            TObject* brick, int brickAmount, 
+            TObject* &brick, int &brickAmount, 
             TObject* obj, 
             int &level, int maxLevel, 
             TObject* &moving, int &movingAmount, 

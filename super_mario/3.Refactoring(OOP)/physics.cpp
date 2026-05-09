@@ -100,7 +100,7 @@ void hatkid::marioCollision(
 
 void hatkid::vertMoveObject(
         hatkid::TObject& mario, 
-        hatkid::TObject* brick, int brickAmount, 
+        hatkid::TObject* &brick, int &brickAmount, 
         hatkid::TObject* obj, 
         int &level, int maxLevel, 
         hatkid::TObject* &moving, int &movingAmount, 
