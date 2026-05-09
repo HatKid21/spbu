@@ -1,7 +1,10 @@
 #pragma once
 
-#include "gameState.hpp"
+#include "object.hpp"
 
 namespace hatkid{
-    void createLevel(hatkid::GameState& state, int lvl);
+    
+    void createLevel(TObject& mario, TObject* &bricks, int &brickAmount, 
+                         TObject* &moving, int &movingAmount, int &score, 
+                         int &level, int &maxLevel, bool &isLeftHold, bool &isRightHold);
 }

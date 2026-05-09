@@ -2,62 +2,61 @@
 #include <math.h>
 #include <ncurses.h>
 
-#include "gameState.hpp"
 #include "object.hpp"
 #include "objectTypes.hpp"
 #include "physics.hpp"
 #include "render.hpp"
+#include "gameState.hpp"
 
-void hatkid::clearMap(hatkid::GameState& state){
-    for (int i = 0; i < hatkid::MAP_WIDTH; i++){
-        state.map[0][i] = hatkid::TYPE_AIR;
+void hatkid::clearMap(char map[25][81], int MAP_WIDTH, int MAP_HEIGHT){
+    for (int i = 0; i < MAP_WIDTH; i++){
+        map[0][i] = hatkid::TYPE_AIR;
     }
-    state.map[0][hatkid::MAP_WIDTH] = '\0';
-    for (int i = 1; i < hatkid::MAP_HEIGHT;i++){
-        sprintf(state.map[i],state.map[0]);
+    map[0][MAP_WIDTH] = '\0';
+    for (int i = 1; i < MAP_HEIGHT;i++){
+        sprintf(map[i], map[0]);
     }
 }
 
-void hatkid::putObjectOnMap(hatkid::GameState& state, 
-        hatkid::TObject obj){
+void hatkid::putObjectOnMap(char map[25][81], hatkid::TObject obj, int MAP_WIDTH, int MAP_HEIGHT){
     int ix = (int)round(obj.x);
     int iy = (int)round(obj.y);
     int iWidth = (int) round(obj.width);
     int iHeight = (int)round(obj.height);
     for (int i = ix; i < (ix + iWidth);i++){
         for (int j = iy; j < (iy + iHeight);j++){
-            if (hatkid::isPosInMap(state,i,j)){
-                state.map[j][i] = obj.cType;
+            if (hatkid::isPosInMap(i, j, MAP_WIDTH, MAP_HEIGHT)){
+                map[j][i] = obj.cType;
             }
         }
     }
 }
 
-void hatkid::putScoreOnMap(hatkid::GameState& state){
+void hatkid::putScoreOnMap(char map[25][81], int score){
     char c[30];
-    sprintf(c,"Score %d",state.score);
+    sprintf(c,"Score %d", score);
     int len = strlen(c);
     for (int i = 0; i < len;i++){
-        state.map[1][i+5] = c[i];
+        map[1][i+5] = c[i];
     }
 }
 
-void hatkid::renderBricks(hatkid::GameState& state){
-    for (int i = 0; i < state.brickAmount;i++){
-        hatkid::putObjectOnMap(state,state.brick[i]);
+void hatkid::renderBricks(char map[25][81], hatkid::TObject* brick, int brickAmount, int MAP_WIDTH, int MAP_HEIGHT){
+    for (int i = 0; i < brickAmount;i++){
+        hatkid::putObjectOnMap(map, brick[i], MAP_WIDTH, MAP_HEIGHT);
     }
 }
 
-void hatkid::renderMoving(hatkid::GameState& state){
-    for (int i = 0; i < state.movingAmount; i++){
-        hatkid::vertMoveObject(state, state.moving + i);
-        hatkid::horizonMoveObject(state,state.moving + i);
-        if (state.moving[i].y > hatkid::MAP_HEIGHT){
-            hatkid::deleteMoving(state,i);
+void hatkid::renderMoving(char map[25][81], hatkid::TObject* &moving, int &movingAmount, hatkid::TObject* brick, int brickAmount, int MAP_WIDTH, int MAP_HEIGHT, hatkid::TObject& mario, int &level, int maxLevel, int &score, bool &isLeftHold, bool &isRightHold){
+    for (int i = 0; i < movingAmount; i++){
+        hatkid::vertMoveObject(mario, brick, brickAmount, moving + i, level, maxLevel, moving, movingAmount, score, isLeftHold, isRightHold);
+        hatkid::horizonMoveObject(brick, brickAmount, moving + i);
+        if (moving[i].y > MAP_HEIGHT){
+            hatkid::deleteMoving(moving, movingAmount, i);
             i--;
             continue;
         }
-        hatkid::putObjectOnMap(state,state.moving[i]);
+        hatkid::putObjectOnMap(map, moving[i], MAP_WIDTH, MAP_HEIGHT);
     }
 }
 
@@ -65,12 +64,10 @@ void hatkid::setCursor(int x, int y){
     move(y,x);
 }
 
-void hatkid::showMap(hatkid::GameState& state){
-
-    state.map[hatkid::MAP_HEIGHT - 1][hatkid::MAP_WIDTH - 1] = '\0';
-    for (int i = 0; i < hatkid::MAP_HEIGHT; i++){
-        printw("%s\n",state.map[i]);
+void hatkid::showMap(char map[25][81], int MAP_WIDTH, int MAP_HEIGHT){
+    map[MAP_HEIGHT - 1][MAP_WIDTH - 1] = '\0';
+    for (int i = 0; i < MAP_HEIGHT; i++){
+        printw("%s\n", map[i]);
     }
     refresh();
-
 }
