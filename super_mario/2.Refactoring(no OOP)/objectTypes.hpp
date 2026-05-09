@@ -4,6 +4,7 @@ namespace hatkid{
 
     enum ObjectType{
 
+        TYPE_AIR = ' ',
         TYPE_BONUS = '?',
         TYPE_BRICK = '#',
         TYPE_EMPTY_BONUS = '-',

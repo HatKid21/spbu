@@ -4,12 +4,13 @@
 
 #include "gameState.hpp"
 #include "object.hpp"
+#include "objectTypes.hpp"
 #include "physics.hpp"
 #include "render.hpp"
 
 void hatkid::clearMap(hatkid::GameState& state){
     for (int i = 0; i < hatkid::MAP_WIDTH; i++){
-        state.map[0][i] = ' ';
+        state.map[0][i] = hatkid::TYPE_AIR;
     }
     state.map[0][hatkid::MAP_WIDTH] = '\0';
     for (int i = 1; i < hatkid::MAP_HEIGHT;i++){
