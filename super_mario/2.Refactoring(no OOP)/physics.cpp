@@ -38,7 +38,6 @@ void hatkid::horizonMoveObject(hatkid::TObject* brick, int brickAmount, hatkid::
 
     if (obj->cType == hatkid::TYPE_ENEMY) {
         hatkid::TObject temp = *obj;
-        // Recursive-like call needs dummy variables for the new signature
         int dummyLevel = 0, dummyMax = 0, dummyScore = 0;
         bool dummyL = false, dummyR = false;
         TObject* dummyMoving = nullptr;

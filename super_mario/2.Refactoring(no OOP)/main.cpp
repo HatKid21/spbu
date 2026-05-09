@@ -23,26 +23,55 @@ int main() {
     int level = 1, score = 0, maxLevel = 3;
     bool isLeftHold = false, isRightHold = false;
 
-    hatkid::createLevel(mario, brick, brickAmount, moving, movingAmount, score, level, maxLevel, isLeftHold, isRightHold);
+    hatkid::createLevel(mario, 
+            brick, brickAmount, 
+            moving, movingAmount, 
+            score, level, maxLevel, 
+            isLeftHold, isRightHold);
 
     while(true) {
         hatkid::clearMap(map);
         int input = getch();
         inputHandler(mario, isLeftHold, isRightHold, input);
 
-        if (isRightHold) hatkid::horizonMoveMap(mario, brick, brickAmount, moving, movingAmount, -1);
-        if (isLeftHold)  hatkid::horizonMoveMap(mario, brick, brickAmount, moving, movingAmount, 1);
+        if (isRightHold) hatkid::horizonMoveMap(mario, 
+                brick, brickAmount, 
+                moving, movingAmount, 
+                -1);
+        if (isLeftHold)  hatkid::horizonMoveMap(mario, 
+                brick, brickAmount, 
+                moving, movingAmount, 
+                1);
         
         if (mario.y > hatkid::MAP_HEIGHT) {
             napms(500);
-            hatkid::createLevel(mario, brick, brickAmount, moving, movingAmount, score, level, maxLevel, isLeftHold, isRightHold);
+            hatkid::createLevel(mario, 
+                    brick, brickAmount,
+                    moving, movingAmount,
+                    score, level, maxLevel,
+                    isLeftHold, isRightHold);
         }
 
-        hatkid::vertMoveObject(mario, brick, brickAmount, &mario, level, maxLevel, moving, movingAmount, score, isLeftHold, isRightHold);
-        hatkid::marioCollision(mario, moving, movingAmount, score, level, maxLevel, brick, brickAmount, isLeftHold, isRightHold);
+        hatkid::vertMoveObject(mario, 
+                brick, brickAmount, 
+                &mario, 
+                level, maxLevel, 
+                moving, movingAmount, 
+                score, 
+                isLeftHold, isRightHold);
+        hatkid::marioCollision(mario, 
+                moving, movingAmount, 
+                score, level, maxLevel, 
+                brick, brickAmount, 
+                isLeftHold, isRightHold);
 
         hatkid::renderBricks(map, brick, brickAmount);
-        hatkid::renderMoving(map, moving, movingAmount, brick, brickAmount, mario, level, maxLevel, score, isLeftHold, isRightHold); 
+        hatkid::renderMoving(map, 
+                moving, movingAmount, 
+                brick, brickAmount, 
+                mario, 
+                level, maxLevel, score, 
+                isLeftHold, isRightHold); 
         hatkid::putObjectOnMap(map, mario);
         hatkid::putScoreOnMap(map, score);
 
