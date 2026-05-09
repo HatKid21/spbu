@@ -6,8 +6,8 @@
 #include "physics.hpp"
 #include "render.hpp"
 
-void ncursesInit();
 void inputHandler(hatkid::game::GameState& state, int input);
+void ncursesInit();
 
 int main(){
 
@@ -58,14 +58,6 @@ int main(){
     endwin();
 }
 
-void ncursesInit(){
-    initscr();
-    cbreak();
-    noecho();
-    keypad(stdscr,TRUE);
-    nodelay(stdscr,TRUE);
-}
-
 void inputHandler(hatkid::game::GameState& state, int input){
     switch (input){
     case ' ':
@@ -86,3 +78,12 @@ void inputHandler(hatkid::game::GameState& state, int input){
         break;
     }
 }
+
+void ncursesInit(){
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr,TRUE);
+    nodelay(stdscr,TRUE);
+}
+
