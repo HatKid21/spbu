@@ -1,19 +1,25 @@
 #include <cstdlib>
 #include <ncurses.h>
 
+#include "keyboard.hpp"
 #include "level.hpp"
 #include "physics.hpp"
 #include "render.hpp"
 #include "utils.hpp"
 
 void inputHandler(
-        hatkid::TObject& mario,
-        bool &isLeftHold, bool &isRightHold,
+        hatkid::Keyboard& kbd,
+        hatkid::TObject& mario, 
+        hatkid::TObject* &brick, int brickAmount,
+        hatkid::TObject* &moving,int movingAmount,
+        bool &isLeftHold, bool &isRightHold, 
         int input);
 void ncursesInit();
 
 int main() {
     ncursesInit();
+
+    hatkid::Keyboard kbd;
     
     hatkid::TObject mario;
     hatkid::TObject *brick = nullptr;
@@ -33,19 +39,12 @@ int main() {
             isLeftHold, isRightHold);
 
     while(true) {
+        kbd.update();
+
         hatkid::clearMap(map);
         int input = getch();
-        inputHandler(mario, isLeftHold, isRightHold, input);
+        inputHandler(kbd,mario, brick,brickAmount,moving,movingAmount, isLeftHold, isRightHold, input);
 
-        if (isRightHold) hatkid::horizonMoveMap(mario, 
-                brick, brickAmount, 
-                moving, movingAmount, 
-                -1);
-        if (isLeftHold)  hatkid::horizonMoveMap(mario, 
-                brick, brickAmount, 
-                moving, movingAmount, 
-                1);
-        
         if (mario.y > hatkid::MAP_HEIGHT) {
             napms(500);
             hatkid::createLevel(mario, 
@@ -93,23 +92,26 @@ void ncursesInit() {
     nodelay(stdscr, TRUE);
 }
 
-void inputHandler(hatkid::TObject& mario, bool &isLeftHold, bool &isRightHold, int input) {
-    switch (input) {
-        case ' ': 
-            if (!mario.isFly){
-                mario.verticalSpeed = -1;
-            }
-            break;
-        case 'q': 
-            endwin(); 
-            exit(0);
-        case KEY_LEFT: 
-            isLeftHold = !isLeftHold;
-            isRightHold = false;
-            break;
-        case KEY_RIGHT: 
-            isRightHold = !isRightHold; 
-            isLeftHold = false;
-            break;
+void inputHandler(
+        hatkid::Keyboard& kbd,
+        hatkid::TObject& mario, 
+        hatkid::TObject* &brick, int brickAmount,
+        hatkid::TObject* &moving,int movingAmount,
+        bool &isLeftHold, bool &isRightHold, 
+        int input) {
+    if (kbd.isPressed(57) && !mario.isFly) { 
+        mario.verticalSpeed = -1;
+    }
+
+    if (kbd.isPressed(16)) {
+        endwin();
+        return;
+    }
+
+    if (kbd.isPressed(105)) { 
+        hatkid::horizonMoveMap(mario, brick, brickAmount,moving, movingAmount,1);
+    } 
+    if (kbd.isPressed(106)) { 
+        hatkid::horizonMoveMap(mario,brick,brickAmount,moving,movingAmount,-1);
     }
 }

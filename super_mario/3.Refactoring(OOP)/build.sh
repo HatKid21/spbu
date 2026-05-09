@@ -1,4 +1,4 @@
-FILES_TO_COMPILE="main.cpp object.cpp utils.cpp level.cpp physics.cpp render.cpp"
+FILES_TO_COMPILE="main.cpp object.cpp utils.cpp level.cpp physics.cpp render.cpp keyboard.cpp"
 FILE_NAME="out"
 DIRECTORY="bin"
 
