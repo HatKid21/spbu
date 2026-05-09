@@ -52,6 +52,6 @@ hatkid::TObject* hatkid::getNewMoving(TObject* &moving, int &movingAmount) {
     return &moving[movingAmount - 1];
 }
 
-bool hatkid::isPosInMap(int x, int y, int MAP_WIDTH, int MAP_HEIGHT) {
-    return (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT);
+bool hatkid::isPosInMap(int x, int y) {
+    return (x >= 0 && x < hatkid::MAP_WIDTH && y >= 0 && y < hatkid::MAP_HEIGHT);
 }

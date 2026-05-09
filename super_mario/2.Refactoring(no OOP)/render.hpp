@@ -1,13 +1,13 @@
 #pragma once
-
 #include "object.hpp"
+#include "utils.hpp"
 
-namespace hatkid{
-    void clearMap(char map[25][81], int MAP_WIDTH, int MAP_HEIGHT);
-    void putObjectOnMap(char map[25][81], TObject obj, int MAP_WIDTH, int MAP_HEIGHT);
-    void putScoreOnMap(char map[25][81], int score);
-    void renderBricks(char map[25][81], TObject* brick, int brickAmount, int MAP_WIDTH, int MAP_HEIGHT);
-    void renderMoving(char map[25][81], TObject* &moving, int &movingAmount, TObject* brick, int brickAmount, int MAP_WIDTH, int MAP_HEIGHT, TObject& mario, int &level, int maxLevel, int &score, bool &isLeftHold, bool &isRightHold);
+namespace hatkid {
+    void clearMap(char map[MAP_HEIGHT][MAP_WIDTH + 1]);
+    void putObjectOnMap(char map[MAP_HEIGHT][MAP_WIDTH + 1], TObject obj);
+    void putScoreOnMap(char map[MAP_HEIGHT][MAP_WIDTH + 1], int score);
+    void renderBricks(char map[MAP_HEIGHT][MAP_WIDTH + 1], TObject* brick, int brickAmount);
+    void renderMoving(char map[MAP_HEIGHT][MAP_WIDTH + 1], TObject* &moving, int &movingAmount, TObject* brick, int brickAmount, TObject& mario, int &level, int maxLevel, int &score, bool &isLeftHold, bool &isRightHold);
     void setCursor(int x, int y);
-    void showMap(char map[25][81], int MAP_WIDTH, int MAP_HEIGHT);
+    void showMap(char map[MAP_HEIGHT][MAP_WIDTH + 1]);
 }
