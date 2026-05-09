@@ -1,11 +1,5 @@
 #include "object.hpp"
 
-void hatkid::setObjectPos(hatkid::TObject *obj,
-        float xPos, float yPos){
-    obj->x = xPos;
-    obj->y = yPos;
-}
-
 void hatkid::initObject(
         hatkid::TObject *obj,
         float xPos, float yPos,
@@ -16,4 +10,10 @@ void hatkid::initObject(
     obj->verticalSpeed = 0;
     obj->cType = oType;
     obj->horizontalSpeed = 0.5;
+}
+
+void hatkid::setObjectPos(hatkid::TObject *obj,
+        float xPos, float yPos){
+    obj->x = xPos;
+    obj->y = yPos;
 }

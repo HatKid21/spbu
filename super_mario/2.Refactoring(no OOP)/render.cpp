@@ -17,16 +17,6 @@ void hatkid::clearMap(hatkid::GameState& state){
     }
 }
 
-void hatkid::showMap(hatkid::GameState& state){
-
-    state.map[hatkid::MAP_HEIGHT - 1][hatkid::MAP_WIDTH - 1] = '\0';
-    for (int i = 0; i < hatkid::MAP_HEIGHT; i++){
-        printw("%s\n",state.map[i]);
-    }
-    refresh();
-
-}
-
 void hatkid::putObjectOnMap(hatkid::GameState& state, 
         hatkid::TObject obj){
     int ix = (int)round(obj.x);
@@ -40,10 +30,6 @@ void hatkid::putObjectOnMap(hatkid::GameState& state,
             }
         }
     }
-}
-
-void hatkid::setCursor(int x, int y){
-    move(y,x);
 }
 
 void hatkid::putScoreOnMap(hatkid::GameState& state){
@@ -74,3 +60,16 @@ void hatkid::renderMoving(hatkid::GameState& state){
     }
 }
 
+void hatkid::setCursor(int x, int y){
+    move(y,x);
+}
+
+void hatkid::showMap(hatkid::GameState& state){
+
+    state.map[hatkid::MAP_HEIGHT - 1][hatkid::MAP_WIDTH - 1] = '\0';
+    for (int i = 0; i < hatkid::MAP_HEIGHT; i++){
+        printw("%s\n",state.map[i]);
+    }
+    refresh();
+
+}

@@ -3,12 +3,11 @@
 #include "gameState.hpp"
 #include "object.hpp"
 
-hatkid::TObject* hatkid::getNewMoving(GameState& state){
-    state.movingAmount++;
-    state.moving = (TObject*)realloc(state.moving, sizeof(TObject) * state.movingAmount);
-    return state.moving + state.movingAmount - 1;
+void hatkid::deleteMoving(hatkid::GameState& state, int i){
+    state.movingAmount--;
+    state.moving[i] = state.moving[state.movingAmount];
+    state.moving = (TObject*)realloc(state.moving,sizeof(TObject) * state.movingAmount);
 }
-
 
 hatkid::TObject* hatkid::getNewBrick(hatkid::GameState& state){
     state.brickAmount++;
@@ -16,11 +15,10 @@ hatkid::TObject* hatkid::getNewBrick(hatkid::GameState& state){
     return state.brick + state.brickAmount - 1;
 }
 
-
-void hatkid::deleteMoving(hatkid::GameState& state, int i){
-    state.movingAmount--;
-    state.moving[i] = state.moving[state.movingAmount];
-    state.moving = (TObject*)realloc(state.moving,sizeof(TObject) * state.movingAmount);
+hatkid::TObject* hatkid::getNewMoving(GameState& state){
+    state.movingAmount++;
+    state.moving = (TObject*)realloc(state.moving, sizeof(TObject) * state.movingAmount);
+    return state.moving + state.movingAmount - 1;
 }
 
 bool hatkid::isPosInMap(hatkid::GameState& state,int x, int y){

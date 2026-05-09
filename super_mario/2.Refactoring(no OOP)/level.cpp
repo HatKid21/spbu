@@ -5,9 +5,9 @@
 #include "object.hpp"
 #include "objectTypes.hpp"
 
-using hatkid::initObject;
 using hatkid::getNewBrick;
 using hatkid::getNewMoving;
+using hatkid::initObject;
 
 void hatkid::createLevel(hatkid::GameState& state,int lvl){
 

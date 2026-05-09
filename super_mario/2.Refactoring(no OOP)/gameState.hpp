@@ -28,10 +28,9 @@ namespace hatkid {
         
     };
 
-
-    TObject *getNewMoving(GameState& state);
-    TObject *getNewBrick(GameState& state);
     void deleteMoving(GameState& state, int i);
+    TObject *getNewBrick(GameState& state);
+    TObject *getNewMoving(GameState& state);
     bool isPosInMap(GameState& state,int x, int y);
 
 }

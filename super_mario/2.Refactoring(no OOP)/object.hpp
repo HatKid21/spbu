@@ -11,8 +11,8 @@ namespace hatkid{
         char cType;
     };
 
-    void setObjectPos(TObject *obj, float xPos, float yPos);
-        
     void initObject(TObject *obj,float xPos, float yPos, float oWidth, float oHeight, char oType);
+    
+    void setObjectPos(TObject *obj, float xPos, float yPos);
 
 }
