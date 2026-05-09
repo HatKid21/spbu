@@ -1,9 +1,7 @@
-#include <cstdlib>
-
-#include "gameState.hpp"
 #include "level.hpp"
 #include "object.hpp"
 #include "objectTypes.hpp"
+#include "utils.hpp"
 
 using hatkid::getNewBrick;
 using hatkid::getNewMoving;
@@ -16,15 +14,22 @@ void hatkid::createLevel(hatkid::TObject& mario, hatkid::TObject* &bricks, int &
     isLeftHold = false;
     isRightHold = false;
 
+    if (bricks != nullptr) {
+        delete[] bricks;
+        bricks = nullptr;
+    }
     brickAmount = 0;
-    bricks = (hatkid::TObject*)realloc(bricks, 0);
+
+    if (moving != nullptr) {
+        delete[] moving;
+        moving = nullptr;
+    }
     movingAmount = 0;
-    moving = (hatkid::TObject*)realloc(moving, 0);
 
     hatkid::initObject(&mario, 39, 10, 3, 3, hatkid::TYPE_MARIO);
     score = 0;
 
-    if (level == 1){
+    if (level == 1) {
         initObject(getNewBrick(bricks, brickAmount), 20, 21, 40, 5, hatkid::TYPE_BRICK);
         initObject(getNewBrick(bricks, brickAmount), 30, 10, 5, 3, hatkid::TYPE_BONUS);
         initObject(getNewBrick(bricks, brickAmount), 50, 10, 5, 3, hatkid::TYPE_BONUS);
@@ -43,7 +48,7 @@ void hatkid::createLevel(hatkid::TObject& mario, hatkid::TObject* &bricks, int &
         initObject(getNewMoving(moving, movingAmount), 80, 10, 3, 2, hatkid::TYPE_ENEMY);
     }
 
-    if (level == 2){
+    if (level == 2) {
         initObject(getNewBrick(bricks, brickAmount), 20, 21, 40, 5, hatkid::TYPE_BRICK);
         initObject(getNewBrick(bricks, brickAmount), 60, 15, 10, 10, hatkid::TYPE_BRICK);
         initObject(getNewBrick(bricks, brickAmount), 80, 20, 20, 5, hatkid::TYPE_BRICK);
@@ -59,7 +64,7 @@ void hatkid::createLevel(hatkid::TObject& mario, hatkid::TObject* &bricks, int &
         initObject(getNewMoving(moving, movingAmount), 175, 10, 3, 2, hatkid::TYPE_ENEMY);
     }
 
-    if (level == 3){
+    if (level == 3) {
         initObject(getNewBrick(bricks, brickAmount), 20, 21, 40, 5, hatkid::TYPE_BRICK);
         initObject(getNewBrick(bricks, brickAmount), 80, 20, 15, 5, hatkid::TYPE_BRICK);
         initObject(getNewBrick(bricks, brickAmount), 120, 15, 15, 10, hatkid::TYPE_BRICK);

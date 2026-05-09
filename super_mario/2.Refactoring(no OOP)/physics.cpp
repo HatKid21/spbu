@@ -4,7 +4,7 @@
 #include "object.hpp"
 #include "objectTypes.hpp"
 #include "physics.hpp"
-#include "gameState.hpp"
+#include "utils.hpp"
 
 void hatkid::horizonMoveMap(hatkid::TObject& mario, hatkid::TObject* brick, int brickAmount, hatkid::TObject* moving, int movingAmount, float dx) {
     mario.x -= dx;

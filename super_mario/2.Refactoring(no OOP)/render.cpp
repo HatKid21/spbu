@@ -6,7 +6,7 @@
 #include "objectTypes.hpp"
 #include "physics.hpp"
 #include "render.hpp"
-#include "gameState.hpp"
+#include "utils.hpp"
 
 void hatkid::clearMap(char map[25][81], int MAP_WIDTH, int MAP_HEIGHT){
     for (int i = 0; i < MAP_WIDTH; i++){

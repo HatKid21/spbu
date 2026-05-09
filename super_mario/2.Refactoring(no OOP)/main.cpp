@@ -4,7 +4,7 @@
 #include "level.hpp"
 #include "physics.hpp"
 #include "render.hpp"
-#include "gameState.hpp"
+#include "utils.hpp"
 
 void inputHandler(hatkid::TObject& mario, bool &isLeftHold, bool &isRightHold, int input);
 void ncursesInit();
