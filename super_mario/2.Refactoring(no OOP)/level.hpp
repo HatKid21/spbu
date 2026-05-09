@@ -3,7 +3,5 @@
 #include "gameState.hpp"
 
 namespace hatkid{
-    namespace level{
-        void createLevel(hatkid::game::GameState& state, int lvl);
-    }
+    void createLevel(hatkid::GameState& state, int lvl);
 }

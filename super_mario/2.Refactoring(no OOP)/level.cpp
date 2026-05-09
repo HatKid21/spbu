@@ -4,21 +4,21 @@
 #include "level.hpp"
 #include "object.hpp"
 
-using hatkid::objects::initObject;
-using hatkid::game::getNewBrick;
-using hatkid::game::getNewMoving;
+using hatkid::initObject;
+using hatkid::getNewBrick;
+using hatkid::getNewMoving;
 
-void hatkid::level::createLevel(hatkid::game::GameState& state,int lvl){
+void hatkid::createLevel(hatkid::GameState& state,int lvl){
 
     state.isLeftHold = false;
     state.isRightHold = false;
 
     state.brickAmount = 0;
-    state.brick = (hatkid::objects::TObject*)realloc(state.brick, 0);
+    state.brick = (hatkid::TObject*)realloc(state.brick, 0);
     state.movingAmount = 0;
-    state.moving = (hatkid::objects::TObject*)realloc(state.moving,0);
+    state.moving = (hatkid::TObject*)realloc(state.moving,0);
 
-    hatkid::objects::initObject(&state.mario,39,10,3,3,'@');
+    hatkid::initObject(&state.mario,39,10,3,3,'@');
     state.score = 0;
 
     if (lvl == 1){

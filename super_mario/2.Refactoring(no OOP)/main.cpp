@@ -6,50 +6,50 @@
 #include "physics.hpp"
 #include "render.hpp"
 
-void inputHandler(hatkid::game::GameState& state, int input);
+void inputHandler(hatkid::GameState& state, int input);
 void ncursesInit();
 
 int main(){
 
     ncursesInit();
 
-    hatkid::game::GameState state;
-    hatkid::level::createLevel(state,state.level);
+    hatkid::GameState state;
+    hatkid::createLevel(state,state.level);
 
     int input = 0;
     
     while(true){
-        hatkid::render::clearMap(state);
+        hatkid::clearMap(state);
         
         input = getch();
         
         inputHandler(state, input);
 
         if (state.isRightHold){ 
-            hatkid::physics::horizonMoveMap(state,-1);
+            hatkid::horizonMoveMap(state,-1);
         }
         
         if (state.isLeftHold) {
-            hatkid::physics::horizonMoveMap(state,1);
+            hatkid::horizonMoveMap(state,1);
         }
         
-        if (state.mario.y > hatkid::game::MAP_HEIGHT) {
+        if (state.mario.y > hatkid::MAP_HEIGHT) {
             napms(500);
-            hatkid::level::createLevel(state,state.level);
+            hatkid::createLevel(state,state.level);
         }
 
-        hatkid::physics::vertMoveObject(state,&state.mario);
-        hatkid::physics::marioCollision(state);
+        hatkid::vertMoveObject(state,&state.mario);
+        hatkid::marioCollision(state);
 
-        hatkid::render::renderBricks(state);
-        hatkid::render::renderMoving(state);
+        hatkid::renderBricks(state);
+        hatkid::renderMoving(state);
 
-        hatkid::render::putObjectOnMap(state,state.mario);
+        hatkid::putObjectOnMap(state,state.mario);
 
-        hatkid::render::putScoreOnMap(state);
+        hatkid::putScoreOnMap(state);
 
-        hatkid::render::setCursor(0,0);
-        hatkid::render::showMap(state);
+        hatkid::setCursor(0,0);
+        hatkid::showMap(state);
 
         napms(16);
 
@@ -58,7 +58,7 @@ int main(){
     endwin();
 }
 
-void inputHandler(hatkid::game::GameState& state, int input){
+void inputHandler(hatkid::GameState& state, int input){
     switch (input){
     case ' ':
         if (!state.mario.isFly){

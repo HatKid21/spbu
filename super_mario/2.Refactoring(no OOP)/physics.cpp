@@ -5,12 +5,12 @@
 #include "object.hpp"
 #include "physics.hpp"
 
-bool hatkid::physics::isCollision(hatkid::objects::TObject o1, hatkid::objects::TObject o2) {
+bool hatkid::isCollision(hatkid::TObject o1, hatkid::TObject o2) {
     return (o1.x + o1.width > o2.x) && (o1.x < o2.x + o2.width) &&
            (o1.y + o1.height > o2.y) && (o1.y < o2.y + o2.height);
 }
 
-void hatkid::physics::marioCollision(hatkid::game::GameState& state) {
+void hatkid::marioCollision(hatkid::GameState& state) {
     for (int i = 0; i < state.movingAmount; i++) {
         if (isCollision(state.mario, state.moving[i])) {
             if (state.moving[i].cType == 'o') {
@@ -23,7 +23,7 @@ void hatkid::physics::marioCollision(hatkid::game::GameState& state) {
                     continue;
                 } else {
                     napms(500);
-                    hatkid::level::createLevel(state,state.level);
+                    hatkid::createLevel(state,state.level);
                 }
             }
 
@@ -36,7 +36,7 @@ void hatkid::physics::marioCollision(hatkid::game::GameState& state) {
     }
 }
 
-void hatkid::physics::horizonMoveObject(hatkid::game::GameState& state, hatkid::objects::TObject* obj) {
+void hatkid::horizonMoveObject(hatkid::GameState& state, hatkid::TObject* obj) {
     obj->x += obj->horizontalSpeed;
 
     for (int i = 0; i < state.brickAmount; i++) {
@@ -48,8 +48,8 @@ void hatkid::physics::horizonMoveObject(hatkid::game::GameState& state, hatkid::
     }
 
     if (obj->cType == 'o') {
-        hatkid::objects::TObject temp = *obj;
-        hatkid::physics::vertMoveObject(state, &temp);
+        hatkid::TObject temp = *obj;
+        hatkid::vertMoveObject(state, &temp);
         if (temp.isFly) {
             obj->x -= obj->horizontalSpeed;
             obj->horizontalSpeed = -obj->horizontalSpeed;
@@ -57,7 +57,7 @@ void hatkid::physics::horizonMoveObject(hatkid::game::GameState& state, hatkid::
     }
 }
 
-void hatkid::physics::horizonMoveMap(hatkid::game::GameState& state, float dx) {
+void hatkid::horizonMoveMap(hatkid::GameState& state, float dx) {
     state.mario.x -= dx;
 
     for (int i = 0; i < state.brickAmount; i++) {
@@ -76,10 +76,10 @@ void hatkid::physics::horizonMoveMap(hatkid::game::GameState& state, float dx) {
     }
 }
 
-void hatkid::physics::vertMoveObject(hatkid::game::GameState& state, hatkid::objects::TObject* obj) {
+void hatkid::vertMoveObject(hatkid::GameState& state, hatkid::TObject* obj) {
     obj->isFly = true;
     obj->verticalSpeed += 0.05f;
-    hatkid::objects::setObjectPos(obj, obj->x, obj->y + obj->verticalSpeed);
+    hatkid::setObjectPos(obj, obj->x, obj->y + obj->verticalSpeed);
 
     for (int i = 0; i < state.brickAmount; i++) {
         if (isCollision(*obj, state.brick[i])) {
@@ -89,8 +89,8 @@ void hatkid::physics::vertMoveObject(hatkid::game::GameState& state, hatkid::obj
 
             if (state.brick[i].cType == '?' && obj->verticalSpeed < 0 && obj == &state.mario) {
                 state.brick[i].cType = '-';
-                hatkid::objects::TObject* coin = getNewMoving(state);
-                hatkid::objects::initObject(coin, state.brick[i].x, state.brick[i].y - 3, 3, 2, '$');
+                hatkid::TObject* coin = getNewMoving(state);
+                hatkid::initObject(coin, state.brick[i].x, state.brick[i].y - 3, 3, 2, '$');
                 coin->verticalSpeed = -0.5f;
             }
 
@@ -103,7 +103,7 @@ void hatkid::physics::vertMoveObject(hatkid::game::GameState& state, hatkid::obj
                     state.level = 1;
                 }
                 napms(1000);
-                hatkid::level::createLevel(state,state.level);
+                hatkid::createLevel(state,state.level);
             }
             break;
         }

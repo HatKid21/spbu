@@ -4,15 +4,11 @@
 #include "object.hpp"
 
 namespace hatkid{
-    namespace render{
-
-        void clearMap(hatkid::game::GameState& state);
-        void showMap(hatkid::game::GameState& state);
-        void putObjectOnMap(hatkid::game::GameState& state,hatkid::objects::TObject obj);
-        void setCursor(int x, int y);
-        void putScoreOnMap(hatkid::game::GameState& state);
-        void renderBricks(hatkid::game::GameState& state);
-        void renderMoving(hatkid::game::GameState& state);
-
-    }
+    void clearMap(GameState& state);
+    void showMap(GameState& state);
+    void putObjectOnMap(GameState& state, TObject obj);
+    void setCursor(int x, int y);
+    void putScoreOnMap(GameState& state);
+    void renderBricks(GameState& state);
+    void renderMoving(GameState& state);
 }

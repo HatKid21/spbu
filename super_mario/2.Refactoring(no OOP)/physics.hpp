@@ -4,15 +4,13 @@
 #include "object.hpp"
 
 namespace hatkid {
-    namespace physics {
 
-        bool isCollision(hatkid::objects::TObject o1, hatkid::objects::TObject o2);
+    bool isCollision(TObject o1, TObject o2);
 
-        void marioCollision(hatkid::game::GameState& state);
-        void horizonMoveObject(hatkid::game::GameState& state, hatkid::objects::TObject* obj);
-        void horizonMoveMap(hatkid::game::GameState& state, float dx);
-        void vertMoveObject(hatkid::game::GameState& state, hatkid::objects::TObject* obj);
+    void marioCollision(GameState& state);
+    void horizonMoveObject(GameState& state, TObject* obj);
+    void horizonMoveMap(GameState& state, float dx);
+    void vertMoveObject(GameState& state, TObject* obj);
 
-    }
 }
 
