@@ -1,6 +1,6 @@
 #pragma once
 
-#icnlude "gameObject.hpp"
+#include "gameObject.hpp"
 #include "utils.hpp"
 
 namespace hatkid{
@@ -13,9 +13,11 @@ namespace hatkid{
             Renderer(int height,int width);
             ~Renderer();
 
-            void drawObject(GameObject obj);
+            void drawObject(GameObject& obj);
             void clearMap();
             void showMap();
+
+            void drawScore(int score);
         private:
             bool isPosInMap(int x, int y);
     };

@@ -1,5 +1,5 @@
 #include "gameObject.hpp"
-#include "objectType.hpp"
+#include "objectTypes.hpp"
 
 using hatkid::GameObject;
 
@@ -7,14 +7,12 @@ GameObject::GameObject(float width,float height, hatkid::ObjectType type)
     : width(width), height(height), type(type){
 }
 
-GameObject::~GameObject() = default;
-
 float GameObject::x() const {
-    return x;
+    return _x;
 }
 
 float GameObject::y() const {
-    return y;
+    return _y;
 }
 
 float GameObject::getWidth() const{
@@ -30,14 +28,14 @@ hatkid::ObjectType GameObject::getType() const{
 }
 
 void GameObject::setX(float x){
-    this.x = x;
+    _x = x;
 }
 
 void GameObject::setY(float y){
-    this.y = y;
+    _y = y;
 }
 
 void GameObject::setPos(float x, float y){
-    this.x = x;
-    this.y = y;
+    _x = x;
+    _y = y;
 }

@@ -1,15 +1,17 @@
 #pragma once
 
+#include "gameObject.hpp"
+
 namespace hatkid{
 
-    class Enemy : public GameObject{
+    class Enemy : public GameObject {
         private:
             int direction;
 
         public:
             Enemy();
 
-            char getSymbol const override;
+            char getSymbol() const override;
 
             int getDirection() const;
             void setDirection(int dir);

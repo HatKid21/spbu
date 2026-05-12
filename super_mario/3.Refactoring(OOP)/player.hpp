@@ -13,10 +13,15 @@ namespace hatkid{
             Player();
             ~Player();
 
+            char getSymbol() const override;
+
             bool isOnGround() const;
-            
             void setOnGround(bool val);
+            void jump();
 
-    }
+            float getVerticalSpeed() const;
+            void setVerticalSpeed(float speed);
 
-};
+    };
+
+}

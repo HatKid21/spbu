@@ -2,7 +2,9 @@
 
 #include "gameObject.hpp"
 #include "player.hpp"
+#include "Level.hpp"
 #include "renderer.hpp"
+#include "keyboard.hpp"
 
 namespace hatkid{
 
@@ -11,9 +13,18 @@ namespace hatkid{
             Player player;
             Level level;
             Renderer renderer;
+            Keyboard keyboard;
+            bool isRunning;
         public:
             Game();
             ~Game() = default;
-    }
+
+            void run();
+            void stop();
+
+        private:
+            void inputHandler();
+
+   };
 
 }
