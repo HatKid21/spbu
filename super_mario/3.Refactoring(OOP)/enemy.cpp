@@ -1,9 +1,13 @@
 #include "enemy.hpp"
+#include "objectTypes.hpp"
 
 using hatkid::Enemy;
 
-Enemy::Enemy()
-    : GameObject(3, 2, hatkid::ObjectType::ENEMY), direction(1) {
+Enemy::Enemy() : GameObject(0,0,hatkid::ObjectType::AIR){};
+
+Enemy::Enemy(float x, float y,float width, float height, hatkid::ObjectType type)
+    : GameObject(width, height, type), direction(1) {
+        setPos(x,y);
 }
 
 char Enemy::getSymbol() const {

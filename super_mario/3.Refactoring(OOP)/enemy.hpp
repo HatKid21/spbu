@@ -11,6 +11,7 @@ namespace hatkid{
 
         public:
             Enemy();
+            Enemy(float x, float y,float width, float height, hatkid::ObjectType type);
 
             char getSymbol() const override;
 
