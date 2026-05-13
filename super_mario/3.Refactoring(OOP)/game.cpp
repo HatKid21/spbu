@@ -3,13 +3,14 @@
 #include "game.hpp"
 #include "keyboard.hpp"
 #include "player.hpp"
-#include "Level.hpp"
+#include "level.hpp"
 #include "brick.hpp"
 #include "renderer.hpp"
 
 using hatkid::Game;
 
 Game::Game() : renderer(25,80), player(),level(1),keyboard(),isRunning(false){
+    player.setPos(39,10);
 }
 
 void Game::run(){
