@@ -39,7 +39,7 @@ void Renderer::drawScore(int score){
 }
 
 void Renderer::drawObject(hatkid::GameObject& obj){
-    int ix = (int)std::round(obj.x());
+    int ix = (int)std::round(obj.x()) + offset;
     int iy = (int)std::round(obj.y());
     for (int i = ix; i < (ix + (int)obj.getWidth()); i++) {
         for (int j = iy; j < (iy + (int)obj.getHeight()); j++) {
@@ -71,4 +71,8 @@ void Renderer::showMap(){
 
 bool Renderer::isPosInMap(int x, int y){
     return (x >= 0 && x < width && y >= 0 && y < height);
+}
+
+void Renderer::addOffset(int dx){
+    offset += dx;
 }

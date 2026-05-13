@@ -60,9 +60,11 @@ void Game::inputHandler(){
     }
 
     if (keyboard.isPressed(105)) { 
-        //TODO
+        player.setX(player.x() - 1);
+        renderer.addOffset(1);
     } 
     if (keyboard.isPressed(106)) { 
-        //TODO
+        player.setX(player.x() + 1);
+        renderer.addOffset(-1);
     }
 }

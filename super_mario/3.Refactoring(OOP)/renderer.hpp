@@ -8,6 +8,7 @@ namespace hatkid{
             char** map;
             int height;
             int width;
+            int offset;
         public:
             Renderer(int height,int width);
             ~Renderer();
@@ -17,6 +18,7 @@ namespace hatkid{
             void showMap();
 
             void drawScore(int score);
+            void addOffset(int dx);
         private:
             bool isPosInMap(int x, int y);
     };
