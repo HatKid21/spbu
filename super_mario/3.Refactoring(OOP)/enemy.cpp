@@ -17,3 +17,7 @@ int Enemy::getDirection() const {
 void Enemy::setDirection(int dir) {
     direction = dir;
 }
+
+bool Enemy::isAlive() const{
+    return alive;
+}

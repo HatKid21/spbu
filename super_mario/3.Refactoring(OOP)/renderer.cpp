@@ -56,7 +56,7 @@ void Renderer::clearMap() {
         map[0][i] = hatkid::ObjectType::AIR;
     }
     map[0][width] = '\0';
-    for (int i = 1; i < MAP_HEIGHT; i++) {
+    for (int i = 1; i < height; i++) {
         std::strcpy(map[i], map[0]);
     }
 }

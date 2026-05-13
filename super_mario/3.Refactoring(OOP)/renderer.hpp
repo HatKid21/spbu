@@ -1,7 +1,6 @@
 #pragma once
 
 #include "gameObject.hpp"
-#include "utils.hpp"
 
 namespace hatkid{
     class Renderer{

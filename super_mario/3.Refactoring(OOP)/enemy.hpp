@@ -7,6 +7,7 @@ namespace hatkid{
     class Enemy : public GameObject {
         private:
             int direction;
+            bool alive;
 
         public:
             Enemy();
@@ -15,6 +16,8 @@ namespace hatkid{
 
             int getDirection() const;
             void setDirection(int dir);
+
+            bool isAlive() const;
 
     };
 
