@@ -20,6 +20,10 @@ namespace hatkid{
             void drawScore(int score);
             void addOffset(int dx);
             void setCameraX(int camX);
+
+            int getMapHeight() const;
+
+            void resetOffset();
         private:
             bool isPosInMap(int x, int y);
     };

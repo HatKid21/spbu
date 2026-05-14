@@ -4,8 +4,20 @@
 
 using hatkid::Level;
 
-Level::Level(int level) : currentLevel(level),score(0){
+Level::Level(int level) : currentLevel(level),score(0),goalReached(false),bricks(nullptr),enemies(nullptr),enemyAmount(0),brickAmount(0){
+    loadLevel(currentLevel);
+}
+
+void Level::loadLevel(int level){
+    delete[] bricks;
+    delete[] enemies;
+    bricks = nullptr;
+    enemies = nullptr;
+    goalReached = false;
+
+    currentLevel = level;
     int i;
+
     if (level == 1) {
         brickAmount = 13;
         bricks = new Brick[brickAmount];
@@ -27,7 +39,6 @@ Level::Level(int level) : currentLevel(level),score(0){
         enemyAmount = 2;
         enemies = new Enemy[enemyAmount];
         i = 0;
-        
         enemies[i++] = Enemy(25, 10, 3, 2, hatkid::ObjectType::ENEMY);
         enemies[i++] = Enemy(80, 10, 3, 2, hatkid::ObjectType::ENEMY);
     }
@@ -46,7 +57,6 @@ Level::Level(int level) : currentLevel(level),score(0){
         enemyAmount = 6;
         enemies = new Enemy[enemyAmount];
         i = 0;
-
         enemies[i++] = Enemy(25, 10, 3, 2, hatkid::ObjectType::ENEMY);
         enemies[i++] = Enemy(80, 10, 3, 2, hatkid::ObjectType::ENEMY);
         enemies[i++] = Enemy(65, 10, 3, 2, hatkid::ObjectType::ENEMY);
@@ -63,11 +73,10 @@ Level::Level(int level) : currentLevel(level),score(0){
         bricks[i++] = Brick( 80, 20, 15, 5, hatkid::ObjectType::BRICK);
         bricks[i++] = Brick( 120, 15, 15, 10, hatkid::ObjectType::BRICK);
         bricks[i++] = Brick( 160, 10, 15, 15, hatkid::ObjectType::GOAL);
-        
+
         enemyAmount = 6;
         enemies = new Enemy[enemyAmount];
         i = 0;
-
         enemies[i++] = Enemy(25, 10, 3, 2, hatkid::ObjectType::ENEMY);
         enemies[i++] = Enemy(50, 10, 3, 2, hatkid::ObjectType::ENEMY);
         enemies[i++] = Enemy(80, 10, 3, 2, hatkid::ObjectType::ENEMY);
@@ -75,12 +84,32 @@ Level::Level(int level) : currentLevel(level),score(0){
         enemies[i++] = Enemy(120, 10, 3, 2, hatkid::ObjectType::ENEMY);
         enemies[i++] = Enemy(130, 10, 3, 2, hatkid::ObjectType::ENEMY);
     }
+}
 
+void Level::reset(){
+    score = 0;
+    loadLevel(currentLevel);
+}
+
+void Level::nextLevel(){
+    if (currentLevel < 3){
+        currentLevel++;
+    } else{
+        currentLevel = 1;
+    }
+    loadLevel(currentLevel);
 }
 
 Level::~Level(){
     delete[] enemies;
     delete[] bricks;
+}
+bool Level::isGoalReached() const{
+    return goalReached;
+}
+
+void Level::setGoalReached(bool state){
+    goalReached = state;
 }
 
 int Level::getScore() const{
@@ -111,3 +140,10 @@ int Level::getEnemyAmount(){
     return enemyAmount;
 }
 
+int Level::getSpawnX() const{
+    return spawnX;
+}
+
+int Level::getSpawnY() const{
+    return spawnY;
+}

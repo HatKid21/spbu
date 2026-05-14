@@ -49,3 +49,11 @@ void Player::addHorizontalSpeed(float ds){
 void Player::setHorizontalSpeed(float speed) {
     horizontalSpeed = speed;
 }
+
+void Player::setDead(bool state){
+    dead = state;
+}
+
+bool Player::isDead() const{
+    return dead;
+}

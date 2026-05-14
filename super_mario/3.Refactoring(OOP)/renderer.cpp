@@ -80,3 +80,11 @@ void Renderer::addOffset(int dx){
 void Renderer::setCameraX(int camX){
     offset = -(camX - width / 3);
 }
+
+void Renderer::resetOffset(){
+    offset = 0;
+}
+
+int Renderer::getMapHeight() const{
+    return height;
+}

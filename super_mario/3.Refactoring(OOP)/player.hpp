@@ -9,6 +9,7 @@ namespace hatkid{
             float verticalSpeed;
             float horizontalSpeed;
             bool onGround;
+            bool dead;
 
         public:
             Player();
@@ -27,6 +28,9 @@ namespace hatkid{
             float getHorizontalSpeed() const;
             void addHorizontalSpeed(float ds);
             void setHorizontalSpeed(float speed);
+
+            void setDead(bool state);
+            bool isDead() const;
 
     };
 

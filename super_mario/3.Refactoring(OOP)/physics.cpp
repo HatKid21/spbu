@@ -20,7 +20,7 @@ void Physics::playerMoveHorizontal(hatkid::Player& player, hatkid::Level& level)
 
 }
 
-void Physics::playerMoveVertical(hatkid::Player& player, hatkid::Level& level){
+void Physics::playerMoveVertical(hatkid::Player& player, hatkid::Level& level,int mapHeight){
     player.setOnGround(false);
     player.addVerticalSpeed(0.05);
     player.setY(player.y() + player.getVerticalSpeed());
@@ -42,11 +42,15 @@ void Physics::playerMoveVertical(hatkid::Player& player, hatkid::Level& level){
             player.setVerticalSpeed(0);
 
             if (bricks[i].getType() == hatkid::ObjectType::GOAL){
-                //TODO next level logic
+                level.setGoalReached(true);
             }
             break;
 
         }
+    }
+
+    if (player.y() > mapHeight){
+        player.setDead(true);
     }
 
 }
@@ -96,7 +100,7 @@ void Physics::checkPlayerEnemyCollision(hatkid::Player& player, hatkid::Level& l
     hatkid::Enemy* enemies = level.getEnemies();
     int enemyAmount = level.getEnemyAmount();
     for (int i = 0; i < enemyAmount; i++){
-        if (player.collisionWith(enemies[i])){
+        if (player.collisionWith(enemies[i]) && enemies[i].isAlive()){
             if (!player.isOnGround() 
                     && player.getVerticalSpeed() > 0 
                     && player.y() + player.getHeight() < enemies[i].y() + enemies[i].getHeight() * 0.5){
@@ -104,7 +108,7 @@ void Physics::checkPlayerEnemyCollision(hatkid::Player& player, hatkid::Level& l
                 enemies[i].setAlive(false);
                 continue;
             } else{
-                //TODO player died level restart
+                player.setDead(true);
             }
         }
     }

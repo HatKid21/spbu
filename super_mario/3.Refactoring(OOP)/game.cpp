@@ -27,7 +27,7 @@ void Game::run(){
         inputHandler();
 
         hatkid::Physics::playerMoveHorizontal(player, level);
-        hatkid::Physics::playerMoveVertical(player, level);
+        hatkid::Physics::playerMoveVertical(player, level,renderer.getMapHeight());
         hatkid::Physics::checkPlayerEnemyCollision(player, level);
 
         Enemy* enemies = level.getEnemies();
@@ -36,6 +36,29 @@ void Game::run(){
         }
 
         hatkid::Physics::checkPlayerEnemyCollision(player, level);
+
+        if (player.isDead()){
+            level.reset();
+            player.setPos(level.getSpawnX(),level.getSpawnY());
+            player.setHorizontalSpeed(0);
+            player.setVerticalSpeed(0);
+            player.setOnGround(false);
+            player.setDead(false);
+            renderer.resetOffset();
+            napms(1000);
+            continue;
+        }
+
+        if (level.isGoalReached()){
+            level.nextLevel();
+            player.setPos(level.getSpawnX(),level.getSpawnY());
+            player.setHorizontalSpeed(0);
+            player.setVerticalSpeed(0);
+            player.setOnGround(false);
+            renderer.resetOffset();
+            napms(1000);
+            continue;
+        }
 
         renderer.setCameraX((int)player.x());
         
