@@ -1,24 +1,32 @@
+#include "coin.hpp"
 #include "level.hpp"
 #include "brick.hpp"
 #include "enemy.hpp"
 
 using hatkid::Level;
 
-Level::Level(int level) : currentLevel(level),score(0),goalReached(false),bricks(nullptr),enemies(nullptr),enemyAmount(0),brickAmount(0){
-    loadLevel(currentLevel);
+Level::Level(int level) 
+    : currentLevel(level),score(0),goalReached(false),
+    bricks(nullptr),brickAmount(0),
+    enemies(nullptr),enemyAmount(0),
+    coins(nullptr),coinAmount(0)
+    {
+    loadLevel();
 }
 
-void Level::loadLevel(int level){
+void Level::loadLevel(){
     delete[] bricks;
     delete[] enemies;
+    delete[] coins;
     bricks = nullptr;
     enemies = nullptr;
+    coins = nullptr;
+    coinAmount = 0;
     goalReached = false;
 
-    currentLevel = level;
     int i;
 
-    if (level == 1) {
+    if (currentLevel == 1) {
         brickAmount = 13;
         bricks = new Brick[brickAmount];
         i = 0;
@@ -43,7 +51,7 @@ void Level::loadLevel(int level){
         enemies[i++] = Enemy(80, 10, 3, 2, hatkid::ObjectType::ENEMY);
     }
 
-    if (level == 2) {
+    if (currentLevel == 2) {
         brickAmount = 6;
         bricks = new Brick[brickAmount];
         i = 0;
@@ -65,7 +73,7 @@ void Level::loadLevel(int level){
         enemies[i++] = Enemy(175, 10, 3, 2, hatkid::ObjectType::ENEMY);
     }
 
-    if (level == 3) {
+    if (currentLevel == 3) {
         brickAmount = 4;
         bricks = new Brick[brickAmount];
         i = 0;
@@ -86,18 +94,40 @@ void Level::loadLevel(int level){
     }
 }
 
+void Level::addCoin(float x, float y){
+    hatkid::Coin* newCoins = new hatkid::Coin[coinAmount + 1];
+    for (int i = 0; i < coinAmount; i++){
+        newCoins[i] = coins[i];
+    }
+    hatkid::Coin coin(x,y);
+    coin.setVerticalSpeed(-0.5);
+    newCoins[coinAmount] = coin;
+    delete[] coins;
+    coins = newCoins;
+    coinAmount++;
+}
+
+hatkid::Coin* Level::getCoins(){
+    return coins;
+}
+
+int Level::getCoinAmount(){
+    return coinAmount;
+}
+
 void Level::reset(){
     score = 0;
-    loadLevel(currentLevel);
+    loadLevel();
 }
 
 void Level::nextLevel(){
+    score = 0;
     if (currentLevel < 3){
         currentLevel++;
     } else{
         currentLevel = 1;
     }
-    loadLevel(currentLevel);
+    loadLevel();
 }
 
 Level::~Level(){

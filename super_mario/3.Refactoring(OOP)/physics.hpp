@@ -1,5 +1,6 @@
 #pragma once
 
+#include "coin.hpp"
 #include "movable.hpp"
 #include "player.hpp"
 #include "enemy.hpp"
@@ -13,6 +14,9 @@ namespace hatkid{
 
             static void moveEnemy(Enemy& enemy, Level& level);
 
+            static void moveCoin(Coin& coin, Level& level);
+
             static void checkPlayerEnemyCollision(Player& player, Level& level);
+            static void checkPlayerCoinCollision(Player& player, Level& level);
     };
 }

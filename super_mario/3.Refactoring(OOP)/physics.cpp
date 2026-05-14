@@ -35,7 +35,7 @@ void Physics::playerMoveVertical(hatkid::Player& player, hatkid::Level& level,in
             }
             if (bricks[i].getType() == hatkid::ObjectType::BONUS && player.getVerticalSpeed() < 0){
                 bricks[i].setType(hatkid::ObjectType::EMPTY_BONUS);
-                //TODO create coins
+                level.addCoin(bricks[i].x(),bricks[i].y()-2);
             }
 
             player.setY(player.y() - player.getVerticalSpeed());
@@ -104,7 +104,7 @@ void Physics::checkPlayerEnemyCollision(hatkid::Player& player, hatkid::Level& l
             if (!player.isOnGround() 
                     && player.getVerticalSpeed() > 0 
                     && player.y() + player.getHeight() < enemies[i].y() + enemies[i].getHeight() * 0.5){
-                level.addScore(100);
+                level.addScore(250);
                 enemies[i].setDead(true);
                 continue;
             } else{
@@ -114,4 +114,50 @@ void Physics::checkPlayerEnemyCollision(hatkid::Player& player, hatkid::Level& l
     }
 }
 
-//TODO logic for coins
+void Physics::moveCoin(hatkid::Coin& coin, hatkid::Level& level){
+    if (coin.isDead()) {
+        return;
+    }
+
+    hatkid::Brick* bricks = level.getBricks();
+    int brickAmount = level.getBrickAmount();
+
+    float speed = 0.5f * coin.getDirection();
+    coin.setX(coin.x() + speed);
+
+    for (int i = 0; i < brickAmount; i++){
+        if (coin.collisionWith(bricks[i])){
+            coin.setX(coin.x() - speed);
+            coin.changeDirection();
+            break;
+        }
+    }
+
+    coin.setOnGround(false);
+    coin.addVerticalSpeed(0.05f);
+    coin.setY(coin.y() + coin.getVerticalSpeed());
+
+    for (int i = 0; i < brickAmount; i++){
+        if (coin.collisionWith(bricks[i])){
+            if (coin.getVerticalSpeed() > 0){
+                coin.setOnGround(true);
+            }
+            coin.setY(coin.y() - coin.getVerticalSpeed());
+            coin.setVerticalSpeed(0);
+            break;
+        }
+    }
+}
+            
+
+void Physics::checkPlayerCoinCollision(hatkid::Player& player, hatkid::Level& level){
+    hatkid::Coin* coins = level.getCoins();
+    int coinAmount = level.getCoinAmount();
+    for (int i = 0; i < coinAmount; i++){
+        if (player.collisionWith(coins[i]) && !coins[i].isDead()){
+            level.addScore(coins[i].getVal());
+            coins[i].setDead(true);
+        }
+    }
+}
+

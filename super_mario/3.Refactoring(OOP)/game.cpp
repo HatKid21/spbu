@@ -34,8 +34,13 @@ void Game::run(){
         for (int i = 0; i < level.getEnemyAmount(); i++){
             hatkid::Physics::moveEnemy(enemies[i],level);
         }
+        Coin* coins = level.getCoins();
+        for (int i = 0; i < level.getCoinAmount();i++){
+            hatkid::Physics::moveCoin(coins[i],level);
+        }
 
         hatkid::Physics::checkPlayerEnemyCollision(player, level);
+        hatkid::Physics::checkPlayerCoinCollision(player,level);
 
         if (player.isDead()){
             level.reset();
@@ -73,6 +78,12 @@ void Game::run(){
             }
         }
 
+        for (int i = 0; i < level.getCoinAmount(); i++){
+            if (!coins[i].isDead()){
+                renderer.drawObject(coins[i]);
+            }
+        }
+
         renderer.drawObject(player);
         renderer.drawScore(level.getScore());
 
@@ -100,12 +111,8 @@ void Game::inputHandler(){
 
     if (keyboard.isPressed(105)) { 
         player.setHorizontalSpeed(-1);
-        //hatkid::Physics::playerMoveHorizontal(player,level);
-        //player.setX(player.x() - 1);
     }else if (keyboard.isPressed(106)) { 
         player.setHorizontalSpeed(1);
-        //hatkid::Physics::playerMoveHorizontal(player,level);
-        //player.setX(player.x() + 1);
     }else{
         player.setHorizontalSpeed(0);
     }

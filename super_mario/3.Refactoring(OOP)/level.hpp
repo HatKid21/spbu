@@ -1,6 +1,7 @@
 #pragma once
 
 #include "brick.hpp"
+#include "coin.hpp"
 #include "enemy.hpp"
 
 namespace hatkid{
@@ -18,6 +19,8 @@ namespace hatkid{
             int brickAmount;
             Enemy* enemies;
             int enemyAmount;
+            Coin* coins;
+            int coinAmount;
 
         public:
             Level(int level);
@@ -32,9 +35,13 @@ namespace hatkid{
             int getBrickAmount();
             int getEnemyAmount();
 
+            void addCoin(float x, float y);
+            Coin* getCoins();
+            int getCoinAmount();
+
             void reset();
             void nextLevel();
-            void loadLevel(int level);
+            void loadLevel();
 
             bool isGoalReached() const;
             void setGoalReached(bool state);
