@@ -18,6 +18,8 @@ namespace hatkid{
             int getDirection() const;
             void setDirection(int dir);
 
+            void setAlive(bool st);
+
             bool isAlive() const;
 
     };

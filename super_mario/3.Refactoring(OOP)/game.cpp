@@ -6,6 +6,7 @@
 #include "level.hpp"
 #include "brick.hpp"
 #include "renderer.hpp"
+#include "physics.hpp"
 
 using hatkid::Game;
 
@@ -24,6 +25,12 @@ void Game::run(){
     while (isRunning){
         renderer.clearMap();
         inputHandler();
+
+        hatkid::Physics::playerMoveHorizontal(player, level);
+        hatkid::Physics::playerMoveVertical(player, level);
+        hatkid::Physics::checkPlayerEnemyCollision(player, level);
+
+        renderer.setCameraX((int)player.x());
         
         Brick* bricks = level.getBricks();
         for (int i = 0; i < level.getBrickAmount(); i++){
@@ -56,15 +63,19 @@ void Game::inputHandler(){
 
     if (keyboard.isPressed(16)) {
         endwin();
+        isRunning = false;
         return;
     }
 
     if (keyboard.isPressed(105)) { 
-        player.setX(player.x() - 1);
-        renderer.addOffset(1);
-    } 
-    if (keyboard.isPressed(106)) { 
-        player.setX(player.x() + 1);
-        renderer.addOffset(-1);
+        player.setHorizontalSpeed(-1);
+        //hatkid::Physics::playerMoveHorizontal(player,level);
+        //player.setX(player.x() - 1);
+    }else if (keyboard.isPressed(106)) { 
+        player.setHorizontalSpeed(1);
+        //hatkid::Physics::playerMoveHorizontal(player,level);
+        //player.setX(player.x() + 1);
+    }else{
+        player.setHorizontalSpeed(0);
     }
 }

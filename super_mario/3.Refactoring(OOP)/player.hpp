@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gameObject.hpp"
+#include "level.hpp"
 
 namespace hatkid{
     class Player : public GameObject{
@@ -20,7 +21,12 @@ namespace hatkid{
             void jump();
 
             float getVerticalSpeed() const;
+            void addVerticalSpeed(float ds);
             void setVerticalSpeed(float speed);
+
+            float getHorizontalSpeed() const;
+            void addHorizontalSpeed(float ds);
+            void setHorizontalSpeed(float speed);
 
     };
 

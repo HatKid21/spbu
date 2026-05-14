@@ -31,7 +31,21 @@ void Player::jump() {
 float Player::getVerticalSpeed() const {
     return verticalSpeed;
 }
+void Player::addVerticalSpeed(float ds){
+    verticalSpeed += ds;
+}
 
-void Player::setVerticalSpeed(float v) {
-    verticalSpeed = v;
+void Player::setVerticalSpeed(float speed) {
+    verticalSpeed = speed;
+}
+
+float Player::getHorizontalSpeed() const {
+    return horizontalSpeed;
+}
+void Player::addHorizontalSpeed(float ds){
+    horizontalSpeed += ds;
+}
+
+void Player::setHorizontalSpeed(float speed) {
+    horizontalSpeed = speed;
 }

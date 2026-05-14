@@ -76,3 +76,7 @@ bool Renderer::isPosInMap(int x, int y){
 void Renderer::addOffset(int dx){
     offset += dx;
 }
+
+void Renderer::setCameraX(int camX){
+    offset = -(camX - width / 3);
+}

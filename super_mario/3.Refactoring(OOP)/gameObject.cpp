@@ -27,6 +27,10 @@ hatkid::ObjectType GameObject::getType() const{
     return type;
 }
 
+void GameObject::setType(hatkid::ObjectType newType) {
+    type = newType;
+}
+
 void GameObject::setX(float x){
     _x = x;
 }
@@ -38,4 +42,13 @@ void GameObject::setY(float y){
 void GameObject::setPos(float x, float y){
     _x = x;
     _y = y;
+}
+
+bool GameObject::collisionWith(const GameObject& other){
+    return (
+        _x < other.x() + other.getWidth()  &&
+        _x + width > other.x()        &&
+        _y < other.y() + other.getHeight() &&
+        _y + height > other.y()
+    );
 }

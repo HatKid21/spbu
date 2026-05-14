@@ -22,6 +22,10 @@ void Enemy::setDirection(int dir) {
     direction = dir;
 }
 
+void Enemy::setAlive(bool st){
+    alive = st;
+}
+
 bool Enemy::isAlive() const{
     return alive;
 }
