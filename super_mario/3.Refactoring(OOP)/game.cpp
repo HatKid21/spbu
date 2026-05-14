@@ -30,6 +30,13 @@ void Game::run(){
         hatkid::Physics::playerMoveVertical(player, level);
         hatkid::Physics::checkPlayerEnemyCollision(player, level);
 
+        Enemy* enemies = level.getEnemies();
+        for (int i = 0; i < level.getEnemyAmount(); i++){
+            hatkid::Physics::moveEnemy(enemies[i],level);
+        }
+
+        hatkid::Physics::checkPlayerEnemyCollision(player, level);
+
         renderer.setCameraX((int)player.x());
         
         Brick* bricks = level.getBricks();
@@ -37,9 +44,10 @@ void Game::run(){
             renderer.drawObject(bricks[i]);
         }
 
-        Enemy* enemies = level.getEnemies();
         for (int i = 0; i < level.getEnemyAmount(); i++){
-            renderer.drawObject(enemies[i]);
+            if (enemies[i].isAlive()){
+                renderer.drawObject(enemies[i]);
+            }
         }
 
         renderer.drawObject(player);

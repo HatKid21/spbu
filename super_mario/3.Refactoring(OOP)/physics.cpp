@@ -52,12 +52,45 @@ void Physics::playerMoveVertical(hatkid::Player& player, hatkid::Level& level){
 }
 
 void Physics::moveEnemy(hatkid::Enemy& enemy, hatkid::Level& level){
-    //TODO enemy moving
-    hatkid::Brick* brick = level.getBricks();
+    if (!enemy.isAlive()){
+        return;
+    }
+
+    hatkid::Brick* bricks = level.getBricks();
     int brickAmount = level.getBrickAmount();
 
-}
+    float oldX = enemy.x();
+    float oldY = enemy.y();
+    bool wasOnGround = enemy.isOnGround();
 
+    float speed = 0.5f * enemy.getDirection();
+    enemy.setX(enemy.x() + speed);
+
+    for (int i = 0; i < brickAmount; i++){
+        if (enemy.collisionWith(bricks[i])){
+            enemy.setX(enemy.x() - speed);
+            enemy.changeDirection();
+            break;
+        }
+    }
+    enemy.setOnGround(false);
+    enemy.setY(enemy.y() + 0.5);
+
+    for (int i = 0; i < brickAmount; i++){
+        if (enemy.collisionWith(bricks[i])){
+            enemy.setY(enemy.y() - 0.5);
+            enemy.setOnGround(true);
+            break;
+        }
+    }
+
+    if (wasOnGround && !enemy.isOnGround()){
+            enemy.setX(oldX);
+            enemy.setY(oldY);
+            enemy.setOnGround(true);
+            enemy.changeDirection();
+    }
+}
 
 void Physics::checkPlayerEnemyCollision(hatkid::Player& player, hatkid::Level& level){
     hatkid::Enemy* enemies = level.getEnemies();

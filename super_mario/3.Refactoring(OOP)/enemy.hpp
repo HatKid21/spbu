@@ -8,6 +8,7 @@ namespace hatkid{
         private:
             int direction;
             bool alive;
+            bool onGround;
 
         public:
             Enemy();
@@ -17,10 +18,14 @@ namespace hatkid{
 
             int getDirection() const;
             void setDirection(int dir);
+            void changeDirection();
 
             void setAlive(bool st);
 
             bool isAlive() const;
+
+            void setOnGround(bool val);
+            bool isOnGround() const;
 
     };
 
