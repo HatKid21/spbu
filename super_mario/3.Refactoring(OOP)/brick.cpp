@@ -11,5 +11,5 @@ Brick::Brick(float x, float y, float width, float height,hatkid::ObjectType type
 }
 
 char Brick::getSymbol() const{
-    return '#';
+    return type;
 }
