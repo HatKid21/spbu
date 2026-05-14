@@ -1,43 +1,26 @@
 #include "enemy.hpp"
-#include "objectTypes.hpp"
 
 using hatkid::Enemy;
 
-Enemy::Enemy() : GameObject(0,0,hatkid::ObjectType::AIR){};
-
-Enemy::Enemy(float x, float y,float width, float height, hatkid::ObjectType type)
-    : GameObject(width, height, type), direction(1),alive(true),onGround(false) {
-        setPos(x,y);
+Enemy::Enemy() : Movable(0, 0, hatkid::ObjectType::AIR), direction(1) {
+    dead = true;
 }
 
-char Enemy::getSymbol() const {
-    return 'o';
+Enemy::Enemy(float x, float y, float width, float height, hatkid::ObjectType type)
+    : Movable(width, height, type), direction(1) {
+    setPos(x, y);
 }
 
-int Enemy::getDirection() const {
-    return direction;
+char Enemy::getSymbol() const { 
+    return 'o'; 
 }
 
-void Enemy::setDirection(int dir) {
-    direction = dir;
+int Enemy::getDirection() const { 
+    return direction; 
 }
-
-void Enemy::changeDirection(){
-    direction *= -1;
+void Enemy::setDirection(int dir) { 
+    direction = dir; 
 }
-
-void Enemy::setAlive(bool st){
-    alive = st;
-}
-
-bool Enemy::isAlive() const{
-    return alive;
-}
-
-void Enemy::setOnGround(bool val){
-    onGround = val;
-}
-
-bool Enemy::isOnGround() const{
-    return onGround;
+void Enemy::changeDirection() {
+    direction *= -1; 
 }

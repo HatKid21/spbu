@@ -1,4 +1,4 @@
-FILES_TO_COMPILE="main.cpp brick.cpp gameObject.cpp level.cpp renderer.cpp player.cpp enemy.cpp game.cpp keyboard.cpp physics.cpp"
+FILES_TO_COMPILE="main.cpp brick.cpp gameObject.cpp level.cpp renderer.cpp player.cpp enemy.cpp game.cpp keyboard.cpp physics.cpp movable.cpp"
 FILE_NAME="out"
 DIRECTORY="bin"
 

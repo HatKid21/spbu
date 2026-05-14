@@ -56,7 +56,7 @@ void Physics::playerMoveVertical(hatkid::Player& player, hatkid::Level& level,in
 }
 
 void Physics::moveEnemy(hatkid::Enemy& enemy, hatkid::Level& level){
-    if (!enemy.isAlive()){
+    if (enemy.isDead()){
         return;
     }
 
@@ -100,12 +100,12 @@ void Physics::checkPlayerEnemyCollision(hatkid::Player& player, hatkid::Level& l
     hatkid::Enemy* enemies = level.getEnemies();
     int enemyAmount = level.getEnemyAmount();
     for (int i = 0; i < enemyAmount; i++){
-        if (player.collisionWith(enemies[i]) && enemies[i].isAlive()){
+        if (player.collisionWith(enemies[i]) && !enemies[i].isDead()){
             if (!player.isOnGround() 
                     && player.getVerticalSpeed() > 0 
                     && player.y() + player.getHeight() < enemies[i].y() + enemies[i].getHeight() * 0.5){
                 level.addScore(100);
-                enemies[i].setAlive(false);
+                enemies[i].setDead(true);
                 continue;
             } else{
                 player.setDead(true);

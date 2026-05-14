@@ -1,7 +1,9 @@
 #pragma once
 
+#include "movable.hpp"
 #include "player.hpp"
 #include "enemy.hpp"
+#include "level.hpp"
 
 namespace hatkid{
     class Physics{

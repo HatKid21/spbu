@@ -68,7 +68,7 @@ void Game::run(){
         }
 
         for (int i = 0; i < level.getEnemyAmount(); i++){
-            if (enemies[i].isAlive()){
+            if (!enemies[i].isDead()){
                 renderer.drawObject(enemies[i]);
             }
         }
