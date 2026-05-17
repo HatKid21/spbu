@@ -26,21 +26,22 @@ void Game::run(){
         renderer.clearMap();
         inputHandler();
 
-        hatkid::Physics::playerMoveHorizontal(player, level);
-        hatkid::Physics::playerMoveVertical(player, level,renderer.getMapHeight());
-        hatkid::Physics::checkPlayerEnemyCollision(player, level);
+        hatkid::Physics::moveHorizontal(player, level);
+        hatkid::Physics::moveVertical(player, level,renderer.getMapHeight());
+        //hatkid::Physics::checkPlayerMovableCollision(player, level);
 
         Enemy* enemies = level.getEnemies();
         for (int i = 0; i < level.getEnemyAmount(); i++){
-            hatkid::Physics::moveEnemy(enemies[i],level);
+            hatkid::Physics::moveHorizontal(enemies[i],level);
+            hatkid::Physics::moveVertical(enemies[i],level,renderer.getMapHeight());
         }
         Coin* coins = level.getCoins();
         for (int i = 0; i < level.getCoinAmount();i++){
-            hatkid::Physics::moveCoin(coins[i],level);
+            hatkid::Physics::moveHorizontal(coins[i],level);
+            hatkid::Physics::moveVertical(coins[i],level,renderer.getMapHeight());
         }
 
-        hatkid::Physics::checkPlayerEnemyCollision(player, level);
-        hatkid::Physics::checkPlayerCoinCollision(player,level);
+        hatkid::Physics::checkPlayerMovableCollision(player, level);
 
         if (player.isDead()){
             level.reset();

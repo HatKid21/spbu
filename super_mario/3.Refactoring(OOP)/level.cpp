@@ -101,6 +101,7 @@ void Level::addCoin(float x, float y){
     }
     hatkid::Coin coin(x,y);
     coin.setVerticalSpeed(-0.5);
+    coin.setHorizontalSpeed(0.5);
     newCoins[coinAmount] = coin;
     delete[] coins;
     coins = newCoins;

@@ -35,8 +35,16 @@ void GameObject::setX(float x){
     _x = x;
 }
 
+void GameObject::addX(float dx){
+    _x += dx;
+}
+
 void GameObject::setY(float y){
     _y = y;
+}
+
+void GameObject::addY(float dy){
+    _y += dy;
 }
 
 void GameObject::setPos(float x, float y){

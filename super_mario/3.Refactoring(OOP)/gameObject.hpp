@@ -26,7 +26,9 @@ namespace hatkid{
             void setType(ObjectType type);
 
             void setX(float x);
+            void addX(float dx);
             void setY(float y);
+            void addY(float dy);
             void setPos(float x, float y);
 
             bool collisionWith(const GameObject& other);

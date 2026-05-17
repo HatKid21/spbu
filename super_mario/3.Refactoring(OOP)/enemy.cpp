@@ -2,25 +2,17 @@
 
 using hatkid::Enemy;
 
-Enemy::Enemy() : Movable(0, 0, hatkid::ObjectType::AIR), direction(1) {
+Enemy::Enemy() : Movable(0, 0, hatkid::ObjectType::AIR) {
     dead = true;
 }
 
 Enemy::Enemy(float x, float y, float width, float height, hatkid::ObjectType type)
-    : Movable(width, height, type), direction(1) {
+    : Movable(width, height, type) {
     setPos(x, y);
+    setHorizontalSpeed(0.5);
 }
 
 char Enemy::getSymbol() const { 
     return 'o'; 
 }
 
-int Enemy::getDirection() const { 
-    return direction; 
-}
-void Enemy::setDirection(int dir) { 
-    direction = dir; 
-}
-void Enemy::changeDirection() {
-    direction *= -1; 
-}
