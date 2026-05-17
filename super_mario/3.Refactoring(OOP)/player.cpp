@@ -14,7 +14,6 @@ char Player::getSymbol() const {
 }
 
 void Player::onCollision(GameObject& other, Level& level) {
-
     if (other.getType() == ObjectType::BONUS && getVerticalSpeed() < 0) {
         other.setType(ObjectType::EMPTY_BONUS);
         level.addCoin(other.x(), other.y() - 2);
@@ -25,28 +24,18 @@ void Player::onCollision(GameObject& other, Level& level) {
     }
 }
 
-void Player::jump() {
-    if (onGround) {
-        verticalSpeed = -1.0f;
-        onGround = false;
-    }
-}
-
 void Player::handleInteractions(Level& level){
     Enemy* enemies = level.getEnemies();
     int enemyAmount = level.getEnemyAmount();
 
     for (int i = 0; i < enemyAmount; i++) {
-
         if (collisionWith(enemies[i]) && !enemies[i].isDead()) {
-
             if (!isOnGround()
                 && getVerticalSpeed() > 0
                 && y() + getHeight() < enemies[i].y() + enemies[i].getHeight() * 0.5) {
 
                 level.addScore(250);
                 enemies[i].setDead(true);
-
             } else {
                 setDead(true);
             }
@@ -57,11 +46,16 @@ void Player::handleInteractions(Level& level){
     int coinAmount = level.getCoinAmount();
 
     for (int i = 0; i < coinAmount; i++) {
-
         if (collisionWith(coins[i]) && !coins[i].isDead()) {
-
             level.addScore(coins[i].getVal());
             coins[i].setDead(true);
         }
+    }
+}
+
+void Player::jump() {
+    if (onGround) {
+        verticalSpeed = -1.0f;
+        onGround = false;
     }
 }

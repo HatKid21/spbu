@@ -13,6 +13,10 @@ Enemy::Enemy(float x, float y, float width, float height, hatkid::ObjectType typ
     setHorizontalSpeed(0.5);
 }
 
+char Enemy::getSymbol() const { 
+    return 'o'; 
+}
+
 void Enemy::update(hatkid::Level& level, int mapHeight){
     if (isDead()) return;
 
@@ -47,12 +51,3 @@ void Enemy::update(hatkid::Level& level, int mapHeight){
 
     Physics::moveVertical(*this, level, mapHeight);
 }
-
-void Enemy::onCollision(hatkid::GameObject& other,hatkid::Level& level){
-
-}
-
-char Enemy::getSymbol() const { 
-    return 'o'; 
-}
-

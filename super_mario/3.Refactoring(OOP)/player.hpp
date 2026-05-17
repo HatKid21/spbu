@@ -5,8 +5,6 @@
 
 namespace hatkid{
 
-    class Level;
-
     class Player : public Movable {
         public:
             Player();

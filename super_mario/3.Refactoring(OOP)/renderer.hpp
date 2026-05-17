@@ -14,10 +14,11 @@ namespace hatkid{
             ~Renderer();
 
             void drawObject(GameObject& obj);
+            void drawScore(int score);
+
             void clearMap();
             void showMap();
 
-            void drawScore(int score);
             void addOffset(int dx);
             void setCameraX(int camX);
 

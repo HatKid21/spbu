@@ -1,6 +1,5 @@
-#include "physics.hpp"
-#include "player.hpp"
 #include "level.hpp"
+#include "physics.hpp"
 
 using hatkid::Physics;
 
@@ -21,9 +20,6 @@ void Physics::moveHorizontal(hatkid::Movable& obj, hatkid::Level& level){
             return;
         }
     }
-
-
-
 }
 
 void Physics::moveVertical(hatkid::Movable& obj, hatkid::Level& level,int mapHeight){
@@ -52,10 +48,8 @@ void Physics::moveVertical(hatkid::Movable& obj, hatkid::Level& level,int mapHei
             break;
         }
     }
-
     if (obj.y() > mapHeight){
         obj.setDead(true);
     }
-
 }
 

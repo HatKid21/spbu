@@ -17,8 +17,8 @@ namespace hatkid{
             Movable(float width, float height, ObjectType type);
             virtual ~Movable() = default;
 
-            virtual void update(Level& level, int mapHeight);
             virtual void onCollision(GameObject& other, Level& level);
+            virtual void update(Level& level, int mapHeight);
 
             float getVerticalSpeed() const;
             void addVerticalSpeed(float ds);

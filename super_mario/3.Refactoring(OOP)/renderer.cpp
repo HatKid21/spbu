@@ -29,15 +29,6 @@ Renderer::~Renderer(){
     delete[] map;
 }
 
-void Renderer::drawScore(int score){
-    char c[30];
-    std::sprintf(c, "Score %d", score);
-    int len = std::strlen(c);
-    for (int i = 0; i < len; i++) {
-        map[1][i + 5] = c[i];
-    }
-}
-
 void Renderer::drawObject(hatkid::GameObject& obj){
     int ix = (int)std::round(obj.x()) + offset;
     int iy = (int)std::round(obj.y());
@@ -49,7 +40,14 @@ void Renderer::drawObject(hatkid::GameObject& obj){
         }
     }
 }
-
+void Renderer::drawScore(int score){
+    char c[30];
+    std::sprintf(c, "Score %d", score);
+    int len = std::strlen(c);
+    for (int i = 0; i < len; i++) {
+        map[1][i + 5] = c[i];
+    }
+}
 
 void Renderer::clearMap() {
     for (int i = 0; i < width; i++) {
@@ -60,7 +58,6 @@ void Renderer::clearMap() {
         std::strcpy(map[i], map[0]);
     }
 }
-
 void Renderer::showMap(){
     for (int i = 0; i < height; i++) {
         printw("%s\n", map[i]);
@@ -69,22 +66,21 @@ void Renderer::showMap(){
     move(0,0);
 }
 
-bool Renderer::isPosInMap(int x, int y){
-    return (x >= 0 && x < width && y >= 0 && y < height);
-}
-
 void Renderer::addOffset(int dx){
     offset += dx;
 }
-
 void Renderer::setCameraX(int camX){
     offset = -(camX - width / 3);
+}
+
+int Renderer::getMapHeight() const{
+    return height;
 }
 
 void Renderer::resetOffset(){
     offset = 0;
 }
 
-int Renderer::getMapHeight() const{
-    return height;
+bool Renderer::isPosInMap(int x, int y){
+    return (x >= 0 && x < width && y >= 0 && y < height);
 }

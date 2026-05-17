@@ -1,12 +1,12 @@
 #include <ncurses.h>
 
+#include "brick.hpp"
 #include "game.hpp"
 #include "keyboard.hpp"
-#include "player.hpp"
 #include "level.hpp"
-#include "brick.hpp"
-#include "renderer.hpp"
 #include "physics.hpp"
+#include "player.hpp"
+#include "renderer.hpp"
 
 using hatkid::Game;
 

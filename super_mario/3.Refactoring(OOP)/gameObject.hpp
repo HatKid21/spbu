@@ -20,16 +20,19 @@ namespace hatkid{
 
             float x() const;
             float y() const;
-            float getWidth() const;
-            float getHeight() const;
-            ObjectType getType() const;
-            void setType(ObjectType type);
 
             void setX(float x);
             void addX(float dx);
             void setY(float y);
             void addY(float dy);
             void setPos(float x, float y);
+            
+            float getHeight() const;
+            float getWidth() const;
+            
+            ObjectType getType() const;
+            void setType(ObjectType type);
+
 
             bool collisionWith(const GameObject& other);
 

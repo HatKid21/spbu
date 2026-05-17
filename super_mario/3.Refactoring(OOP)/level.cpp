@@ -14,6 +14,12 @@ Level::Level(int level)
     loadLevel();
 }
 
+Level::~Level(){
+    delete[] enemies;
+    delete[] bricks;
+    delete[] coins;
+}
+
 void Level::loadLevel(){
     delete[] bricks;
     delete[] enemies;
@@ -94,6 +100,64 @@ void Level::loadLevel(){
     }
 }
 
+void Level::reset(){
+    score = 0;
+    loadLevel();
+}
+void Level::nextLevel(){
+    score = 0;
+    if (currentLevel < 3){
+        currentLevel++;
+    } else{
+        currentLevel = 1;
+    }
+    loadLevel();
+}
+int Level::getScore() const{
+    return score;
+}
+void Level::addScore(int points){
+    score += points;
+}
+
+int Level::getCurrentLevel() const {
+    return currentLevel;
+}
+bool Level::isGoalReached() const{
+    return goalReached;
+}
+void Level::setGoalReached(bool state){
+    goalReached = state;
+}
+
+int Level::getSpawnX() const{
+    return spawnX;
+}
+int Level::getSpawnY() const{
+    return spawnY;
+}
+
+hatkid::Brick* Level::getBricks(){
+    return bricks;
+}
+int Level::getBrickAmount(){
+    return brickAmount;
+}
+
+hatkid::Enemy* Level::getEnemies(){
+    return enemies;
+}
+int Level::getEnemyAmount(){
+    return enemyAmount;
+}
+
+hatkid::Coin* Level::getCoins(){
+    return coins;
+}
+int Level::getCoinAmount(){
+    return coinAmount;
+}
+
 void Level::addCoin(float x, float y){
     hatkid::Coin* newCoins = new hatkid::Coin[coinAmount + 1];
     for (int i = 0; i < coinAmount; i++){
@@ -106,76 +170,4 @@ void Level::addCoin(float x, float y){
     delete[] coins;
     coins = newCoins;
     coinAmount++;
-}
-
-hatkid::Coin* Level::getCoins(){
-    return coins;
-}
-
-int Level::getCoinAmount(){
-    return coinAmount;
-}
-
-void Level::reset(){
-    score = 0;
-    loadLevel();
-}
-
-void Level::nextLevel(){
-    score = 0;
-    if (currentLevel < 3){
-        currentLevel++;
-    } else{
-        currentLevel = 1;
-    }
-    loadLevel();
-}
-
-Level::~Level(){
-    delete[] enemies;
-    delete[] bricks;
-    delete[] coins;
-}
-bool Level::isGoalReached() const{
-    return goalReached;
-}
-
-void Level::setGoalReached(bool state){
-    goalReached = state;
-}
-
-int Level::getScore() const{
-    return score;
-}
-
-void Level::addScore(int points){
-    score += points;
-}
-
-int Level::getCurrentLevel() const {
-    return currentLevel;
-}
-
-hatkid::Brick* Level::getBricks(){
-    return bricks;
-}
-
-hatkid::Enemy* Level::getEnemies(){
-    return enemies;
-}
-
-int Level::getBrickAmount(){
-    return brickAmount;
-}
-
-int Level::getEnemyAmount(){
-    return enemyAmount;
-}
-
-int Level::getSpawnX() const{
-    return spawnX;
-}
-
-int Level::getSpawnY() const{
-    return spawnY;
 }
