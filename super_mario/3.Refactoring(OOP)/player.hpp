@@ -15,6 +15,7 @@ namespace hatkid{
             char getSymbol() const override;
 
             void onCollision(GameObject& other, Level& level) override;
+            void handleInteractions(Level& level);
 
             void jump();
     };

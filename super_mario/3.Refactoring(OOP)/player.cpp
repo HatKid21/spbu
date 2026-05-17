@@ -31,3 +31,37 @@ void Player::jump() {
         onGround = false;
     }
 }
+
+void Player::handleInteractions(Level& level){
+    Enemy* enemies = level.getEnemies();
+    int enemyAmount = level.getEnemyAmount();
+
+    for (int i = 0; i < enemyAmount; i++) {
+
+        if (collisionWith(enemies[i]) && !enemies[i].isDead()) {
+
+            if (!isOnGround()
+                && getVerticalSpeed() > 0
+                && y() + getHeight() < enemies[i].y() + enemies[i].getHeight() * 0.5) {
+
+                level.addScore(250);
+                enemies[i].setDead(true);
+
+            } else {
+                setDead(true);
+            }
+        }
+    }
+
+    Coin* coins = level.getCoins();
+    int coinAmount = level.getCoinAmount();
+
+    for (int i = 0; i < coinAmount; i++) {
+
+        if (collisionWith(coins[i]) && !coins[i].isDead()) {
+
+            level.addScore(coins[i].getVal());
+            coins[i].setDead(true);
+        }
+    }
+}

@@ -37,7 +37,7 @@ void Game::run(){
             coins[i].update(level, renderer.getMapHeight());
         }
 
-        hatkid::Physics::checkPlayerMovableCollision(player, level);
+        player.handleInteractions(level);
 
         if (player.isDead()){
             level.reset();

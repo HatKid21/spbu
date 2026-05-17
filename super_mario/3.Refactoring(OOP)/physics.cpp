@@ -59,29 +59,3 @@ void Physics::moveVertical(hatkid::Movable& obj, hatkid::Level& level,int mapHei
 
 }
 
-void Physics::checkPlayerMovableCollision(hatkid::Player& player, hatkid::Level& level){
-    hatkid::Enemy* enemies = level.getEnemies();
-    int enemyAmount = level.getEnemyAmount();
-    for (int i = 0; i < enemyAmount;i++){
-        if (player.collisionWith(enemies[i]) && !enemies[i].isDead()){
-            if (!player.isOnGround() 
-                    && player.getVerticalSpeed() > 0 
-                    && player.y() + player.getHeight() < enemies[i].y() + enemies[i].getHeight() * 0.5){
-                level.addScore(250);
-                enemies[i].setDead(true);
-                continue;
-            } else{
-                player.setDead(true);
-            }
-        }
-    }
-    hatkid::Coin* coins = level.getCoins();
-    int coinAmount = level.getCoinAmount();
-    for (int i = 0; i < coinAmount; i++){
-        if (player.collisionWith(coins[i]) && !coins[i].isDead()){
-            level.addScore(coins[i].getVal());
-            coins[i].setDead(true);
-        }
-    }
-}
-
