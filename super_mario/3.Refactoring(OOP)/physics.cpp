@@ -22,21 +22,6 @@ void Physics::moveHorizontal(hatkid::Movable& obj, hatkid::Level& level){
         }
     }
 
-    if (Enemy* enemy = dynamic_cast<Enemy*>(&obj)){
-        bool groundBelow = false;
-        enemy->addY(1);
-        for (int i = 0; i < brickAmount; i++){
-            if (enemy->collisionWith(bricks[i])){
-                groundBelow = true;
-                break;
-            }
-        }
-        enemy->addY(-1);
-        if (!groundBelow){
-            obj.addX(-obj.getHorizontalSpeed());
-            obj.setHorizontalSpeed(-obj.getHorizontalSpeed());
-        }
-    }
 
 
 }
@@ -45,9 +30,6 @@ void Physics::moveVertical(hatkid::Movable& obj, hatkid::Level& level,int mapHei
     if (obj.isDead()){
         return;
     }
-
-    float oldY = obj.y();
-    bool wasOnGround = obj.isOnGround();
 
     obj.setOnGround(false);
     obj.addVerticalSpeed(0.05);
@@ -61,15 +43,9 @@ void Physics::moveVertical(hatkid::Movable& obj, hatkid::Level& level,int mapHei
             if (obj.getVerticalSpeed() > 0){
                 obj.setOnGround(true);
             }
-            if (Player* player = dynamic_cast<Player*>(&obj)){
-                if (bricks[i].getType() == hatkid::ObjectType::BONUS && player->getVerticalSpeed() < 0){
-                    bricks[i].setType(hatkid::ObjectType::EMPTY_BONUS);
-                    level.addCoin(bricks[i].x(),bricks[i].y()-2);
-                }
-                if (bricks[i].getType() == hatkid::ObjectType::GOAL){
-                    level.setGoalReached(true);
-                }
-            }
+
+            obj.onCollision(bricks[i],level);
+
             obj.addY(-obj.getVerticalSpeed());
             obj.setVerticalSpeed(0);
 

@@ -26,19 +26,15 @@ void Game::run(){
         renderer.clearMap();
         inputHandler();
 
-        hatkid::Physics::moveHorizontal(player, level);
-        hatkid::Physics::moveVertical(player, level,renderer.getMapHeight());
-        //hatkid::Physics::checkPlayerMovableCollision(player, level);
+        player.update(level, renderer.getMapHeight());
 
         Enemy* enemies = level.getEnemies();
         for (int i = 0; i < level.getEnemyAmount(); i++){
-            hatkid::Physics::moveHorizontal(enemies[i],level);
-            hatkid::Physics::moveVertical(enemies[i],level,renderer.getMapHeight());
+            enemies[i].update(level, renderer.getMapHeight());
         }
         Coin* coins = level.getCoins();
         for (int i = 0; i < level.getCoinAmount();i++){
-            hatkid::Physics::moveHorizontal(coins[i],level);
-            hatkid::Physics::moveVertical(coins[i],level,renderer.getMapHeight());
+            coins[i].update(level, renderer.getMapHeight());
         }
 
         hatkid::Physics::checkPlayerMovableCollision(player, level);

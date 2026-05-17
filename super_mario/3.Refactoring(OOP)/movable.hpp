@@ -3,6 +3,9 @@
 #include "gameObject.hpp"
 
 namespace hatkid{
+
+    class Level;
+
     class Movable : public GameObject {
         protected:
             float verticalSpeed;
@@ -13,6 +16,9 @@ namespace hatkid{
         public:
             Movable(float width, float height, ObjectType type);
             virtual ~Movable() = default;
+
+            virtual void update(Level& level, int mapHeight);
+            virtual void onCollision(GameObject& other, Level& level);
 
             float getVerticalSpeed() const;
             void addVerticalSpeed(float ds);

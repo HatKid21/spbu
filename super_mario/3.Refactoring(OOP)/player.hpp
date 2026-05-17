@@ -1,14 +1,21 @@
 #pragma once
 
+#include "level.hpp"
 #include "movable.hpp"
 
 namespace hatkid{
+
+    class Level;
+
     class Player : public Movable {
         public:
             Player();
             ~Player();
 
             char getSymbol() const override;
+
+            void onCollision(GameObject& other, Level& level) override;
+
             void jump();
     };
 }
