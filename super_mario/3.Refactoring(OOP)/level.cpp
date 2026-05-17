@@ -134,6 +134,7 @@ void Level::nextLevel(){
 Level::~Level(){
     delete[] enemies;
     delete[] bricks;
+    delete[] coins;
 }
 bool Level::isGoalReached() const{
     return goalReached;
