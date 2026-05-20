@@ -1,9 +1,10 @@
-FILES_TO_COMPILE="main.cpp brick.cpp gameObject.cpp level.cpp renderer.cpp player.cpp enemy.cpp game.cpp keyboard.cpp physics.cpp movable.cpp coin.cpp"
-FILE_NAME="out"
-DIRECTORY="bin"
+BUILD_TYPE=Ninja
+BUILD_SUFFIX=ninja
 
-FULL_PATH="$DIRECTORY/$FILE_NAME"
+BUILD_FOLDER=build_$BUILD_SUFFIX
 
-mkdir -p "$DIRECTORY"
+mkdir -p $BUILD_FOLDER
 
-g++ $FILES_TO_COMPILE -o "$FULL_PATH" -lncurses
+cmake -G "$BUILD_TYPE" -S . -B "$BUILD_FOLDER"
+
+cmake --build "$BUILD_FOLDER"
