@@ -19,5 +19,9 @@ namespace biv {
 			
 		protected:
 			void keyPressEvent(QKeyEvent* event) override;
+    
+    private:
+      void appendText(const QString& text);
+      void eraseText();
 	};
 }

@@ -33,6 +33,10 @@ KeyBoardWindow::KeyBoardWindow(QWidget* parent) : QWidget(parent) {
 	main_layout->addLayout(smail_layout);
     main_layout->addWidget(display);
     main_layout->addWidget(keyboard);
+
+
+    connect(keyboard, &KeyBoard::keyClicked,this, &KeyBoardWindow::appendText);
+    connect(keyboard, &KeyBoard::backspaceClicked, this, &KeyBoardWindow::eraseText);
 }
 
 void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
@@ -41,4 +45,16 @@ void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
 		display->setText(display->text() + keyboard->get_key_text(key));
 		keyboard->animate_button(key);
 	}
+}
+
+void KeyBoardWindow::appendText(const QString& text){
+  display->setText(display->text() + text);
+}
+
+void KeyBoardWindow::eraseText(){
+  QString text = display->text();
+
+  if (!text.isEmpty()){
+    display->setText(text.left(text.length() - 1) );
+  }
 }

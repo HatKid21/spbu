@@ -12,11 +12,14 @@
 
 namespace biv {
 	class KeyBoard : public QWidget {
+    Q_OBJECT
 		private:
 			const int button_width;
 			std::unordered_map<int, KeyBoardButton*> buttons;
 			
 			KeyBoardData* keyboard_data;
+
+      bool capsLock = false;
 		
 		public:
 			KeyBoard(const int width, QWidget* parent = nullptr);
@@ -32,5 +35,11 @@ namespace biv {
 				const int line,
 				const int start_position
 			);
+      void toggleCaps();
+      QString getKeyText(const int code) const;
+    signals:
+      void keyClicked(const QString& test);
+      void backspaceClicked();
+
 	};
 }

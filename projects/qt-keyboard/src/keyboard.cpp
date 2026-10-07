@@ -51,6 +51,17 @@ KeyBoard::KeyBoard(const int width, QWidget* parent)
 	KeyBoardButton* space = new KeyBoardButton();
 	space->setMinimumSize(8 * button_width, button_width);
 	keys_layout->addWidget(space, 8, 7, 2, 16);
+
+  // Подключение специальных кнопок
+  connect(space, &QPushButton::clicked, this, [this](){
+    emit keyClicked(" ");
+  });
+
+  connect(backspace_btn, &QPushButton::clicked, this, [this](){
+    emit backspaceClicked();
+  });
+
+  connect(caps_btn, &QPushButton::clicked, this, &KeyBoard::toggleCaps);
 }
 
 void KeyBoard::animate_button(const int code) {
@@ -81,5 +92,27 @@ void KeyBoard::create_buttons(
 		layout->addWidget(btn, line, i * 2 + start_position, 2, 2);
 		
 		buttons[data[i].code] = btn;
+
+    const QString text = data[i].text;
+
+    const int code = data[i].code;
+
+    connect(btn, &QPushButton::clicked, this, [this, code](){
+      emit keyClicked(getKeyText(code));
+    });
+
 	}
+}
+
+void KeyBoard::toggleCaps(){
+  capsLock = !capsLock;
+}
+
+QString KeyBoard::getKeyText(const int code) const {
+  QString text = buttons.at(code)->text();
+
+  if (!capsLock && !text.isEmpty() && text.at(0).isLetter()){
+    return text.toLower();
+  }
+  return text;
 }
