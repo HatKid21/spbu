@@ -5,6 +5,8 @@
 #include <QPixmap>
 #include <QVBoxLayout>
 
+#include <iostream>
+
 using biv::KeyBoardWindow;
 
 KeyBoardWindow::KeyBoardWindow(QWidget* parent) : QWidget(parent) {
@@ -12,7 +14,8 @@ KeyBoardWindow::KeyBoardWindow(QWidget* parent) : QWidget(parent) {
 	resize(keyboard_width, 710);
     setWindowTitle("Грустная Клавиатура");
 	
-	QPixmap pixmap("img/grustnii-smail.png");
+	//QPixmap pixmap("projects/qt-keyboard/img/grustnii-smail.png");
+	QPixmap pixmap("projects/qt-keyboard/img/grustnii-smail.png");
 	QLabel* image = new QLabel(this);
 	image->setFixedSize(200, 200);
 	image->setPixmap(pixmap);
@@ -34,17 +37,46 @@ KeyBoardWindow::KeyBoardWindow(QWidget* parent) : QWidget(parent) {
     main_layout->addWidget(display);
     main_layout->addWidget(keyboard);
 
-
     connect(keyboard, &KeyBoard::keyClicked,this, &KeyBoardWindow::appendText);
     connect(keyboard, &KeyBoard::backspaceClicked, this, &KeyBoardWindow::eraseText);
 }
 
 void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
+  if (event->key() == Qt::Key_Backspace){
+    eraseText();
+    keyboard->press_button(event->nativeVirtualKey());
+    return;
+  }
+
+  if (event->key() == Qt::Key_Space){
+    appendText(" ");
+    keyboard->press_button(event->nativeVirtualKey());
+    return;
+  }
+
+  if (event->key() == Qt::Key_CapsLock){
+    keyboard->toggleCaps();
+    keyboard->press_button(event->nativeVirtualKey());
+    return;
+  }
+
 	const int key = event->nativeVirtualKey();
+
 	if (keyboard->is_key_allowed(key)) {
-		display->setText(display->text() + keyboard->get_key_text(key));
-		keyboard->animate_button(key);
+    appendText(keyboard->get_key_text(key));
+		keyboard->press_button(key);
 	}
+
+  std::cout << key << "\n";
+
+}
+
+void KeyBoardWindow::keyReleaseEvent(QKeyEvent* event) {
+    const int key = event->nativeVirtualKey();
+
+    if (keyboard->is_key_allowed(key)) {
+        keyboard->release_button(key);
+    }
 }
 
 void KeyBoardWindow::appendText(const QString& text){

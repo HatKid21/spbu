@@ -62,6 +62,17 @@ KeyBoard::KeyBoard(const int width, QWidget* parent)
   });
 
   connect(caps_btn, &QPushButton::clicked, this, &KeyBoard::toggleCaps);
+
+  backspace_btn->setFocusPolicy(Qt::NoFocus);
+  tab_btn->setFocusPolicy(Qt::NoFocus);
+  caps_btn->setFocusPolicy(Qt::NoFocus);
+  enter_btn->setFocusPolicy(Qt::NoFocus);
+  left_shift_btn->setFocusPolicy(Qt::NoFocus);
+  right_shift_btn->setFocusPolicy(Qt::NoFocus);
+  space->setFocusPolicy(Qt::NoFocus);
+
+  setFocusPolicy(Qt::StrongFocus);
+  setFocus();
 }
 
 void KeyBoard::animate_button(const int code) {
@@ -69,11 +80,37 @@ void KeyBoard::animate_button(const int code) {
 }
 
 QString KeyBoard::get_key_text(const int code) const {
-	return buttons.at(code)->text();
+    QString text = buttons.at(code)->text();
+
+    if (capsLock) {
+        return text.toUpper();
+    }
+
+    return text.toLower();
 }
 
 bool KeyBoard::is_key_allowed(const int code) const noexcept {
-	return keyboard_data->is_key_allowed(code);
+    return keyboard_data->is_key_allowed(code);
+}
+
+void KeyBoard::toggleCaps(){
+  capsLock = !capsLock;
+}
+
+void KeyBoard::press_button(const int code) {
+    auto it = buttons.find(code);
+
+    if (it != buttons.end()) {
+        it->second->setDown(true);
+    }
+}
+
+void KeyBoard::release_button(const int code) {
+    auto it = buttons.find(code);
+
+    if (it != buttons.end()) {
+        it->second->setDown(false);
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -88,6 +125,7 @@ void KeyBoard::create_buttons(
 	for (int i = 0; i < data.size(); i++) {
         KeyBoardButton* btn = new KeyBoardButton(data[i].text);
 		btn->setMinimumSize(button_width, button_width);
+    btn->setFocusPolicy(Qt::NoFocus);
         
 		layout->addWidget(btn, line, i * 2 + start_position, 2, 2);
 		
@@ -98,21 +136,10 @@ void KeyBoard::create_buttons(
     const int code = data[i].code;
 
     connect(btn, &QPushButton::clicked, this, [this, code](){
-      emit keyClicked(getKeyText(code));
+      emit keyClicked(get_key_text(code));
     });
 
 	}
 }
 
-void KeyBoard::toggleCaps(){
-  capsLock = !capsLock;
-}
 
-QString KeyBoard::getKeyText(const int code) const {
-  QString text = buttons.at(code)->text();
-
-  if (!capsLock && !text.isEmpty() && text.at(0).isLetter()){
-    return text.toLower();
-  }
-  return text;
-}

@@ -27,6 +27,9 @@ namespace biv {
 			void animate_button(const int code);
 			QString get_key_text(const int code) const;
 			bool is_key_allowed(const int code) const noexcept;
+      void toggleCaps();
+      void press_button(const int code);
+      void release_button(const int code);
 			
 		private:
 			void create_buttons(
@@ -35,8 +38,6 @@ namespace biv {
 				const int line,
 				const int start_position
 			);
-      void toggleCaps();
-      QString getKeyText(const int code) const;
     signals:
       void keyClicked(const QString& test);
       void backspaceClicked();
