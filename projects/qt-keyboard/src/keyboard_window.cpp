@@ -42,25 +42,25 @@ KeyBoardWindow::KeyBoardWindow(QWidget* parent) : QWidget(parent) {
 }
 
 void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
-  if (event->key() == Qt::Key_Backspace){
+	const int key = event->key();
+  if (key == Qt::Key_Backspace){
     eraseText();
     keyboard->press_button(event->nativeVirtualKey());
     return;
   }
 
-  if (event->key() == Qt::Key_Space){
+  if (key == Qt::Key_Space){
     appendText(" ");
     keyboard->press_button(event->nativeVirtualKey());
     return;
   }
 
-  if (event->key() == Qt::Key_CapsLock){
+  if (key == Qt::Key_CapsLock){
     keyboard->toggleCaps();
     keyboard->press_button(event->nativeVirtualKey());
     return;
   }
 
-	const int key = event->nativeVirtualKey();
 
 	if (keyboard->is_key_allowed(key)) {
     appendText(keyboard->get_key_text(key));
@@ -72,7 +72,7 @@ void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
 }
 
 void KeyBoardWindow::keyReleaseEvent(QKeyEvent* event) {
-    const int key = event->nativeVirtualKey();
+    const int key = event->key();
 
     if (keyboard->is_key_allowed(key)) {
         keyboard->release_button(key);
