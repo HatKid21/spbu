@@ -17,6 +17,7 @@ KeyBoard::KeyBoard(const int width, QWidget* parent)
 	KeyBoardButton* backspace_btn = new KeyBoardButton("Удалить");
 	backspace_btn->setMinimumSize(2 * button_width, button_width);
 	keys_layout->addWidget(backspace_btn, 0, 26, 2, 3);
+  buttons[Qt::Key_Backspace] = backspace_btn; 
 
 	// 2-я линия
 	KeyBoardButton* tab_btn = new KeyBoardButton("Tab");
@@ -29,12 +30,14 @@ KeyBoard::KeyBoard(const int width, QWidget* parent)
 	KeyBoardButton* caps_btn = new KeyBoardButton("Caps");
 	caps_btn->setMinimumSize(2 * button_width, button_width);
 	keys_layout->addWidget(caps_btn, 4, 0, 2, 4);
+  buttons[Qt::Key_CapsLock] = caps_btn;
 	
 	create_buttons(keyboard_data->get_line3(), keys_layout, 4, 4);
 	
 	KeyBoardButton* enter_btn = new KeyBoardButton("Enter");
 	enter_btn->setMinimumSize(2 * button_width, button_width);
 	keys_layout->addWidget(enter_btn, 4, 26, 2, 3);
+  buttons[Qt::Key_Return] = enter_btn;
 	
 	// 4-я линия
 	KeyBoardButton* left_shift_btn = new KeyBoardButton("Shift");
@@ -51,6 +54,7 @@ KeyBoard::KeyBoard(const int width, QWidget* parent)
 	KeyBoardButton* space = new KeyBoardButton();
 	space->setMinimumSize(8 * button_width, button_width);
 	keys_layout->addWidget(space, 8, 7, 2, 16);
+  buttons[Qt::Key_Space] = space;
 
   // Подключение специальных кнопок
   connect(space, &QPushButton::clicked, this, [this](){
@@ -73,10 +77,6 @@ KeyBoard::KeyBoard(const int width, QWidget* parent)
 
   setFocusPolicy(Qt::StrongFocus);
   setFocus();
-}
-
-void KeyBoard::animate_button(const int code) {
-	buttons.at(code)->animateClick();
 }
 
 QString KeyBoard::get_key_text(const int code) const {

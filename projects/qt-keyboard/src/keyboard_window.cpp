@@ -5,7 +5,6 @@
 #include <QPixmap>
 #include <QVBoxLayout>
 
-#include <iostream>
 
 using biv::KeyBoardWindow;
 
@@ -16,7 +15,7 @@ KeyBoardWindow::KeyBoardWindow(QWidget* parent) : QWidget(parent) {
 	
 	//QPixmap pixmap("projects/qt-keyboard/img/grustnii-smail.png");
 	QPixmap pixmap("projects/qt-keyboard/img/grustnii-smail.png");
-	QLabel* image = new QLabel(this);
+	image = new QLabel(this);
 	image->setFixedSize(200, 200);
 	image->setPixmap(pixmap);
 	image->setScaledContents(true);
@@ -45,19 +44,34 @@ void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
 	const int key = event->key();
   if (key == Qt::Key_Backspace){
     eraseText();
-    keyboard->press_button(event->nativeVirtualKey());
+    keyboard->press_button(key);
     return;
   }
 
   if (key == Qt::Key_Space){
     appendText(" ");
-    keyboard->press_button(event->nativeVirtualKey());
+    keyboard->press_button(key);
     return;
   }
 
   if (key == Qt::Key_CapsLock){
     keyboard->toggleCaps();
-    keyboard->press_button(event->nativeVirtualKey());
+    keyboard->press_button(key);
+    return;
+  }
+
+  if (key == Qt::Key_Return){
+    QString curText = display->text();
+    if (curText.toLower() == "козяблик"){
+      QPixmap pixmap("projects/qt-keyboard/img/vesely-smail.jpg");
+      image->setPixmap(pixmap);
+    } else{
+      QPixmap pixmap("projects/qt-keyboard/img/grustnii-smail.png");
+      image->setPixmap(pixmap);
+    }
+    
+    display->setText("");
+    keyboard->press_button(key); 
     return;
   }
 
@@ -67,7 +81,6 @@ void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
 		keyboard->press_button(key);
 	}
 
-  std::cout << key << "\n";
 
 }
 

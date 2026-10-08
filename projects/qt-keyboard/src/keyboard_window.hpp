@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QWidget>
+#include <QLabel>
 
 #include "keyboard.hpp"
 
@@ -13,6 +14,7 @@ namespace biv {
 		private:
 			QLineEdit* display;
 			KeyBoard* keyboard;
+      QLabel* image;
 
 		public:
 			KeyBoardWindow(QWidget* parent = nullptr);

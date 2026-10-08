@@ -11,7 +11,11 @@ const std::vector<KeyData> KeyBoardData::KEYS = {
 	{65, "Ф"}, {83, "Ы"}, {68, "В"}, {70, "А"}, {71, "П"}, {72, "Р"}, {74, "О"}, 
 		{75, "Л"}, {76, "Д"}, {59, "Ж"}, {39, "Э"}, 
 	{90, "Я"}, {88, "Ч"}, {67, "С"}, {86, "М"}, {66, "И"}, {78, "Т"}, {77, "Ь"}, 
-		{44, "Б"}, {46, "Ю"}, {47, "."}
+		{44, "Б"}, {46, "Ю"}, {47, "."},
+    {Qt::Key_Space, " "},
+    {Qt::Key_Backspace, "←"},
+    {Qt::Key_CapsLock, "Caps"},
+    {Qt::Key_Return, ""}
 };
 
 std::vector<KeyData> KeyBoardData::get_line1() const {
