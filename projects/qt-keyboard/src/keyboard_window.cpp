@@ -38,6 +38,7 @@ KeyBoardWindow::KeyBoardWindow(QWidget* parent) : QWidget(parent) {
 
     connect(keyboard, &KeyBoard::keyClicked,this, &KeyBoardWindow::appendText);
     connect(keyboard, &KeyBoard::backspaceClicked, this, &KeyBoardWindow::eraseText);
+    connect(keyboard, &KeyBoard::enterClicked, this, &KeyBoardWindow::handleEnter);
 }
 
 void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
@@ -61,16 +62,7 @@ void KeyBoardWindow::keyPressEvent(QKeyEvent* event) {
   }
 
   if (key == Qt::Key_Return){
-    QString curText = display->text();
-    if (curText.toLower() == "козяблик"){
-      QPixmap pixmap("projects/qt-keyboard/img/vesely-smail.jpg");
-      image->setPixmap(pixmap);
-    } else{
-      QPixmap pixmap("projects/qt-keyboard/img/grustnii-smail.png");
-      image->setPixmap(pixmap);
-    }
-    
-    display->setText("");
+    handleEnter();
     keyboard->press_button(key); 
     return;
   }
@@ -102,4 +94,18 @@ void KeyBoardWindow::eraseText(){
   if (!text.isEmpty()){
     display->setText(text.left(text.length() - 1) );
   }
+}
+
+void KeyBoardWindow::handleEnter(){
+  QString curText = display->text();
+
+  if (curText.toLower() == "козяблик"){
+    QPixmap pixmap("projects/qt-keyboard/img/vesely-smail.jpg");
+    image->setPixmap(pixmap);
+  } else{
+    QPixmap pixmap("projects/qt-keyboard/img/grustnii-smail.png");
+    image->setPixmap(pixmap);
+  }
+
+  display->setText("");
 }

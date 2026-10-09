@@ -67,6 +67,10 @@ KeyBoard::KeyBoard(const int width, QWidget* parent)
 
   connect(caps_btn, &QPushButton::clicked, this, &KeyBoard::toggleCaps);
 
+  connect(enter_btn, &QPushButton::clicked, this, [this](){
+    emit enterClicked();
+  });
+
   backspace_btn->setFocusPolicy(Qt::NoFocus);
   tab_btn->setFocusPolicy(Qt::NoFocus);
   caps_btn->setFocusPolicy(Qt::NoFocus);

@@ -26,5 +26,6 @@ namespace biv {
     private:
       void appendText(const QString& text);
       void eraseText();
+      void handleEnter();
 	};
 }

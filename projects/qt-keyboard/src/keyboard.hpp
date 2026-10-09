@@ -40,6 +40,7 @@ namespace biv {
     signals:
       void keyClicked(const QString& test);
       void backspaceClicked();
+      void enterClicked();
 
 	};
 }
